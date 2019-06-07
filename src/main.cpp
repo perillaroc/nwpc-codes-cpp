@@ -114,6 +114,10 @@ int main() {
     auto raw_data_length = 0x98998 - 0xB1 + 1;
 	auto data_count = 1036800;
 
+	int binary_scale_factor = 0x0;
+	int decimal_scale_factor = 0x2;
+	float reference_value = convertToFloat(0x46B1298E);
+
     auto buf = new unsigned char[raw_data_length];
 
 	std::FILE* f = std::fopen(grib_file_path.c_str(), "rb");
@@ -134,12 +138,7 @@ int main() {
 		std::cerr << "value decode has error." << std::endl;
 		return 1;
 	}
-
-	int binary_scale_factor = 0;
-	int decimal_scale_factor = 2;
-
-	float reference_value = convertToFloat(0x46B1298E);
-
+	
 	for (auto i = 0; i < data_count; i++) {
 		val[i] = (reference_value + val[i] * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
 	}
