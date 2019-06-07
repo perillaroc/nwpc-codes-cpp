@@ -20,28 +20,14 @@ void openjpeg_info(const char* msg, void* client_data)
 {
 }
 
-int main() {
-    std::string grib_file_path{"D:/windroc/project/2019/grib2/nwpc-codes-cpp/dist/data/t.850hpa.000.grb2"};
+float convertToFloat(uint32_t v) {
+	return *(reinterpret_cast<float*>(&v));
+}
 
-    auto start_pos = 0xB1;
-    auto raw_data_length = 0x98998 - 0xB1 + 1;
-	auto data_count = 1036800;
-
-    auto buf = new unsigned char[raw_data_length];
-
-	std::FILE* f = std::fopen(grib_file_path.c_str(), "rb");
-	std::fseek(f, start_pos, SEEK_SET);
-	std::fread(buf, 1, raw_data_length, f);
-	std::fclose(f);
-
-    // std::ifstream f(grib_file_path, std::ios::binary);
-	// f.seekg(start_pos);
-	// f.read(reinterpret_cast<char*>(buf), raw_data_length);
-	// f.close();
-
+std::vector<double> decodeValues(unsigned char* buf, size_t raw_data_length, size_t data_count) {
 	int err = 0;
 	unsigned long  mask;
-	std::vector<double> val(data_count);
+	std::vector<double> val;
 
 	opj_dparameters_t parameters = { 0, };	/* decompression parameters */
 	opj_stream_t* stream = NULL;
@@ -102,6 +88,7 @@ int main() {
 
 	auto count = image->comps[0].w * image->comps[0].h;
 
+	val.resize(count);
 	for (auto i = 0; i < count; i++) {
 		auto v = data[i];
 		val[i] = v & mask;
@@ -117,17 +104,43 @@ cleanup:
 	if (stream) opj_stream_destroy(stream);
 	if (image)  opj_image_destroy(image);
 
+	return val;
+}
+
+int main() {
+    std::string grib_file_path{"D:/windroc/project/2019/grib2/nwpc-codes-cpp/dist/data/t.850hpa.000.grb2"};
+
+    auto start_pos = 0xB1;
+    auto raw_data_length = 0x98998 - 0xB1 + 1;
+	auto data_count = 1036800;
+
+    auto buf = new unsigned char[raw_data_length];
+
+	std::FILE* f = std::fopen(grib_file_path.c_str(), "rb");
+	std::fseek(f, start_pos, SEEK_SET);
+	std::fread(buf, 1, raw_data_length, f);
+	std::fclose(f);
+
+    // std::ifstream f(grib_file_path, std::ios::binary);
+	// f.seekg(start_pos);
+	// f.read(reinterpret_cast<char*>(buf), raw_data_length);
+	// f.close();
+
+	auto val = decodeValues(buf, raw_data_length, data_count);
+
     delete[] buf;
+
+	if (val.size() == 0) {
+		std::cerr << "value decode has error." << std::endl;
+		return 1;
+	}
 
 	int binary_scale_factor = 0;
 	int decimal_scale_factor = 2;
 
-	float reference_value = 0.0;
-	auto a = sizeof(float);
-	uint32_t reference_value_int = 0x46B1298E;
-	reference_value = *(reinterpret_cast<float*>(&reference_value_int));
+	float reference_value = convertToFloat(0x46B1298E);
 
-	for (auto i = 0; i < count; i++) {
+	for (auto i = 0; i < data_count; i++) {
 		val[i] = (reference_value + val[i] * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
 	}
 
