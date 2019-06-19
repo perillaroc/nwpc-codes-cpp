@@ -6,7 +6,7 @@
 #include <cstdint>
 #include <cmath>
 
-#include "openjpeg_coder.h"
+#include "openjpeg_helper.h"
 
 void openjpeg_warning(const char* msg, void* client_data)
 {
