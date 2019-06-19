@@ -3,6 +3,7 @@
 add_executable(nwpc_codes_cpp
     main.cpp
 	openjpeg_helper.cpp
+	openjpeg_decoder.cpp
 	)
 
 target_include_directories(
