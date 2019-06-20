@@ -24,15 +24,15 @@ int main() {
 
     auto buf = new unsigned char[raw_data_length];
 
-	std::FILE* f = std::fopen(grib_file_path.c_str(), "rb");
-	std::fseek(f, start_pos, SEEK_SET);
-	std::fread(buf, 1, raw_data_length, f);
-	std::fclose(f);
+	//std::FILE* f = std::fopen(grib_file_path.c_str(), "rb");
+	//std::fseek(f, start_pos, SEEK_SET);
+	//std::fread(buf, 1, raw_data_length, f);
+	//std::fclose(f);
 
-    // std::ifstream f(grib_file_path, std::ios::binary);
-	// f.seekg(start_pos);
-	// f.read(reinterpret_cast<char*>(buf), raw_data_length);
-	// f.close();
+    std::ifstream f(grib_file_path, std::ios::binary);
+	f.seekg(start_pos);
+	f.read(reinterpret_cast<char*>(buf), raw_data_length);
+	f.close();
 
 	auto val = decodeValues(buf, raw_data_length, data_count);
 
