@@ -5,6 +5,8 @@ add_library(grib_coder STATIC)
 target_sources(grib_coder PRIVATE
 	openjpeg_helper.cpp
 	openjpeg_decoder.cpp
+	grib_file_handler.cpp
+	grib_message_handler.cpp
 )
 
 target_include_directories(grib_coder

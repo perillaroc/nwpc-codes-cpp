@@ -1,1 +1,2 @@
 add_subdirectory(simple_data)
+add_subdirectory(single_message)
