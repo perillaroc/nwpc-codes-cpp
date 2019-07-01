@@ -7,6 +7,8 @@ target_sources(grib_coder PRIVATE
 	openjpeg_decoder.cpp
 	grib_file_handler.cpp
 	grib_message_handler.cpp
+	grib_section.cpp
+	grib_section_0.cpp
 )
 
 target_include_directories(grib_coder

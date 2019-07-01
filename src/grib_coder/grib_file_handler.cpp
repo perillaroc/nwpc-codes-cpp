@@ -15,12 +15,8 @@ GribFileHandler::~GribFileHandler()
 
 std::unique_ptr<GribMessageHandler> GribFileHandler::next()
 {
-	char buffer[4];
-	auto result = std::fread(buffer, 1, 4, file_);
-	if (result != 4) {
-		return std::unique_ptr<GribMessageHandler>();
-	}
-	std::cout << buffer << std::endl;
+	auto message_handler = std::make_unique<GribMessageHandler>();
+	auto result = message_handler->parseFile(file_);
 	return std::unique_ptr<GribMessageHandler>();
 }
 
