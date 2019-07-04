@@ -9,6 +9,7 @@ target_sources(grib_coder PRIVATE
 	grib_message_handler.cpp
 	grib_section.cpp
 	grib_section_0.cpp
+	number_convert.cpp
 )
 
 target_include_directories(grib_coder

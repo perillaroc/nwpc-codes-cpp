@@ -1,7 +1,7 @@
 #include "grib_section_0.h"
+#include "number_convert.h"
 
 #include <algorithm>
-#include <cstdint>
 
 namespace GribCoder {
 
@@ -28,10 +28,7 @@ bool GribSection0::parseFile(std::FILE* file)
 	unsigned char length_buffer[8];
 	std::copy(std::begin(buffer) + 8, std::begin(buffer) + 16, std::begin(length_buffer));
 
-	for (auto index = 0; index < 8; index++) {
-		total_length_ <<= 8;
-		total_length_ |= length_buffer[index];
-	}
+	total_length_ = convertBytesToUint64(length_buffer, 8);
 }
 
 }
