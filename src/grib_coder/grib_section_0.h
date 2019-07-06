@@ -13,7 +13,7 @@ public:
 
 	bool parseFile(std::FILE* file);
 
-private:
+public:
 	std::string identifier_;
 	unsigned int discipline_ = 0;
 	unsigned int edition_number_ = 0;

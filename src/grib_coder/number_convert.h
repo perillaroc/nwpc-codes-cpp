@@ -4,6 +4,6 @@
 
 namespace GribCoder {
 
-uint64_t convertBytesToUint64(unsigned char* bytes, size_t lenght);
+uint64_t convertBytesToUint64(unsigned char* bytes, size_t length);
 
 } // namespace GribCoder
