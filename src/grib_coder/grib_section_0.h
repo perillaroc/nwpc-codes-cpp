@@ -11,7 +11,7 @@ public:
 
 	virtual ~GribSection0();
 
-	bool parseFile(std::FILE* file);
+	bool parseFile(std::FILE* file) override;
 
 public:
 	std::string identifier_;

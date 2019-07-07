@@ -1,6 +1,7 @@
 #include "grib_message_handler.h"
 
 #include "grib_section_0.h"
+#include "grib_section_1.h"
 #include "grib_section_8.h"
 #include "number_convert.h"
 #include <memory>
@@ -57,10 +58,19 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 	if (result != 5) {
 		return false;
 	}
-	
+	auto section_length = convertBytesToUint64(buffer, 4);
 	auto section_number = int(buffer[4]);
 
-	return false;
+	if (section_number == 1) {
+		auto section_1 = std::make_shared<GribSection1>(section_length);
+		result = section_1->parseFile(file);
+		if (!result) {
+			return false;
+		}
+		section_list_.push_back(section_1);
+	}
+
+	return true;
 }
 
 }

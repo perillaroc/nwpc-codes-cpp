@@ -8,6 +8,12 @@ GribSection::GribSection(int section_number):
 
 }
 
+GribSection::GribSection(int section_number, long section_length):
+	section_number_{section_number},
+	section_length_{section_length}
+{
+}
+
 GribSection::~GribSection()
 {
 
