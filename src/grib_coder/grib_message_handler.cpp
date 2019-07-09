@@ -2,6 +2,7 @@
 
 #include "grib_section_0.h"
 #include "grib_section_1.h"
+#include "grib_section_3.h"
 #include "grib_section_8.h"
 #include "number_convert.h"
 #include <memory>
@@ -58,17 +59,40 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 	if (result != 5) {
 		return false;
 	}
-	auto section_length = convertBytesToUint64(buffer, 4);
+	auto section_length = convertBytesToUint32(buffer, 4);
 	auto section_number = int(buffer[4]);
 
+	std::shared_ptr<GribSection> section;
+
 	if (section_number == 1) {
-		auto section_1 = std::make_shared<GribSection1>(section_length);
-		result = section_1->parseFile(file);
-		if (!result) {
-			return false;
-		}
-		section_list_.push_back(section_1);
+		section = std::make_shared<GribSection1>(section_length);
+		result = section->parseFile(file);
+	} 
+	else if (section_number == 2) {
+		throw std::exception("we don't use section 2");
+		result = false;
+	} 
+	else if (section_number == 3) {
+		section = std::make_shared<GribSection3>(section_length);
+		result = section->parseFile(file);
+	} 
+	else if (section_number == 4) {
+		result = false;
 	}
+	else if (section_number == 5) {
+		result = false;
+	}
+	else if (section_number == 6) {
+		result = false;
+	}
+	else if (section_number == 7) {
+		result = false;
+	}
+
+	if (!result) {
+		return false;
+	}
+	section_list_.push_back(section);
 
 	return true;
 }

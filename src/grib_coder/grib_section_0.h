@@ -2,6 +2,7 @@
 
 #include "grib_section.h"
 #include <string>
+#include <cstdint>
 
 namespace GribCoder {
 
@@ -15,9 +16,9 @@ public:
 
 public:
 	std::string identifier_;
-	unsigned int discipline_ = 0;
-	unsigned int edition_number_ = 0;
-	unsigned long long total_length_ = 0;
+	uint8_t discipline_ = 0;
+	uint8_t edition_number_ = 0;
+	uint64_t total_length_ = 0;
 };
 
 } // namespace GribCoder

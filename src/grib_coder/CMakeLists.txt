@@ -10,6 +10,7 @@ target_sources(grib_coder PRIVATE
 	grib_section.cpp
 	grib_section_0.cpp
 	grib_section_1.cpp
+	grib_section_3.cpp
 	grib_section_8.cpp
 	number_convert.cpp
 )
