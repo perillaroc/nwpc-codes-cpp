@@ -38,6 +38,6 @@ private:
 	int32_t longitude_of_last_grid_point_;
 	uint32_t i_direction_increment_;
 	uint32_t j_direction_increment_;
-	uint32_t scanning_mode_;
+	uint8_t scanning_mode_;
 };
 } // namespace GribCoder
