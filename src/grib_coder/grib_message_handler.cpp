@@ -4,6 +4,7 @@
 #include "grib_section_1.h"
 #include "grib_section_3.h"
 #include "grib_section_4.h"
+#include "grib_section_5.h"
 #include "grib_section_8.h"
 #include "number_convert.h"
 #include <memory>
@@ -82,7 +83,8 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		result = section->parseFile(file);
 	}
 	else if (section_number == 5) {
-		result = false;
+		section = std::make_shared<GribSection5>(section_length);
+		result = section->parseFile(file);
 	}
 	else if (section_number == 6) {
 		result = false;

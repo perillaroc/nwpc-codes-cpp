@@ -48,6 +48,20 @@ uint16_t convertBytesToUint16(unsigned char* bytes, size_t length)
 	n |= bytes[1];
 	return n;
 }
+int16_t convertBytesToInt16(unsigned char* bytes, size_t length)
+{
+	int16_t n = 0;
+	n |= bytes[0] << 8;
+	n |= bytes[1];
+	int16_t magic = 0x8000;
+	auto a = n & magic;
+	if ((n & magic) == magic) {
+		n = ~n;
+		n |= magic;
+		n += 1;
+	}
+	return n;
+}
 uint8_t convertBytesToUint8(unsigned char* bytes, size_t length)
 {
 	return uint8_t(*bytes);
@@ -55,5 +69,10 @@ uint8_t convertBytesToUint8(unsigned char* bytes, size_t length)
 int8_t convertBytesToInt8(unsigned char* bytes, size_t length)
 {
 	return int8_t(*bytes);
+}
+float convertBytesToFloat(unsigned char* bytes, size_t length)
+{
+	auto t = convertBytesToUint32(bytes, 4);
+	return *(reinterpret_cast<float*>(&t));
 }
 } // namespace GribCoder
