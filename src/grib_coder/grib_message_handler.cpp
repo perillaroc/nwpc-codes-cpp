@@ -3,6 +3,7 @@
 #include "grib_section_0.h"
 #include "grib_section_1.h"
 #include "grib_section_3.h"
+#include "grib_section_4.h"
 #include "grib_section_8.h"
 #include "number_convert.h"
 #include <memory>
@@ -60,7 +61,7 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		return false;
 	}
 	auto section_length = convertBytesToUint32(buffer, 4);
-	auto section_number = int(buffer[4]);
+	auto section_number = convertBytesToUint8(&buffer[4]);
 
 	std::shared_ptr<GribSection> section;
 
@@ -77,7 +78,8 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		result = section->parseFile(file);
 	} 
 	else if (section_number == 4) {
-		result = false;
+		section = std::make_shared<GribSection4>(section_length);
+		result = section->parseFile(file);
 	}
 	else if (section_number == 5) {
 		result = false;
