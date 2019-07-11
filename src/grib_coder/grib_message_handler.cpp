@@ -6,6 +6,7 @@
 #include "grib_section_4.h"
 #include "grib_section_5.h"
 #include "grib_section_6.h"
+#include "grib_section_7.h"
 #include "grib_section_8.h"
 #include "number_convert.h"
 #include <memory>
@@ -92,7 +93,29 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		result = section->parseFile(file);
 	}
 	else if (section_number == 7) {
-		result = false;
+		auto section_7 = std::make_shared<GribSection7>(section_length);
+		section = section_7;
+		result = section->parseFile(file);
+
+		if (!result) {
+			return false;
+		}
+
+		// find section 5
+		std::shared_ptr<GribSection5> section_5;
+		for (auto iter = section_list_.rbegin(); iter != section_list_.rend(); iter++) {
+			auto s = *iter;
+			if (s->section_number_ == 5) {
+				section_5 = std::static_pointer_cast<GribSection5>(s);
+				break;
+			}
+		}
+		if (!section_5) {
+			return false;
+		}
+
+		// decode values
+		result = section_7->decodeValues(section_5);
 	}
 
 	if (!result) {

@@ -14,7 +14,7 @@ public:
 
 	virtual bool parseFile(std::FILE* file) = 0;
 
-protected:
+public:
 	int section_number_;
 	long section_length_;
 };

@@ -13,7 +13,7 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
-private:
+public:
 	uint32_t number_of_values_;
 	uint16_t data_representation_template_number_;
 
