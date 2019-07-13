@@ -12,7 +12,7 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
-private:
+public:
 	uint8_t source_of_grid_definition_;
 	uint32_t number_of_data_points_;
 	uint8_t number_of_octects_for_number_of_points_;

@@ -19,7 +19,7 @@ public:
 
 	bool decodeValues(std::shared_ptr<GribSection5> section_5);
 
-private:
+public:
 	std::vector<unsigned char> raw_value_bytes_;
 	std::vector<double> code_values_;
 };

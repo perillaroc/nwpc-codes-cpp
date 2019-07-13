@@ -126,4 +126,16 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 	return true;
 }
 
+std::shared_ptr<GribSection> GribMessageHandler::getSection(int section_number, size_t begin_pos)
+{
+	std::shared_ptr<GribSection> section;
+	for (auto iter = section_list_.begin() + begin_pos; iter != section_list_.end(); iter++) {
+		auto s = *iter;
+		if (s->section_number_ == section_number) {
+			return s;
+		}
+	}
+	return section;
 }
+
+} // namespace GribCoder

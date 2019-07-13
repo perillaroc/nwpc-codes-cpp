@@ -18,6 +18,8 @@ public:
 private:
 	bool parseNextSection(std::FILE* file);
 
+	std::shared_ptr<GribSection> getSection(int section_number, size_t begin_pos = 0);
+
 	std::vector < std::shared_ptr<GribSection>> section_list_;
 };
 

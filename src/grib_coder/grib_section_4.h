@@ -13,7 +13,7 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
-private:
+public:
 	uint16_t nv_;
 	uint16_t product_definition_template_number_;
 	

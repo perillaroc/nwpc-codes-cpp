@@ -12,7 +12,7 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
-private:
+public:
 	uint16_t centre_;
 	uint16_t sub_centre_;
 	uint8_t tables_version_;
