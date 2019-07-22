@@ -1,6 +1,8 @@
 #include "openjpeg_decoder.h"
 #include "openjpeg_helper.h"
 
+#include <cassert>
+
 
 void openjpeg_warning(const char* msg, void* client_data)
 {
@@ -20,10 +22,10 @@ std::vector<double> decodeJPEG2000Values(unsigned char* buf, size_t raw_data_len
 	std::vector<double> val;
 
 	opj_dparameters_t parameters = { 0, };	/* decompression parameters */
-	opj_stream_t* stream = NULL;
+	opj_stream_t* stream = nullptr;
 	opj_memory_stream mstream;
-	opj_image_t* image = NULL;
-	opj_codec_t* codec = NULL;
+	opj_image_t* image = nullptr;
+	opj_codec_t* codec = nullptr;
 	opj_image_comp_t comp = { 0, };
 
 	/* set decoding parameters to default values */
@@ -59,7 +61,7 @@ std::vector<double> decodeJPEG2000Values(unsigned char* buf, size_t raw_data_len
 		goto cleanup;
 	}
 
-	if (!(data_count <= image->comps[0].w * image->comps[0].h)) {
+	if (data_count > image->comps[0].w * image->comps[0].h) {
 		err = 5;
 		goto cleanup;
 	}
@@ -68,25 +70,28 @@ std::vector<double> decodeJPEG2000Values(unsigned char* buf, size_t raw_data_len
 		goto cleanup;
 	}
 
-	_ASSERT(image->comps[0].sgnd == 0);
-	_ASSERT(comp.prec <= sizeof(image->comps[0].data[0]) * 8 - 1); /* BR: -1 because I don't know what happens if the sign bit is set */
+	assert(image->comps[0].sgnd == 0);
+	assert(comp.prec <= sizeof(image->comps[0].data[0]) * 8 - 1); /* BR: -1 because I don't know what happens if the sign bit is set */
 
-	_ASSERT(image->comps[0].prec < sizeof(mask) * 8 - 1);
+	assert(image->comps[0].prec < sizeof(mask) * 8 - 1);
 
-	auto data = image->comps[0].data;
-	mask = (1 << image->comps[0].prec) - 1;
+    {
+        auto data = image->comps[0].data;
+        mask = (1 << image->comps[0].prec) - 1;
 
-	auto count = image->comps[0].w * image->comps[0].h;
+        auto count = image->comps[0].w * image->comps[0].h;
 
-	val.resize(count);
-	for (auto i = 0; i < count; i++) {
-		auto v = data[i];
-		val[i] = v & mask;
-	}
+        val.resize(count);
+        for (auto i = 0; i < count; i++) {
+            auto v = data[i];
+            val[i] = v & mask;
+        }
 
-	if (!opj_end_decompress(codec, stream)) {
-		err = 7;
-	}
+        if (!opj_end_decompress(codec, stream)) {
+            err = 7;
+        }
+    }
+
 
 cleanup:
 	/* close the byte stream */

@@ -73,7 +73,7 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		result = section->parseFile(file);
 	} 
 	else if (section_number == 2) {
-		throw std::exception("we don't use section 2");
+		throw std::exception();
 		result = false;
 	} 
 	else if (section_number == 3) {

@@ -2,6 +2,13 @@ project(grib_coder)
 
 add_library(grib_coder STATIC)
 
+
+find_package(OpenJPEG CONFIG)
+
+if(OPENJPEG_FOUND)
+	message(STATUS "Found OpenJPEG...${OPENJPEG_INCLUDE_DIRS} ${OPENJPEG_LIBRARIES}")
+endif()
+
 target_sources(grib_coder PRIVATE
 	openjpeg_helper.cpp
 	openjpeg_decoder.cpp
@@ -22,12 +29,12 @@ target_sources(grib_coder PRIVATE
 target_include_directories(grib_coder
 	PUBLIC
 		${CMAKE_CURRENT_SOURCE_DIR}
-		D:/lib/cpp/openjpeg/openjpeg-v2.3.0-windows-x64/include/openjpeg-2.3
+		${OPENJPEG_INCLUDE_DIRS}
 )
 
 target_link_libraries(grib_coder
 	PUBLIC
-		D:/lib/cpp/openjpeg/openjpeg-v2.3.0-windows-x64/lib/openjp2.lib
+		${OPENJPEG_LIBRARIES}
 )
 
 add_library(NwpcCodesCpp::GribCoder ALIAS grib_coder)
