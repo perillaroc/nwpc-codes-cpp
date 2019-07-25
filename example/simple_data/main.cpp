@@ -12,7 +12,7 @@ float convertToFloat(uint32_t v) {
 
 
 int main() {
-    std::string grib_file_path{"D:/windroc/project/2019/grib2/nwpc-codes-cpp/dist/data/t.850hpa.000.grb2"};
+    std::string grib_file_path{"./dist/data/t.850hpa.000.grb2"};
 
     auto start_pos = 0xB1;
     auto raw_data_length = 0x98998 - 0xB1 + 1;
