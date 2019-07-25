@@ -38,6 +38,7 @@ bool GribMessageHandler::parseFile(std::FILE* file)
 
 	while (current_pos < section8_start_pos) {
 		parseNextSection(file);
+		current_pos = std::ftell(file);
 	}
 
 	if (current_pos != section8_start_pos) {

@@ -29,6 +29,7 @@ bool GribSection0::parseFile(std::FILE* file)
 	std::copy(std::begin(buffer) + 8, std::begin(buffer) + 16, std::begin(length_buffer));
 
 	total_length_ = convertBytesToUint64(length_buffer, 8);
+	return true;
 }
 
 }
