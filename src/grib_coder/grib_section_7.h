@@ -12,7 +12,7 @@ namespace GribCoder {
 class GribSection7 : public GribSection {
 public:
 	GribSection7();
-	GribSection7(int section_length);
+	explicit GribSection7(int section_length);
 	~GribSection7();
 
 	bool parseFile(std::FILE* file) override;

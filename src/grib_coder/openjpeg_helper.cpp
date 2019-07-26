@@ -4,7 +4,7 @@
 /* This will read from our memory to the buffer */
 OPJ_SIZE_T opj_memory_stream_read(void* buffer, OPJ_SIZE_T nb_bytes, void* p_user_data)
 {
-	opj_memory_stream* mstream = (opj_memory_stream*)p_user_data; /* Our data */
+	auto mstream = (opj_memory_stream*)p_user_data; /* Our data */
 	OPJ_SIZE_T nb_bytes_read = nb_bytes; /* Amount to move to buffer */
 
 	/* Check if the current offset is outside our data buffer */
@@ -23,7 +23,7 @@ OPJ_SIZE_T opj_memory_stream_read(void* buffer, OPJ_SIZE_T nb_bytes, void* p_use
 /* Write from the buffer to our memory */
 OPJ_SIZE_T opj_memory_stream_write(void* buffer, OPJ_SIZE_T nb_bytes, void* user_data)
 {
-	opj_memory_stream* mstream = (opj_memory_stream*)user_data; /* our data */
+	auto mstream = (opj_memory_stream*)user_data; /* our data */
 	OPJ_SIZE_T nb_bytes_write = nb_bytes; /* Amount to move to buffer */
 
 	/* Check if the current offset is outside our data buffer */
@@ -43,7 +43,7 @@ OPJ_SIZE_T opj_memory_stream_write(void* buffer, OPJ_SIZE_T nb_bytes, void* user
 /* Moves the pointer forward, but never more than we have */
 OPJ_OFF_T opj_memory_stream_skip(OPJ_OFF_T nb_bytes, void* user_data)
 {
-	opj_memory_stream* mstream = (opj_memory_stream*)user_data;
+	auto mstream = (opj_memory_stream*)user_data;
 	OPJ_SIZE_T l_nb_bytes;
 
 	if (nb_bytes < 0)
@@ -80,7 +80,7 @@ opj_stream_t* opj_stream_create_default_memory_stream(opj_memory_stream* memoryS
 	opj_stream_t* stream;
 
 	if (!(stream = opj_stream_default_create(is_read_stream)))
-		return (NULL);
+		return nullptr;
 	/* Set how to work with the frame buffer */
 	if (is_read_stream)
 		opj_stream_set_read_function(stream, opj_memory_stream_read);

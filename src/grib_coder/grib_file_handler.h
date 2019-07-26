@@ -8,7 +8,7 @@
 namespace GribCoder {
 class GribFileHandler {
 public:
-	GribFileHandler(std::FILE *file);
+	explicit GribFileHandler(std::FILE *file);
 
 	~GribFileHandler();
 

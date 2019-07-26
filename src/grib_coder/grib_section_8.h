@@ -9,7 +9,7 @@ class GribSection8 : public GribSection {
 public:
 	GribSection8();
 
-	virtual ~GribSection8();
+	~GribSection8();
 
 	bool parseFile(std::FILE* file) override;
 

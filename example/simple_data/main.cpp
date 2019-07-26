@@ -34,7 +34,7 @@ int main() {
 	f.read(reinterpret_cast<char*>(buf), raw_data_length);
 	f.close();
 
-	auto val = decodeJPEG2000Values(buf, raw_data_length, data_count);
+	auto val = GribCoder::decodeJPEG2000Values(buf, raw_data_length, data_count);
 
     delete[] buf;
 

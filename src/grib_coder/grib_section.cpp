@@ -3,7 +3,8 @@
 namespace GribCoder {
 
 GribSection::GribSection(int section_number):
-	section_number_{section_number_}
+	section_number_{section_number},
+	section_length_{0}
 {
 
 }

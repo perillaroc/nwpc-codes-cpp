@@ -6,8 +6,9 @@ namespace GribCoder {
 
 class GribSection {
 public:
-	GribSection(int section_number);
+	explicit GribSection(int section_number);
 	GribSection(int section_number, long section_length);
+
 	virtual ~GribSection();
 
 	void setSectionLength(long length);

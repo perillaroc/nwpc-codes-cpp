@@ -2,8 +2,7 @@
 
 #include <openjpeg.h>
 
-typedef struct j2k_encode_helper {
-
+struct j2k_encode_helper {
 	size_t           buffer_size;
 
 	long             width;
@@ -20,21 +19,20 @@ typedef struct j2k_encode_helper {
 
 	long             jpeg_length;
 	unsigned char* jpeg_buffer;
-
-} j2k_encode_helper;
+};
 
 /* OpenJPEG 2.1 version of grib_openjpeg_encoding.c */
 
 /* opj_* Helper code from https://groups.google.com/forum/#!topic/openjpeg/8cebr0u7JgY */
 /* These routines are added to use memory instead of a file for input and output */
 /* struct need to treat memory as a stream */
-typedef struct
+struct opj_memory_stream
 {
 	OPJ_UINT8* pData;       /* our data */
 	OPJ_SIZE_T dataSize;    /* how big is our data */
 	OPJ_SIZE_T offset;      /* where we are currently in our data */
 	j2k_encode_helper* helper;
-} opj_memory_stream;
+};
 
 /* This will read from our memory to the buffer */
 OPJ_SIZE_T opj_memory_stream_read(void* buffer, OPJ_SIZE_T nb_bytes, void* p_user_data);
