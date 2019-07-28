@@ -38,4 +38,8 @@ void CodeTableProperty::setCodeTableId(const std::string &code_table_id) {
     code_table_id_ = code_table_id;
 }
 
+void CodeTableProperty::setOctetCount(size_t count) {
+    octet_count_ = count;
+}
+
 } // namespace GribCoder

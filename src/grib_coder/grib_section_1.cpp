@@ -9,6 +9,11 @@ namespace GribCoder {
 GribSection1::GribSection1() :
 	GribSection(1)
 {
+    tables_version_.setCodeTableId("1.0");
+    local_tables_version_.setCodeTableId("1.1");
+    significance_of_reference_time_.setCodeTableId("1.2");
+    production_status_of_processed_data_.setCodeTableId("1.3");
+    type_of_processed_data_.setCodeTableId("1.4");
 }
 
 GribSection1::GribSection1(long section_length) :
@@ -32,17 +37,28 @@ bool GribSection1::parseFile(std::FILE* file)
 
 	centre_ = convertBytesToUint16(&buffer[0], 2);
 	sub_centre_ = convertBytesToUint16(&buffer[2], 2);
-	tables_version_ = convertBytesToUint8(&buffer[4]);
-	local_tables_version_ = convertBytesToUint8(&buffer[5]);
-	significance_of_reference_time_ = convertBytesToUint8(&buffer[6]);
+
+	auto tables_version = convertBytesToUint8(&buffer[4]);
+	tables_version_.setLong(tables_version);
+
+	auto local_tables_version = convertBytesToUint8(&buffer[5]);
+	local_tables_version_.setLong(local_tables_version);
+
+	auto significance_of_reference_time = convertBytesToUint8(&buffer[6]);
+	significance_of_reference_time_.setLong(significance_of_reference_time);
+
 	year_ = convertBytesToUint16(&buffer[7], 2);
 	month_ = convertBytesToUint8(&buffer[9]);
 	day_ = convertBytesToUint8(&buffer[10]);
 	hour_ = convertBytesToUint8(&buffer[11]);
 	minute_ = convertBytesToUint8(&buffer[12]);
 	second_ = convertBytesToUint8(&buffer[13]);
-	production_status_of_processed_data_ = convertBytesToUint8(&buffer[14]);
-	type_of_processed_data_ = convertBytesToUint8(&buffer[15]);
+
+	auto production_status_of_processed_data = convertBytesToUint8(&buffer[14]);
+	production_status_of_processed_data_.setLong(production_status_of_processed_data);
+
+	auto type_of_processed_data = convertBytesToUint8(&buffer[15]);
+	type_of_processed_data_.setLong(type_of_processed_data);
 
 	return true;
 }

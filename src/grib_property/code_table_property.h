@@ -19,10 +19,11 @@ public:
     std::string getString() override;
 
     void setCodeTableId(const std::string &code_table_id);
+    void setOctetCount(size_t count);
 
 private:
     std::string code_table_id_ = "";
-    size_t octet_bytes_ = 1;
+    size_t octet_count_ = 1;
     long value_ = 255;
 };
 

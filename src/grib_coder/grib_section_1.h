@@ -1,6 +1,8 @@
 #pragma once
 
 #include "grib_section.h"
+#include <code_table_property.h>
+
 #include <cstdint>
 
 namespace GribCoder {
@@ -15,17 +17,17 @@ public:
 public:
 	uint16_t centre_;
 	uint16_t sub_centre_;
-	uint8_t tables_version_;
-	uint8_t local_tables_version_;
-	uint8_t significance_of_reference_time_;
+	CodeTableProperty tables_version_;
+	CodeTableProperty local_tables_version_;
+	CodeTableProperty significance_of_reference_time_;
 	uint16_t year_;
 	uint8_t month_;
 	uint8_t day_;
 	uint8_t hour_;
 	uint8_t minute_;
 	uint8_t second_;
-	uint8_t production_status_of_processed_data_;
-	uint8_t type_of_processed_data_;
+	CodeTableProperty production_status_of_processed_data_;
+	CodeTableProperty type_of_processed_data_;
 };
 
 
