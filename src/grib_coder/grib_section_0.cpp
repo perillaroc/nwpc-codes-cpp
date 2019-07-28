@@ -8,6 +8,7 @@ namespace GribCoder {
 GribSection0::GribSection0():
 	GribSection{ 0 }
 {
+    discipline_.setCodeTableId("0.0");
 }
 
 GribSection0::~GribSection0()
@@ -22,7 +23,8 @@ bool GribSection0::parseFile(std::FILE* file)
 		return false;
 	}
 	identifier_ = std::string(std::begin(buffer), std::begin(buffer) + 4);
-	discipline_ = convertBytesToInt8(&buffer[6]);
+	auto discipline_number = convertBytesToInt8(&buffer[6]);
+	discipline_.setLong(discipline_number);
 	edition_number_ = convertBytesToInt8(&buffer[7]);
 	total_length_ = convertBytesToUint64(&buffer[8], 8);
 	return true;

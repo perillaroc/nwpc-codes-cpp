@@ -1,6 +1,7 @@
 #pragma once
 
 #include "grib_section.h"
+#include "code_table_property.h"
 #include <string>
 #include <cstdint>
 
@@ -16,7 +17,7 @@ public:
 
 public:
 	std::string identifier_ = "GRIB";
-	uint8_t discipline_ = 0;
+	CodeTableProperty discipline_;
 	uint8_t edition_number_ = 0;
 	uint64_t total_length_ = 0;
 };

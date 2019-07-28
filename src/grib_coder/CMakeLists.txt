@@ -35,6 +35,7 @@ target_include_directories(grib_coder
 target_link_libraries(grib_coder
 	PUBLIC
 		${OPENJPEG_LIBRARIES}
+		NwpcCodesCpp::GribProperty
 )
 
 add_library(NwpcCodesCpp::GribCoder ALIAS grib_coder)
