@@ -25,4 +25,9 @@ void GribSection::setSectionLength(long length)
 	section_length_ = length;
 }
 
+bool GribSection::decode(std::vector<std::shared_ptr<GribSection>> section_list)
+{
+	return true;
+}
+
 } // namespace GribCoder

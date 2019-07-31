@@ -71,57 +71,36 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 
 	if (section_number == 1) {
 		section = std::make_shared<GribSection1>(section_length);
-		result = section->parseFile(file);
 	} 
 	else if (section_number == 2) {
 		throw std::exception();
-		result = false;
 	} 
 	else if (section_number == 3) {
 		section = std::make_shared<GribSection3>(section_length);
-		result = section->parseFile(file);
 	} 
 	else if (section_number == 4) {
 		section = std::make_shared<GribSection4>(section_length);
-		result = section->parseFile(file);
 	}
 	else if (section_number == 5) {
 		section = std::make_shared<GribSection5>(section_length);
-		result = section->parseFile(file);
 	}
 	else if (section_number == 6) {
 		section = std::make_shared<GribSection6>(section_length);
-		result = section->parseFile(file);
 	}
 	else if (section_number == 7) {
-		auto section_7 = std::make_shared<GribSection7>(section_length);
-		section = section_7;
-		result = section->parseFile(file);
-
-		if (!result) {
-			return false;
-		}
-
-		// find section 5
-		std::shared_ptr<GribSection5> section_5;
-		for (auto iter = section_list_.rbegin(); iter != section_list_.rend(); iter++) {
-			auto s = *iter;
-			if (s->section_number_ == 5) {
-				section_5 = std::static_pointer_cast<GribSection5>(s);
-				break;
-			}
-		}
-		if (!section_5) {
-			return false;
-		}
-
-		// decode values
-		result = section_7->decodeValues(section_5);
+		section = std::make_shared<GribSection7>(section_length);
 	}
 
+	result = section->parseFile(file);
 	if (!result) {
 		return false;
 	}
+
+	result = section->decode(section_list_); 
+	if (!result) {
+		return false;
+	}
+
 	section_list_.push_back(section);
 
 	return true;

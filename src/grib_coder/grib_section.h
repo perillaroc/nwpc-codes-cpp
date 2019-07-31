@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+#include <memory>
 #include <cstdio>
 
 namespace GribCoder {
@@ -14,6 +16,8 @@ public:
 	void setSectionLength(long length);
 
 	virtual bool parseFile(std::FILE* file) = 0;
+
+	virtual bool decode(std::vector<std::shared_ptr<GribSection>> section_list);
 
 public:
 	int section_number_;

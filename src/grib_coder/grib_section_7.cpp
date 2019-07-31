@@ -34,8 +34,21 @@ bool GribSection7::parseFile(std::FILE* file)
 
 	return true;
 }
-bool GribSection7::decodeValues(std::shared_ptr<GribSection5> section_5)
+bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> section_list)
 {
+	// find section 5
+	std::shared_ptr<GribSection5> section_5;
+	for (auto iter = section_list.rbegin(); iter != section_list.rend(); iter++) {
+		auto s = *iter;
+		if (s->section_number_ == 5) {
+			section_5 = std::static_pointer_cast<GribSection5>(s);
+			break;
+		}
+	}
+	if (!section_5) {
+		return false;
+	}
+	
 	auto binary_scale_factor = section_5->binary_scale_factor_;
 	auto decimal_scale_factor = section_5->decimal_scale_factor_;
 	auto reference_value = section_5->reference_value_;
@@ -47,5 +60,6 @@ bool GribSection7::decodeValues(std::shared_ptr<GribSection5> section_5)
 		code_values_[i] = (reference_value + code_values_[i] * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
 	}
 	return true;
+
 }
 } // GribCoder

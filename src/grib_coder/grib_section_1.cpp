@@ -9,17 +9,14 @@ namespace GribCoder {
 GribSection1::GribSection1() :
 	GribSection(1)
 {
-    tables_version_.setCodeTableId("1.0");
-    local_tables_version_.setCodeTableId("1.1");
-    significance_of_reference_time_.setCodeTableId("1.2");
-    production_status_of_processed_data_.setCodeTableId("1.3");
-    type_of_processed_data_.setCodeTableId("1.4");
+	init();
 }
 
 GribSection1::GribSection1(long section_length) :
 	GribSection(1, section_length)
 {
 	assert(section_length == 21);
+	init();
 }
 
 GribSection1::~GribSection1()
@@ -61,6 +58,15 @@ bool GribSection1::parseFile(std::FILE* file)
 	type_of_processed_data_.setLong(type_of_processed_data);
 
 	return true;
+}
+
+void GribSection1::init()
+{
+	tables_version_.setCodeTableId("1.0");
+	local_tables_version_.setCodeTableId("1.1");
+	significance_of_reference_time_.setCodeTableId("1.2");
+	production_status_of_processed_data_.setCodeTableId("1.3");
+	type_of_processed_data_.setCodeTableId("1.4");
 }
 
 } // namespace GribCoder

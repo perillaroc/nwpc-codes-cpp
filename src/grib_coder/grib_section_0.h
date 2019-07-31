@@ -15,6 +15,9 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
+private:
+	void init();
+
 public:
 	std::string identifier_ = "GRIB";
 	CodeTableProperty discipline_;

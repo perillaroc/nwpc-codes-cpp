@@ -8,12 +8,14 @@ namespace GribCoder {
 GribSection3::GribSection3():
 	GribSection{3}
 {
+	init();
 }
 
 GribSection3::GribSection3(long section_length):
 	GribSection{ 3, section_length }
 {
 	assert(section_length_ == 72);
+	init();
 }
 
 GribSection3::~GribSection3()
@@ -29,13 +31,17 @@ bool GribSection3::parseFile(std::FILE* file)
 		return false;
 	}
 
-	source_of_grid_definition_ = convertBytesToUint8(&buffer[5]);
+	auto source_of_grid_definition = convertBytesToUint8(&buffer[5]);
+	source_of_grid_definition_.setLong(source_of_grid_definition);
 	number_of_data_points_ = convertBytesToUint32(&buffer[6], 4);
 	number_of_octects_for_number_of_points_ = convertBytesToUint8(&buffer[10]);
-	interpretation_of_number_of_points_ = convertBytesToUint8(&buffer[11]);
-	grid_definition_template_number_ = convertBytesToUint16(&buffer[12], 2);
-
-	shape_of_earth_ = convertBytesToUint8(&buffer[14]);
+	auto interpretation_of_number_of_points = convertBytesToUint8(&buffer[11]);
+	interpretation_of_number_of_points_.setLong(interpretation_of_number_of_points);
+	auto grid_definition_template_number = convertBytesToUint16(&buffer[12], 2);
+	grid_definition_template_number_.setLong(grid_definition_template_number);
+	
+	auto shape_of_earth = convertBytesToUint8(&buffer[14]);
+	shape_of_earth_.setLong(shape_of_earth);
 	scale_factor_of_radius_of_spherical_earth_ = convertBytesToUint8(&buffer[15]);
 	scaled_value_of_radius_of_spherical_earth_ = convertBytesToUint32(&buffer[16], 4);
 	scale_factor_of_earth_major_axis_ = convertBytesToUint8(&buffer[20]);
@@ -56,6 +62,17 @@ bool GribSection3::parseFile(std::FILE* file)
 	scanning_mode_ = convertBytesToUint8(&buffer[71]);
 
 	return true;
+}
+
+void GribSection3::init()
+{
+	source_of_grid_definition_.setCodeTableId("3.0");
+	interpretation_of_number_of_points_.setCodeTableId("3.11");
+
+	grid_definition_template_number_.setOctetCount(2);
+	grid_definition_template_number_.setCodeTableId("3.1");
+
+	shape_of_earth_.setCodeTableId("3.2");
 }
 
 } // namespace GribCoder

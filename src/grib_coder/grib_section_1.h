@@ -14,6 +14,9 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
+private:
+	void init();
+
 public:
 	uint16_t centre_;
 	uint16_t sub_centre_;

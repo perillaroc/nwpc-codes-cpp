@@ -1,6 +1,7 @@
 #pragma once 
 
 #include "grib_section.h"
+#include <code_table_property.h>
 #include <cstdint>
 
 namespace GribCoder {
@@ -14,17 +15,20 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
+private:
+	void init();
+
 public:
 	uint32_t number_of_values_;
-	uint16_t data_representation_template_number_;
+	CodeTableProperty data_representation_template_number_;
 
 	// Template 5.40 Grid point data - JPEG 2000 code stream format
 	float reference_value_; // NOTE: check std::numeric_limits<T>::is_iec559
 	int16_t binary_scale_factor_;
 	int16_t decimal_scale_factor_;
 	uint8_t bits_per_value_;
-	uint8_t type_of_original_field_values_;
-	uint8_t type_of_compression_used_;
+	CodeTableProperty type_of_original_field_values_;
+	CodeTableProperty type_of_compression_used_;
 	uint8_t target_compression_ratio_;
 
 };

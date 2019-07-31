@@ -17,7 +17,7 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
-	bool decodeValues(std::shared_ptr<GribSection5> section_5);
+	bool decode(std::vector<std::shared_ptr<GribSection>> section_list) override;
 
 public:
 	std::vector<unsigned char> raw_value_bytes_;

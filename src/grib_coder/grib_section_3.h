@@ -1,5 +1,6 @@
 #pragma once
 #include "grib_section.h"
+#include <code_table_property.h>
 
 #include <cstdint>
 
@@ -12,15 +13,18 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
+private:
+	void init();
+
 public:
-	uint8_t source_of_grid_definition_;
+	CodeTableProperty source_of_grid_definition_;
 	uint32_t number_of_data_points_;
 	uint8_t number_of_octects_for_number_of_points_;
-	uint8_t interpretation_of_number_of_points_;
-	uint16_t grid_definition_template_number_;
+	CodeTableProperty interpretation_of_number_of_points_;
+	CodeTableProperty grid_definition_template_number_;
 
 	// Template 3.0
-	uint8_t shape_of_earth_;
+	CodeTableProperty shape_of_earth_;
 	uint8_t scale_factor_of_radius_of_spherical_earth_;
 	uint32_t scaled_value_of_radius_of_spherical_earth_;
 	uint8_t scale_factor_of_earth_major_axis_;
