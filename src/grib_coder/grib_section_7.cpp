@@ -62,4 +62,7 @@ bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> section_list
 	return true;
 
 }
+void GribSection7::init()
+{
+}
 } // GribCoder

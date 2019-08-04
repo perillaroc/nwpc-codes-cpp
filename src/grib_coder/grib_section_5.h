@@ -18,7 +18,7 @@ public:
 	bool parseFile(std::FILE* file) override;
 
 private:
-	void init();
+	void init() override;
 
 public:
 	NumberProperty<uint32_t> number_of_values_;

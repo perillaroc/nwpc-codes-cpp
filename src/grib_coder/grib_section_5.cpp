@@ -53,5 +53,16 @@ void GribSection5::init()
 
 	type_of_original_field_values_.setCodeTableId("5.1");
 	type_of_compression_used_.setCodeTableId("5.40");
+
+	property_map_["numberOfValues"] = &number_of_values_;
+	property_map_["dataRepresentationTemplateNumber"] = &data_representation_template_number_;
+
+	property_map_["referenceValue"] = &reference_value_;
+	property_map_["binaryScaleFactor"] = &binary_scale_factor_;
+	property_map_["decimalScaleFactor"] = &decimal_scale_factor_;
+	property_map_["bitsPerValue"] = &bits_per_value_;
+	property_map_["typeOfOriginalFieldValues"] = &type_of_original_field_values_;
+	property_map_["typeOfCompressionUsed"] = &type_of_compression_used_;
+	property_map_["targetCompressionRatio"] = &target_compression_ratio_;
 }
 } // namespace GribCoder

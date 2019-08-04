@@ -19,6 +19,9 @@ public:
 
 	bool decode(std::vector<std::shared_ptr<GribSection>> section_list) override;
 
+private:
+	void init() override;
+
 public:
 	std::vector<unsigned char> raw_value_bytes_;
 	std::vector<double> code_values_;

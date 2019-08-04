@@ -1,6 +1,9 @@
 #pragma once
 
+#include <grib_property/grib_property.h>
+
 #include <vector>
+#include <map>
 #include <memory>
 #include <cstdio>
 
@@ -19,9 +22,17 @@ public:
 
 	virtual bool decode(std::vector<std::shared_ptr<GribSection>> section_list);
 
+	GribProperty* getProperty(const std::string& name);
+
+protected:
+	virtual void init() = 0;
+
 public:
 	int section_number_;
 	long section_length_;
+
+protected:
+	std::map<std::string, GribProperty*> property_map_;
 };
 
 } // namespace GribCoder

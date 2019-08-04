@@ -33,6 +33,9 @@ bool GribSection0::parseFile(std::FILE* file)
 void GribSection0::init()
 {
 	discipline_.setCodeTableId("0.0");
+	property_map_["discipline"] = &discipline_;
+	property_map_["editionNumber"] = &edition_number_;
+	property_map_["totalLength"] = &total_length_;
 }
 
 }

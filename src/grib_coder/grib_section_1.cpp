@@ -67,6 +67,20 @@ void GribSection1::init()
 	significance_of_reference_time_.setCodeTableId("1.2");
 	production_status_of_processed_data_.setCodeTableId("1.3");
 	type_of_processed_data_.setCodeTableId("1.4");
+
+	property_map_["centre"] = &centre_;
+	property_map_["subCentre"] = &sub_centre_;
+	property_map_["tablesVersion"] = &tables_version_;
+	property_map_["localTablesVersion"] = &local_tables_version_;
+	property_map_["significanceOfReferenceTime"] = &significance_of_reference_time_;
+	property_map_["year"] = &year_;
+	property_map_["month"] = &month_;
+	property_map_["day"] = &day_;
+	property_map_["hour"] = &hour_;
+	property_map_["minute"] = &minute_;
+	property_map_["second"] = &second_;
+	property_map_["productionStatusOfProcessedData"] = &production_status_of_processed_data_;
+	property_map_["typeOfProcessedData"] = &type_of_processed_data_;
 }
 
 } // namespace GribCoder

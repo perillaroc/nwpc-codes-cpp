@@ -15,7 +15,7 @@ public:
 	bool parseFile(std::FILE* file) override;
 
 private:
-	void init();
+	void init() override;
 
 public:
 	CodeTableProperty source_of_grid_definition_;

@@ -30,4 +30,14 @@ bool GribSection::decode(std::vector<std::shared_ptr<GribSection>> section_list)
 	return true;
 }
 
+GribProperty* GribSection::getProperty(const std::string& name)
+{
+	for (auto const& i : property_map_) {
+		if (i.first == name) {
+			return i.second;
+		}
+	}
+	return nullptr;
+}
+
 } // namespace GribCoder

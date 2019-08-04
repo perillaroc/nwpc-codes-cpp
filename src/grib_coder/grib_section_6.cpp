@@ -33,4 +33,8 @@ bool GribSection6::parseFile(std::FILE* file)
 
 	return true;
 }
+void GribSection6::init()
+{
+	property_map_["bitMapIndicator"] = &bit_map_indicator_;
+}
 } // namespace GribCoder

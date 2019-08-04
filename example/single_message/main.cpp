@@ -15,6 +15,10 @@ int main() {
 
 	auto message_handler = handler.next();
 
+	auto discipline = message_handler->getLong("discipline");
+	auto ni = message_handler->getLong("ni");
+	auto nj = message_handler->getString("nj");
+
 	std::fclose(f);
 	
     return 0;

@@ -15,6 +15,9 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
+private:
+	void init() override;
+
 public:
 	NumberProperty<uint8_t> bit_map_indicator_;
 };

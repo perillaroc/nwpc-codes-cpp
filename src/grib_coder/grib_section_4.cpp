@@ -101,6 +101,25 @@ void GribSection4::init()
 	indicator_of_unit_of_time_range_.setCodeTableId("4.4");
 	type_of_first_fixed_surface_.setCodeTableId("4.5");
 	type_of_second_fixed_surface_.setCodeTableId("4.5");
+
+	property_map_["nv"] = &nv_;
+	property_map_["productDefinitionTemplateNumber"] = &product_definition_template_number_;
+
+	property_map_["parameterCategory"] = &parameter_category_;
+	property_map_["parameterNumber"] = &parameter_number_;
+	property_map_["typeOfGenratingProcess"] = &type_of_generating_process_;
+	property_map_["backgroundProcess"] = &background_process_;
+	property_map_["generatingProcessIdentifier"] = &generating_process_identifier_;
+	property_map_["hoursAfterDataCutoff"] = &hours_after_data_cutoff_;
+	property_map_["minutesAfterDataCutoff"] = &minutes_after_data_cutoff_;
+	property_map_["indicatorOfUnitOfTimeRange"] = &indicator_of_unit_of_time_range_;
+	property_map_["forecastTime"] = &forecast_time_;
+	property_map_["typeOfFirstFixedSurface"] = &type_of_first_fixed_surface_;
+	property_map_["scaleFactorOfFirstFixedSurface"] = &scale_factor_of_first_fixed_surface_;
+	property_map_["scaledValueOfFirstFixedSurface"] = &scaled_value_of_first_fixed_surface_;
+	property_map_["typeOfSecondFixedSurfact"] = &type_of_second_fixed_surface_;
+	property_map_["scaleFactorOfSecondFixedSurface"] = &scale_factor_of_second_fixed_surface_;
+	property_map_["scaledValueOfSecondFixedSurface"] = &scaled_value_of_second_fixed_surface_;
 }
 
 } // namespace GribCoder

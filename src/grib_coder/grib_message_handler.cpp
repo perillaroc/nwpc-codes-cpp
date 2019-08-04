@@ -57,6 +57,61 @@ bool GribMessageHandler::parseFile(std::FILE* file)
 	return true;
 }
 
+void GribMessageHandler::setLong(const std::string& key, long value)
+{
+	auto property = getProperty(key);
+	if (property == nullptr) {
+		throw std::exception("key is not found");
+	}
+	property->setLong(value);
+}
+
+long GribMessageHandler::getLong(const std::string& key)
+{
+	auto property = getProperty(key);
+	if (property == nullptr) {
+		throw std::exception("key is not found");
+	}
+	return property->getLong();
+}
+
+void GribMessageHandler::setDouble(const std::string& key, double value)
+{
+	auto property = getProperty(key);
+	if (property == nullptr) {
+		throw std::exception("key is not found");
+	}
+	property->setDouble(value);
+}
+
+double GribMessageHandler::getDouble(const std::string& key)
+{
+	auto property = getProperty(key);
+	if (property == nullptr) {
+		throw std::exception("key is not found");
+	}
+	return property->getDouble();
+}
+
+void GribMessageHandler::setString(const std::string& key, const std::string& value)
+{
+	auto property = getProperty(key);
+	if (property == nullptr) {
+		throw std::exception("key is not found");
+	}
+	property->setString(value);
+}
+
+std::string GribMessageHandler::getString(const std::string& key)
+{
+	auto property = getProperty(key);
+	if (property == nullptr) {
+		throw std::exception("key is not found");
+	}
+	return property->getString();
+}
+
+
 bool GribMessageHandler::parseNextSection(std::FILE* file)
 {
 	unsigned char buffer[5];
@@ -116,6 +171,16 @@ std::shared_ptr<GribSection> GribMessageHandler::getSection(int section_number, 
 		}
 	}
 	return section;
+}
+
+GribProperty* GribMessageHandler::getProperty(const std::string& name) {
+	for (auto section : section_list_) {
+		auto p = section->getProperty(name);
+		if (p != nullptr) {
+			return p;
+		}
+	}
+	return nullptr;
 }
 
 } // namespace GribCoder

@@ -25,4 +25,7 @@ bool GribSection8::parseFile(std::FILE* file)
 		return false;
 	}
 }
+void GribSection8::init()
+{
+}
 }

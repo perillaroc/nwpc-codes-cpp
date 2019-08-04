@@ -1,7 +1,6 @@
 #pragma once
 
 #include "grib_section.h"
-#include <string>
 
 namespace GribCoder {
 
@@ -13,8 +12,8 @@ public:
 
 	bool parseFile(std::FILE* file) override;
 
-public:
-	
+private:
+	void init() override;
 };
 
 } // namespace GribCoder
