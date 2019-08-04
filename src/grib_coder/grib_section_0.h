@@ -1,7 +1,9 @@
 #pragma once
 
 #include "grib_section.h"
-#include "code_table_property.h"
+#include <grib_property/code_table_property.h>
+#include <grib_property/number_property.h>
+
 #include <string>
 #include <cstdint>
 
@@ -21,8 +23,8 @@ private:
 public:
 	std::string identifier_ = "GRIB";
 	CodeTableProperty discipline_;
-	uint8_t edition_number_ = 0;
-	uint64_t total_length_ = 0;
+	NumberProperty<uint8_t> edition_number_ = 0;
+	NumberProperty<uint64_t> total_length_ = 0;
 };
 
 } // namespace GribCoder

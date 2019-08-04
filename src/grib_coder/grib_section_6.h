@@ -1,6 +1,8 @@
 #pragma once 
 
 #include "grib_section.h"
+#include <grib_property/number_property.h>
+
 #include <cstdint>
 
 namespace GribCoder {
@@ -14,7 +16,7 @@ public:
 	bool parseFile(std::FILE* file) override;
 
 public:
-	uint8_t bit_map_indicator_;
+	NumberProperty<uint8_t> bit_map_indicator_;
 };
 
 } // namespace GribCoder

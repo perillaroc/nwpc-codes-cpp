@@ -1,7 +1,8 @@
 #pragma once
 
 #include "grib_section.h"
-#include <code_table_property.h>
+#include <grib_property/code_table_property.h>
+#include <grib_property/number_property.h>
 
 #include <cstdint>
 
@@ -18,17 +19,17 @@ private:
 	void init();
 
 public:
-	uint16_t centre_;
-	uint16_t sub_centre_;
+	NumberProperty<uint16_t> centre_;
+	NumberProperty<uint16_t> sub_centre_;
 	CodeTableProperty tables_version_;
 	CodeTableProperty local_tables_version_;
 	CodeTableProperty significance_of_reference_time_;
-	uint16_t year_;
-	uint8_t month_;
-	uint8_t day_;
-	uint8_t hour_;
-	uint8_t minute_;
-	uint8_t second_;
+	NumberProperty<uint16_t> year_;
+	NumberProperty<uint8_t> month_;
+	NumberProperty<uint8_t> day_;
+	NumberProperty<uint8_t> hour_;
+	NumberProperty<uint8_t> minute_;
+	NumberProperty<uint8_t> second_;
 	CodeTableProperty production_status_of_processed_data_;
 	CodeTableProperty type_of_processed_data_;
 };

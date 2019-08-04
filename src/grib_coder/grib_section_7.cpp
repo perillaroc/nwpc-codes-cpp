@@ -57,7 +57,7 @@ bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> section_list
 
 	code_values_ = decodeJPEG2000Values(&raw_value_bytes_[0], raw_value_bytes_.size(), data_count);
 	for (auto i = 0; i < data_count; i++) {
-		code_values_[i] = (reference_value + code_values_[i] * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
+		code_values_[i] = (reference_value + code_values_[i] * std::pow(2, int16_t(binary_scale_factor))) / std::pow(10, int16_t(decimal_scale_factor));
 	}
 	return true;
 
