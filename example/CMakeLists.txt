@@ -1,2 +1,3 @@
 add_subdirectory(simple_data)
 add_subdirectory(single_message)
+add_subdirectory(grib_database)

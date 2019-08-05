@@ -13,7 +13,7 @@ int main() {
 
 	GribCoder::GribFileHandler handler(f);
 
-	auto message_handler = handler.next();
+	auto message_handler = handler.next();  
 
 	auto discipline = message_handler->getLong("discipline");
 	auto ni = message_handler->getLong("ni");
