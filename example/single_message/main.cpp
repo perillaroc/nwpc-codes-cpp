@@ -18,6 +18,7 @@ int main() {
 	auto discipline = message_handler->getLong("discipline");
 	auto ni = message_handler->getLong("ni");
 	auto nj = message_handler->getString("nj");
+	auto category = message_handler->getString("parameterCategory");
 
 	std::fclose(f);
 	

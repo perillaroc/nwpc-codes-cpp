@@ -69,7 +69,7 @@ bool GribSection4::decode(std::vector<std::shared_ptr<GribSection>> section_list
 	std::shared_ptr<GribSection0> section_0;
 	for (auto iter = section_list.rbegin(); iter != section_list.rend(); iter++) {
 		auto s = *iter;
-		if (s->section_number_ == 5) {
+		if (s->section_number_ == 0) {
 			section_0 = std::static_pointer_cast<GribSection0>(s);
 			break;
 		}

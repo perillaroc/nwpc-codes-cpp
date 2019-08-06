@@ -3,6 +3,7 @@
 #include <map>
 #include <vector>
 #include <memory>
+#include <optional>
 
 namespace GribCoder{
 
@@ -19,6 +20,8 @@ public:
 
 class GribTable {
 public:
+	std::optional<GribTableRecord> getRecord(int code);
+
 	std::vector<GribTableRecord> records_;
 };
 

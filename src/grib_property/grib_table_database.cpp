@@ -91,6 +91,16 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
 	return table;
 }
 
+std::optional<GribTableRecord> GribTable::getRecord(int code)
+{
+	for (auto &i : records_) {
+		if (i.code_ == code) {
+			return i;
+		}
+	}
+	return {};
+}
+
 } // namespace GribCoder
 
 

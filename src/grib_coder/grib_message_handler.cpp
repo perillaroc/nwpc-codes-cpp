@@ -9,11 +9,14 @@
 #include "grib_section_7.h"
 #include "grib_section_8.h"
 #include "number_convert.h"
+
 #include <memory>
+#include <sstream>
 
 namespace GribCoder {
 
-GribMessageHandler::GribMessageHandler()
+GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> db):
+	table_database_{ db }
 {
 }
 
@@ -99,6 +102,15 @@ void GribMessageHandler::setString(const std::string& key, const std::string& va
 	if (property == nullptr) {
 		throw std::exception("key is not found");
 	}
+	auto code_table_property = dynamic_cast<CodeTableProperty*>(property);
+	if (code_table_property) {
+		// set grib2 table database
+		auto table_version = getLong("tablesVersion");
+		std::stringstream table_vsersion_stream;
+		table_vsersion_stream << table_version;
+		code_table_property->setTableDatabase(table_database_);
+		code_table_property->setTablesVersion(table_vsersion_stream.str());
+	}
 	property->setString(value);
 }
 
@@ -107,6 +119,15 @@ std::string GribMessageHandler::getString(const std::string& key)
 	auto property = getProperty(key);
 	if (property == nullptr) {
 		throw std::exception("key is not found");
+	}
+	auto code_table_property = dynamic_cast<CodeTableProperty*>(property);
+	if (code_table_property) {
+		// set grib2 table database
+		auto table_version = getLong("tablesVersion");
+		std::stringstream table_vsersion_stream;
+		table_vsersion_stream << table_version;
+		code_table_property->setTableDatabase(table_database_);
+		code_table_property->setTablesVersion(table_vsersion_stream.str());
 	}
 	return property->getString();
 }

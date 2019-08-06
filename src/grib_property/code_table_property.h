@@ -1,6 +1,7 @@
 #pragma once
 
 #include "grib_property.h"
+#include "grib_table_database.h"
 
 namespace GribCoder {
 
@@ -8,6 +9,9 @@ class CodeTableProperty: public GribProperty {
 public:
     CodeTableProperty();
     ~CodeTableProperty();
+
+	void setTableDatabase(std::shared_ptr<GribTableDatabase> db);
+	void setTablesVersion(const std::string& version);
 
     void setLong(long value) override;
     long getLong() override;
@@ -25,6 +29,9 @@ private:
     std::string code_table_id_ = "";
     size_t octet_count_ = 1;
     long value_ = 255;
+
+	std::string tables_version_;
+	std::shared_ptr<GribTableDatabase> table_database_;
 };
 
 
