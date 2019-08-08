@@ -23,6 +23,9 @@ GribSection7::~GribSection7()
 bool GribSection7::parseFile(std::FILE* file)
 {
 	auto buffer_length = section_length_ - 5;
+	if (buffer_length == 0) {
+		return true;
+	}
 	std::vector<unsigned char> buffer(section_length_);
 	auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
 	if (read_count != buffer_length) {
@@ -36,6 +39,10 @@ bool GribSection7::parseFile(std::FILE* file)
 }
 bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> section_list)
 {
+	if (raw_value_bytes_.size() == 0) {
+		return true;
+	}
+
 	// find section 5
 	std::shared_ptr<GribSection5> section_5;
 	for (auto iter = section_list.rbegin(); iter != section_list.rend(); iter++) {

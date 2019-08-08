@@ -13,7 +13,7 @@ GribSection6::GribSection6():
 GribSection6::GribSection6(int section_length):
 	GribSection{6, section_length}
 {
-	assert(section_length == 6);
+	// assert(section_length == 6);
 }
 
 GribSection6::~GribSection6()

@@ -16,7 +16,7 @@ GribSection4::GribSection4():
 GribSection4::GribSection4(int section_length_):
 	GribSection{4, section_length_}
 {
-	assert(section_length_ == 34);
+	assert(section_length_ == 34 || section_length_ == 58);
 	init();
 }
 
@@ -36,7 +36,9 @@ bool GribSection4::parseFile(std::FILE* file)
 
 	nv_ = convertBytesToUint16(&buffer[5], 2);
 	auto product_definition_template_number = convertBytesToUint16(&buffer[7], 2);
-	assert(product_definition_template_number == 0);
+
+	assert(product_definition_template_number == 0 || product_definition_template_number == 8);
+
 	product_definition_template_number_.setLong(product_definition_template_number);
 
 	auto parameter_category = convertBytesToUint8(&buffer[9]);
