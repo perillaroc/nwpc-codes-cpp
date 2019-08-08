@@ -73,7 +73,7 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
 		if (pos == std::string::npos) {
 			continue;
 		}
-		record.code_ = std::stoi(line.substr(pos));
+		record.code_ = std::stoi(line.substr(0, pos));
 
 		size_t figure_pos = line.find_first_of(' ', pos + 1);
 		if (figure_pos == std::string::npos) {
