@@ -18,7 +18,12 @@ std::unique_ptr<GribMessageHandler> GribFileHandler::next()
 {
 	auto message_handler = std::make_unique<GribMessageHandler>(table_database_);
 	auto result = message_handler->parseFile(file_);
-	return message_handler;
+	if (result) {
+		return message_handler;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 } // namespace GribCoder
