@@ -9,15 +9,16 @@
 namespace GribCoder {
 class GribFileHandler {
 public:
-	explicit GribFileHandler(std::FILE *file);
+	explicit GribFileHandler(std::FILE *file, bool header_only=false);
 
 	~GribFileHandler();
 
 	std::unique_ptr<GribMessageHandler> next();
 
 private:
+	bool header_only_ = false;
 	std::shared_ptr<GribTableDatabase> table_database_;
 
-	std::FILE* file_;
+	std::FILE* file_ = nullptr;
 };
 } // namespace GribCoder

@@ -15,8 +15,9 @@
 
 namespace GribCoder {
 
-GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> db):
-	table_database_{ db }
+GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> db, bool header_only):
+	table_database_{ db },
+	header_only_{ header_only }
 {
 }
 
@@ -80,11 +81,11 @@ long GribMessageHandler::getLong(const std::string& key)
 
 void GribMessageHandler::setDouble(const std::string& key, double value)
 {
-	auto property = getProperty(key);
-	if (property == nullptr) {
-		throw std::exception("key is not found");
-	}
-	property->setDouble(value);
+auto property = getProperty(key);
+if (property == nullptr) {
+	throw std::exception("key is not found");
+}
+property->setDouble(value);
 }
 
 double GribMessageHandler::getDouble(const std::string& key)
@@ -147,13 +148,13 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 
 	if (section_number == 1) {
 		section = std::make_shared<GribSection1>(section_length);
-	} 
+	}
 	else if (section_number == 2) {
 		throw std::exception();
-	} 
+	}
 	else if (section_number == 3) {
 		section = std::make_shared<GribSection3>(section_length);
-	} 
+	}
 	else if (section_number == 4) {
 		section = std::make_shared<GribSection4>(section_length);
 	}
@@ -172,9 +173,16 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		return false;
 	}
 
-	result = section->decode(section_list_); 
+	result = section->decode(section_list_);
 	if (!result) {
 		return false;
+	}
+
+	if (section_number == 7 && header_only_) {
+		auto section7 = std::static_pointer_cast<GribSection7>(section);
+		if(!section7->decodeValues(section_list_)) {
+			return false;
+		}
 	}
 
 	section_list_.push_back(section);

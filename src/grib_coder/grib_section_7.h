@@ -19,6 +19,8 @@ public:
 
 	bool decode(std::vector<std::shared_ptr<GribSection>> section_list) override;
 
+	bool decodeValues(std::vector<std::shared_ptr<GribSection>> section_list);
+
 private:
 	void init() override;
 

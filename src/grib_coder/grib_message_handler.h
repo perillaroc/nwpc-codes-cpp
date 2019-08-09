@@ -11,7 +11,7 @@ namespace GribCoder {
 
 class GribMessageHandler {
 public:
-	GribMessageHandler(std::shared_ptr<GribTableDatabase> db);
+	GribMessageHandler(std::shared_ptr<GribTableDatabase> db, bool header_only = false);
 	~GribMessageHandler();
 
 	bool parseFile(std::FILE* file);
@@ -34,6 +34,8 @@ private:
 
 	std::vector < std::shared_ptr<GribSection>> section_list_;
 	std::shared_ptr<GribTableDatabase> table_database_;
+
+	bool header_only_ = false;
 };
 
 } // namespace GribCoder

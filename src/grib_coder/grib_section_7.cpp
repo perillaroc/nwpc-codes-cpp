@@ -39,6 +39,11 @@ bool GribSection7::parseFile(std::FILE* file)
 }
 bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> section_list)
 {
+	return true;
+}
+
+bool GribSection7::decodeValues(std::vector<std::shared_ptr<GribSection>> section_list)
+{
 	if (raw_value_bytes_.size() == 0) {
 		return true;
 	}
@@ -55,7 +60,7 @@ bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> section_list
 	if (!section_5) {
 		return false;
 	}
-	
+
 	auto binary_scale_factor = int(section_5->binary_scale_factor_);
 	auto decimal_scale_factor = int(section_5->decimal_scale_factor_);
 	auto reference_value = float(section_5->reference_value_);
@@ -70,7 +75,6 @@ bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> section_list
 	//	code_values_[i] = (reference_value + code_values_[i] * std::pow(2, int16_t(binary_scale_factor))) / std::pow(10, int16_t(decimal_scale_factor));
 	//}
 	return true;
-
 }
 void GribSection7::init()
 {
