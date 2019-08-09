@@ -85,7 +85,7 @@ std::vector<double> decodeJPEG2000Values(unsigned char *buf, size_t raw_data_len
         auto count = image->comps[0].w * image->comps[0].h;
 
         val.resize(count);
-        for (auto i = 0; i < count; i++) {
+		for (auto i = 0; i < count; i++) {
             auto v = data[i];
             val[i] = v & mask;
         }

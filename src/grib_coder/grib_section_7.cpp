@@ -56,16 +56,19 @@ bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> section_list
 		return false;
 	}
 	
-	auto binary_scale_factor = section_5->binary_scale_factor_;
-	auto decimal_scale_factor = section_5->decimal_scale_factor_;
-	auto reference_value = section_5->reference_value_;
+	auto binary_scale_factor = int(section_5->binary_scale_factor_);
+	auto decimal_scale_factor = int(section_5->decimal_scale_factor_);
+	auto reference_value = float(section_5->reference_value_);
 
 	auto data_count = section_5->number_of_values_;
 
 	code_values_ = decodeJPEG2000Values(&raw_value_bytes_[0], raw_value_bytes_.size(), data_count);
-	for (auto i = 0; i < data_count; i++) {
-		code_values_[i] = (reference_value + code_values_[i] * std::pow(2, int16_t(binary_scale_factor))) / std::pow(10, int16_t(decimal_scale_factor));
-	}
+	std::transform(code_values_.begin(), code_values_.end(), code_values_.begin(), [=](double v) {
+		return (reference_value + v * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
+		});
+	//for (auto i = 0; i < data_count; i++) {
+	//	code_values_[i] = (reference_value + code_values_[i] * std::pow(2, int16_t(binary_scale_factor))) / std::pow(10, int16_t(decimal_scale_factor));
+	//}
 	return true;
 
 }
