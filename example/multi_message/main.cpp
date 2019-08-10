@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <chrono>
 #include <cstdint>
 #include <cmath>
 
@@ -11,6 +12,7 @@ int main() {
 	
 	std::FILE* f = std::fopen(grib_file_path.c_str(), "rb");
 
+	auto start_time = std::chrono::system_clock::now();
 	GribCoder::GribFileHandler handler(f);
 	int index = 1;
 	std::cout << "Parsing message " << index << "..." << std::endl;
@@ -28,6 +30,10 @@ int main() {
 		std::cout << "Parsing message " << index << "..." << std::endl;
 		message_handler = handler.next();
 	}
+
+	auto end_time = std::chrono::system_clock::now();
+	std::chrono::duration<double> duration = end_time - start_time;
+	std::cout << duration.count() << std::endl;
 
 	std::fclose(f);
 	
