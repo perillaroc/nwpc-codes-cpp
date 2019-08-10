@@ -22,7 +22,7 @@ int main() {
 		auto levelType = message_handler->getString("typeOfFirstFixedSurface");
 		auto levelNumberFactor = message_handler->getLong("scaleFactorOfFirstFixedSurface");
 		auto levelNumberValue = message_handler->getLong("scaledValueOfFirstFixedSurface");
-		std::cout << category << " " << number << " " << levelNumberFactor << " " << levelNumberValue << std::endl;
+		std::cout << category << " | " << number << " | " << levelType << " | " << levelNumberFactor << " | " << levelNumberValue << std::endl;
 
 		index++;
 		std::cout << "Parsing message " << index << "..." << std::endl;
