@@ -5,4 +5,9 @@ target_include_directories(vendor
         $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}>
     )
 
+target_compile_definitions(vendor
+	INTERFACE
+		-DFMT_HEADER_ONLY
+)
+
 add_library(NwpcCodesCpp::vendor ALIAS vendor)
