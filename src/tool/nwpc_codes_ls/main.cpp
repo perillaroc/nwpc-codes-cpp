@@ -12,15 +12,17 @@
 #include <fmt/printf.h>
 
 int listGribFile(const std::string file_path) {
+    fmt::print("{file_path}\n", fmt::arg("file_path", file_path));
 	std::FILE* f = std::fopen(file_path.c_str(), "rb");
 
 	//auto start_time = std::chrono::system_clock::now();
 
 	GribCoder::GribFileHandler handler(f);
-	int index = 1;
+	int current_index = 0;
 	auto message_handler = handler.next();
 
 	while (message_handler) {
+        current_index++;
 		auto edition = message_handler->getLong("editionNumber");
 		
 		// section 1
@@ -71,15 +73,12 @@ int listGribFile(const std::string file_path) {
 			fmt::arg("stepRange", stepRange),
 			fmt::arg("levelType", levelType), 
 			fmt::arg("level", level));
-		index++;
 		message_handler = handler.next();
 	}
 
-	//auto end_time = std::chrono::system_clock::now();
-	//std::chrono::duration<double> duration = end_time - start_time;
-	//std::cout << duration.count() << std::endl;
-
 	std::fclose(f);
+
+    fmt::print("{count} grib2 messages in {file_path}\n", fmt::arg("count", current_index), fmt::arg("file_path", file_path));
 
 	return 0;
 }
