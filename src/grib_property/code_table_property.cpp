@@ -58,7 +58,7 @@ std::string CodeTableProperty::getString() {
 		return default_value;
 	}
 	auto record = record_result.value();
-	return record.description_;
+	return record.title_;
 }
 
 void CodeTableProperty::setCodeTableId(const std::string &code_table_id) {

@@ -5,25 +5,9 @@
 #include <memory>
 #include <optional>
 
+#include "grib_table.h"
+
 namespace GribCoder{
-
-class GribTableRecord {
-public:
-	bool isValid() {
-		return code_ != -1;
-	}
-
-	int code_ = -1;
-	std::string figure_;
-	std::string description_;
-};
-
-class GribTable {
-public:
-	std::optional<GribTableRecord> getRecord(int code);
-
-	std::vector<GribTableRecord> records_;
-};
 
 class GribTableDatabase {
 public:

@@ -7,6 +7,7 @@ target_sources(grib_property
         grib_property.cpp
         code_table_property.cpp
 		number_property.cpp
+		grib_table.cpp
 		grib_table_database.cpp)
 
 

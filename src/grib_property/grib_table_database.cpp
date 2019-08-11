@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <exception>
 
 std::string& trim(std::string& s)
 {
@@ -75,12 +76,26 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
 		}
 		record.code_ = std::stoi(line.substr(0, pos));
 
-		size_t figure_pos = line.find_first_of(' ', pos + 1);
-		if (figure_pos == std::string::npos) {
+		size_t abbreviation_pos = line.find_first_of(' ', pos + 1);
+		if (abbreviation_pos == std::string::npos) {
 			continue;
 		}
-		record.figure_ = line.substr(pos + 1, figure_pos - pos);
-		record.description_ = line.substr(figure_pos + 1);
+		record.abbreviation_ = line.substr(pos + 1, abbreviation_pos - pos);
+
+        auto title_start_pos = abbreviation_pos + 1;
+        auto title_end_pos = line.find_last_of("(");
+        if (title_end_pos == std::string::npos) {
+            record.title_ = line.substr(title_start_pos);
+        } else {
+            record.title_ = line.substr(title_start_pos, title_end_pos - title_start_pos - 1);
+            auto unit_start_pos = title_end_pos + 1;
+            auto unit_end_pos = line.find_last_of(")");
+            if (unit_end_pos == std::string::npos) {
+                throw std::exception("table record line has error");
+            }
+            record.units_ = line.substr(unit_start_pos, unit_end_pos - unit_start_pos);
+        }
+
 		table->records_.push_back(record);
 	}
 
@@ -89,16 +104,6 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
 	tables_[table_version + "." + name] = table;
 
 	return table;
-}
-
-std::optional<GribTableRecord> GribTable::getRecord(int code)
-{
-	for (auto &i : records_) {
-		if (i.code_ == code) {
-			return i;
-		}
-	}
-	return {};
 }
 
 } // namespace GribCoder
