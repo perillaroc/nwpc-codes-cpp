@@ -1,2 +1,3 @@
 add_subdirectory(grib_coder)
 add_subdirectory(grib_property)
+add_subdirectory(tool)
