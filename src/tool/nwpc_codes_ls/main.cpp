@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <chrono>
+#include <limits>
 #include <cstdint>
 #include <cmath>
 
@@ -42,7 +43,13 @@ int listGribFile(const std::string file_path) {
 		//		level
 		auto levelNumberFactor = message_handler->getLong("scaleFactorOfFirstFixedSurface");
 		auto levelNumberValue = message_handler->getLong("scaledValueOfFirstFixedSurface");
-		double level = std::pow(10, levelNumberFactor) * levelNumberValue;
+        std::string level;
+        if (levelNumberFactor == std::numeric_limits<uint8_t>::max() || levelNumberValue == levelNumberValue == std::numeric_limits<uint32_t>::max()) {
+            level = "MISSING";
+        } else {
+            double level_value = std::pow(10, levelNumberFactor) * levelNumberValue;
+            level = fmt::format("{}", level_value);
+        }
 
 		//		stepRange
 		auto forecastTime = message_handler->getLong("forecastTime");
