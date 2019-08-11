@@ -16,4 +16,9 @@ target_include_directories(grib_property
         ${CMAKE_CURRENT_SOURCE_DIR}/../
         )
 
+target_link_libraries(grib_property
+		PRIVATE
+		NwpcCodesCpp::vendor
+)
+
 add_library(NwpcCodesCpp::GribProperty ALIAS grib_property)

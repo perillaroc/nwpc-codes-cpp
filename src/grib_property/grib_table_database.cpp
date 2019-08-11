@@ -74,15 +74,21 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
 		if (pos == std::string::npos) {
 			continue;
 		}
-		record.code_ = std::stoi(line.substr(0, pos));
+        auto code_string = line.substr(0, pos);
+		record.code_ = std::stoi(code_string);
 
-		size_t abbreviation_pos = line.find_first_of(' ', pos + 1);
-		if (abbreviation_pos == std::string::npos) {
+        auto abbreviation_start_pos = pos + 1;
+		size_t abbreviation_end_pos = line.find_first_of(' ', abbreviation_start_pos);
+		if (abbreviation_end_pos == std::string::npos) {
 			continue;
 		}
-		record.abbreviation_ = line.substr(pos + 1, abbreviation_pos - pos);
 
-        auto title_start_pos = abbreviation_pos + 1;
+        auto abbreviation_string = line.substr(abbreviation_start_pos, abbreviation_end_pos - abbreviation_start_pos);
+        if (abbreviation_string != code_string) {
+            record.abbreviation_ = abbreviation_string;
+        }
+
+        auto title_start_pos = abbreviation_end_pos + 1;
         auto title_end_pos = line.find_last_of("(");
         if (title_end_pos == std::string::npos) {
             record.title_ = line.substr(title_start_pos);

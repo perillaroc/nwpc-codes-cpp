@@ -1,7 +1,7 @@
 #include "code_table_property.h"
 
 #include <iostream>
-#include <sstream>
+#include <fmt/format.h>
 
 namespace GribCoder{
 
@@ -43,22 +43,62 @@ void CodeTableProperty::setString(const std::string &value) {
 }
 
 std::string CodeTableProperty::getString() {
-	std::stringstream ss;
-	ss << value_;
-	auto default_value = ss.str();
+    auto default_value = fmt::format("{}", value_);
 
-	auto table = table_database_->getGribTable(tables_version_, code_table_id_);
-	if (!table) {
-		std::cerr << "grib table (" << code_table_id_ << ") is not found." << std::endl;
-		return default_value;
-	}
+    auto record_result = getTableRecord();
+    if (!record_result.has_value()) {
+        return default_value;
+    }
 
-	auto record_result = table->getRecord(value_);
-	if (!record_result.has_value()) {
-		return default_value;
-	}
 	auto record = record_result.value();
+
+    if (record.abbreviation_ == RecordUnknownValue) {
+        return record.title_;
+    }
+    else {
+        return record.abbreviation_;
+    }
+
 	return record.title_;
+}
+
+std::string CodeTableProperty::getTitle()
+{
+    auto default_value = fmt::format("{}", value_);
+
+    auto record_result = getTableRecord();
+    if (!record_result.has_value()) {
+        return default_value;
+    }
+    auto record = record_result.value();
+
+    return record.title_;
+}
+
+std::string CodeTableProperty::getAbbreviation()
+{
+    auto default_value = fmt::format("{}", value_);
+
+    auto record_result = getTableRecord();
+    if (!record_result.has_value()) {
+        return default_value;
+    }
+    auto record = record_result.value();
+
+    return record.abbreviation_;
+}
+
+std::string CodeTableProperty::getUnits()
+{
+    auto default_value = fmt::format("{}", value_);
+
+    auto record_result = getTableRecord();
+    if (!record_result.has_value()) {
+        return default_value;
+    }
+    auto record = record_result.value();
+
+    return record.units_;
 }
 
 void CodeTableProperty::setCodeTableId(const std::string &code_table_id) {
@@ -67,6 +107,18 @@ void CodeTableProperty::setCodeTableId(const std::string &code_table_id) {
 
 void CodeTableProperty::setOctetCount(size_t count) {
     octet_count_ = count;
+}
+
+std::optional<GribTableRecord> CodeTableProperty::getTableRecord()
+{
+    auto table = table_database_->getGribTable(tables_version_, code_table_id_);
+    if (!table) {
+        std::cerr << "grib table (" << code_table_id_ << ") is not found." << std::endl;
+        return std::optional<GribTableRecord>();
+    }
+
+    auto record = table->getRecord(value_);
+    return record;
 }
 
 } // namespace GribCoder

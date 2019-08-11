@@ -22,10 +22,16 @@ public:
     void setString(const std::string &value) override;
     std::string getString() override;
 
+    std::string getTitle();
+    std::string getAbbreviation();
+    std::string getUnits();
+
     void setCodeTableId(const std::string &code_table_id);
     void setOctetCount(size_t count);
 
 private:
+    std::optional<GribTableRecord> getTableRecord();
+
     std::string code_table_id_ = "";
     size_t octet_count_ = 1;
     long value_ = 255;
