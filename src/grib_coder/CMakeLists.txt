@@ -15,14 +15,14 @@ target_sources(grib_coder PRIVATE
 	grib_file_handler.cpp
 	grib_message_handler.cpp
 	grib_section.cpp
-	grib_section_0.cpp
-	grib_section_1.cpp
-	grib_section_3.cpp
-	grib_section_4.cpp
-	grib_section_5.cpp
-	grib_section_6.cpp
-	grib_section_7.cpp
-	grib_section_8.cpp
+	sections/grib_section_0.cpp
+	sections/grib_section_1.cpp
+	sections/grib_section_3.cpp
+	sections/grib_section_4.cpp
+	sections/grib_section_5.cpp
+	sections/grib_section_6.cpp
+	sections/grib_section_7.cpp
+	sections/grib_section_8.cpp
 	number_convert.cpp
 )
 
