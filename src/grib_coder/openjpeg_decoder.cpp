@@ -63,7 +63,7 @@ std::vector<double> decodeJPEG2000Values(unsigned char *buf, size_t raw_data_len
         goto cleanup;
     }
 
-    if (data_count > image->comps[0].w * image->comps[0].h) {
+    if (data_count > (size_t(image->comps[0].w) * size_t(image->comps[0].h))) {
         err = 5;
         goto cleanup;
     }

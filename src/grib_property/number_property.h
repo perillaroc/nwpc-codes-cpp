@@ -8,7 +8,7 @@ namespace GribCoder {
 template<class T>
 class NumberProperty : public GribProperty {
 public:
-	NumberProperty() : GribProperty{} {}
+    NumberProperty() : GribProperty{}, value_{} {}
 	NumberProperty(T value) : value_{ value }, GribProperty {} {}
 
 	~NumberProperty() {}
