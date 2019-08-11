@@ -9,7 +9,7 @@
 
 namespace GribCoder {
 
-class GribSection {
+class GribSection : public std::enable_shared_from_this<GribSection> {
 public:
 	explicit GribSection(int section_number);
 	GribSection(int section_number, long section_length);
@@ -23,6 +23,8 @@ public:
 	virtual bool decode(std::vector<std::shared_ptr<GribSection>> section_list);
 
 	GribProperty* getProperty(const std::string& name);
+
+    void registerProperty(const std::string& name, GribProperty* property);
 
 protected:
 	virtual void init() = 0;

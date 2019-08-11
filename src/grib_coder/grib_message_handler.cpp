@@ -168,13 +168,13 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		section = std::make_shared<GribSection7>(section_length);
 	}
 
-	result = section->parseFile(file);
-	if (!result) {
+	auto flag = section->parseFile(file);
+	if (!flag) {
 		return false;
 	}
 
-	result = section->decode(section_list_);
-	if (!result) {
+    flag = section->decode(section_list_);
+	if (!flag) {
 		return false;
 	}
 

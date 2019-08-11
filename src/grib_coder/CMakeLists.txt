@@ -15,6 +15,7 @@ target_sources(grib_coder PRIVATE
 	grib_file_handler.cpp
 	grib_message_handler.cpp
 	grib_section.cpp
+	grib_template.cpp
 	sections/grib_section_0.cpp
 	sections/grib_section_1.cpp
 	sections/grib_section_3.cpp
@@ -23,6 +24,8 @@ target_sources(grib_coder PRIVATE
 	sections/grib_section_6.cpp
 	sections/grib_section_7.cpp
 	sections/grib_section_8.cpp
+	templates/template_4_0.cpp
+	templates/template_4_8.cpp
 	number_convert.cpp
 )
 

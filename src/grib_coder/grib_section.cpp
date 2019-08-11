@@ -40,4 +40,9 @@ GribProperty* GribSection::getProperty(const std::string& name)
 	return nullptr;
 }
 
+void GribSection::registerProperty(const std::string& name, GribProperty* property)
+{
+    property_map_[name] = property;
+}
+
 } // namespace GribCoder
