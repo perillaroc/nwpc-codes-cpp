@@ -58,15 +58,13 @@ bool Template_4_8::decode(std::vector<std::shared_ptr<GribSection>> section_list
         return false;
     }
 
-    std::ostringstream discipline_stream;
     auto discipline = section_0->discipline_.getLong();
-    discipline_stream << "4.1." << discipline;
-    std::string category_table_id = discipline_stream.str();
+    std::string category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);
 
-    std::ostringstream number_stream;
-    number_stream << "4.2." << discipline << "." << parameter_category_.getLong();
-    std::string number_table_id = number_stream.str();
+    std::string number_table_id = fmt::format("4.2.{discipline}.{category}",
+        fmt::arg("discipline", discipline),
+        fmt::arg("category", parameter_category_.getLong()));
     parameter_number_.setCodeTableId(number_table_id);
 
     return true;

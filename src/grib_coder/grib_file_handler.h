@@ -1,8 +1,5 @@
 #pragma once
 
-#include <cstdio>
-#include <memory>
-
 #include "grib_message_handler.h"
 #include <grib_property/grib_table_database.h>
 

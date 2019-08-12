@@ -17,7 +17,7 @@ target_include_directories(grib_property
         )
 
 target_link_libraries(grib_property
-		PRIVATE
+		PUBLIC
 		NwpcCodesCpp::vendor
 )
 

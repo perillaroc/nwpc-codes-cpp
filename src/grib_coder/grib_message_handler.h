@@ -1,9 +1,5 @@
 #pragma once
 
-#include <cstdio>
-#include <vector>
-#include <memory>
-
 #include "grib_section.h"
 #include <grib_property/grib_table_database.h>
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "grib_property.h"
-#include <sstream>
+#include "fmt/format.h"
 
 namespace GribCoder {
 
@@ -36,10 +36,9 @@ public:
 		auto v = std::stod(value);
 		setDouble(v);
 	}
+
 	std::string getString() override {
-		std::stringstream ss;
-		ss << value_;
-		return ss.str();
+        return fmt::format("{}", value_);
 	}
 private:
 	T value_;
