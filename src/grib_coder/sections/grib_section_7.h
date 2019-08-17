@@ -22,7 +22,7 @@ public:
 	bool decodeValues(std::vector<std::shared_ptr<GribSection>> section_list);
 
 private:
-	void init() override;
+	void init();
 
 public:
 	std::vector<unsigned char> raw_value_bytes_;

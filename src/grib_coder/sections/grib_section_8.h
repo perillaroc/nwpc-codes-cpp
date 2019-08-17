@@ -13,7 +13,7 @@ public:
 	bool parseFile(std::FILE* file, bool header_only = false) override;
 
 private:
-	void init() override;
+	void init();
 };
 
 } // namespace grib_coder

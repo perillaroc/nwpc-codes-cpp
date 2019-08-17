@@ -16,7 +16,7 @@ public:
 	bool parseFile(std::FILE* file, bool header_only = false) override;
 
 private:
-	void init() override;
+	void init();
 
 public:
 	NumberProperty<uint16_t> centre_;

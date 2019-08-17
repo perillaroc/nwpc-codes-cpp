@@ -26,9 +26,6 @@ public:
 
     void registerProperty(const std::string& name, GribProperty* property);
 
-protected:
-	virtual void init() = 0;
-
 public:
 	int section_number_;
 	long section_length_;

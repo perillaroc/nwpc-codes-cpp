@@ -21,7 +21,7 @@ public:
 	bool decode(std::vector<std::shared_ptr<GribSection>> section_list) override;
 
 private:
-	void init() override;
+	void init();
 
 public:
 	NumberProperty<uint16_t> nv_;
