@@ -17,7 +17,6 @@ public:
 private:
 	void init();
 
-public:
 	CodeTableProperty source_of_grid_definition_;
 	NumberProperty<uint32_t> number_of_data_points_;
 	NumberProperty<uint8_t> number_of_octects_for_number_of_points_;

@@ -20,7 +20,6 @@ public:
 private:
 	void init();
 
-public:
 	std::string identifier_ = "GRIB";
 	CodeTableProperty discipline_;
 	NumberProperty<uint8_t> edition_number_ = 0;

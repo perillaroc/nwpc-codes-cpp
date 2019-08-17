@@ -9,7 +9,7 @@ public:
     virtual ~GribTemplate();
 
     virtual bool parse(std::vector<unsigned char> &buffer) = 0;
-    virtual bool decode(std::vector<std::shared_ptr<GribSection>> section_list);
+    virtual bool decode(std::vector<std::shared_ptr<GribSection>> &section_list);
 
     virtual void registerProperty(std::shared_ptr<GribSection> section) = 0;
     

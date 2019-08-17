@@ -2,7 +2,6 @@
 #include "number_convert.h"
 
 #include <vector>
-#include <cassert>
 
 namespace grib_coder {
 GribSection6::GribSection6():

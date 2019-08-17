@@ -11,11 +11,15 @@ public:
     NumberProperty() : GribProperty{}, value_{} {}
 	NumberProperty(T value) : GribProperty{}, value_{ value } {}
 
-	~NumberProperty() {}
+    ~NumberProperty() = default;
 
-	operator T() {
+	operator T() const {
 		return value_;
 	}
+
+    T value() const {
+        return value_;
+    }
 
 	void setLong(long value) override {
 		value_ = static_cast<T>(value);

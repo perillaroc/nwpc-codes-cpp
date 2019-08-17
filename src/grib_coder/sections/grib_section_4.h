@@ -18,12 +18,11 @@ public:
 
 	bool parseFile(std::FILE* file, bool header_only = false) override;
 
-	bool decode(std::vector<std::shared_ptr<GribSection>> section_list) override;
+	bool decode(std::vector<std::shared_ptr<GribSection>> &section_list) override;
 
 private:
 	void init();
 
-public:
 	NumberProperty<uint16_t> nv_;
 	CodeTableProperty product_definition_template_number_;
 

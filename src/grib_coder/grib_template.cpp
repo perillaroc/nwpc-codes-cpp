@@ -11,7 +11,7 @@ GribTemplate::~GribTemplate()
 {
 }
 
-bool GribTemplate::decode(std::vector<std::shared_ptr<GribSection>> section_list)
+bool GribTemplate::decode(std::vector<std::shared_ptr<GribSection>> &section_list)
 {
     return true;
 }

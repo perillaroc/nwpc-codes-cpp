@@ -17,24 +17,24 @@ Template_4_0::~Template_4_0()
 
 bool Template_4_0::parse(std::vector<unsigned char>& buffer)
 {
-    auto parameter_category = convert_bytes_to_uint8(&buffer[9]);
+    const auto parameter_category = convert_bytes_to_uint8(&buffer[9]);
     parameter_category_.setLong(parameter_category);
-    auto parameter_number = convert_bytes_to_uint8(&buffer[10]);
+    const auto parameter_number = convert_bytes_to_uint8(&buffer[10]);
     parameter_number_.setLong(parameter_number);
-    auto type_of_generating_process = convert_bytes_to_uint8(&buffer[11]);
+    const auto type_of_generating_process = convert_bytes_to_uint8(&buffer[11]);
     type_of_generating_process_.setLong(type_of_generating_process);
     background_process_ = convert_bytes_to_uint8(&buffer[12]);
     generating_process_identifier_ = convert_bytes_to_uint8(&buffer[13]);
     hours_after_data_cutoff_ = convert_bytes_to_uint16(&buffer[14], 2);
     minutes_after_data_cutoff_ = convert_bytes_to_uint8(&buffer[16]);
-    auto indicator_of_unit_of_time_range = convert_bytes_to_uint8(&buffer[17]);
+    const auto indicator_of_unit_of_time_range = convert_bytes_to_uint8(&buffer[17]);
     indicator_of_unit_of_time_range_.setLong(indicator_of_unit_of_time_range);
     forecast_time_ = convert_bytes_to_int32(&buffer[18], 4);
-    auto type_of_first_fixed_surface = convert_bytes_to_uint8(&buffer[22]);
+    const auto type_of_first_fixed_surface = convert_bytes_to_uint8(&buffer[22]);
     type_of_first_fixed_surface_.setLong(type_of_first_fixed_surface);
     scale_factor_of_first_fixed_surface_ = convert_bytes_to_int8(&buffer[23]);
     scaled_value_of_first_fixed_surface_ = convert_bytes_to_uint32(&buffer[24], 4);
-    auto type_of_second_fixed_surface = convert_bytes_to_uint8(&buffer[28]);
+    const auto type_of_second_fixed_surface = convert_bytes_to_uint8(&buffer[28]);
     type_of_second_fixed_surface_.setLong(type_of_second_fixed_surface);
     scale_factor_of_second_fixed_surface_ = convert_bytes_to_int8(&buffer[29]);
     scaled_value_of_second_fixed_surface_ = convert_bytes_to_uint32(&buffer[30]);
@@ -42,12 +42,12 @@ bool Template_4_0::parse(std::vector<unsigned char>& buffer)
     return true;
 }
 
-bool Template_4_0::decode(std::vector<std::shared_ptr<GribSection>> section_list)
+bool Template_4_0::decode(std::vector<std::shared_ptr<GribSection>> &section_list)
 {
     std::shared_ptr<GribSection0> section_0;
-    for (auto iter = section_list.rbegin(); iter != section_list.rend(); iter++) {
+    for (auto iter = std::rbegin(section_list); iter != std::rend(section_list); ++iter) {
         auto s = *iter;
-        if (s->section_number_ == 0) {
+        if (s->getSectionNumber() == 0) {
             section_0 = std::static_pointer_cast<GribSection0>(s);
             break;
         }
@@ -56,11 +56,11 @@ bool Template_4_0::decode(std::vector<std::shared_ptr<GribSection>> section_list
         return false;
     }
 
-    auto discipline = section_0->discipline_.getLong();
-    std::string category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
+    const auto discipline = section_0->getProperty("discipline")->getLong();
+    const auto category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);
 
-    std::string number_table_id = fmt::format("4.2.{discipline}.{category}",
+    const auto number_table_id = fmt::format("4.2.{discipline}.{category}",
         fmt::arg("discipline", discipline),
         fmt::arg("category", parameter_category_.getLong()));
     parameter_number_.setCodeTableId(number_table_id);

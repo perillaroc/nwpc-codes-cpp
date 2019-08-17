@@ -17,14 +17,13 @@ public:
 
 	bool parseFile(std::FILE* file, bool header_only=false) override;
 
-	bool decode(std::vector<std::shared_ptr<GribSection>> section_list) override;
+	bool decode(std::vector<std::shared_ptr<GribSection>> &section_list) override;
 
-	bool decodeValues(std::vector<std::shared_ptr<GribSection>> section_list);
+	bool decodeValues(std::vector<std::shared_ptr<GribSection>> &section_list);
 
 private:
 	void init();
 
-public:
 	std::vector<unsigned char> raw_value_bytes_;
 	std::vector<double> code_values_;
 };

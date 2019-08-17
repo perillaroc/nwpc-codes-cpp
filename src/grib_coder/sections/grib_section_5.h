@@ -20,7 +20,6 @@ public:
 private:
 	void init();
 
-public:
 	NumberProperty<uint32_t> number_of_values_;
 	CodeTableProperty data_representation_template_number_;
 

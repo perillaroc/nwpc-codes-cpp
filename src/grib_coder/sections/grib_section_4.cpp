@@ -61,7 +61,7 @@ bool GribSection4::parseFile(std::FILE* file, bool header_only)
 	return true;
 }
 
-bool GribSection4::decode(std::vector<std::shared_ptr<GribSection>> section_list)
+bool GribSection4::decode(std::vector<std::shared_ptr<GribSection>> &section_list)
 {
     return product_definition_template_->decode(section_list);
 }

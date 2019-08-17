@@ -18,7 +18,6 @@ public:
 private:
 	void init();
 
-public:
 	NumberProperty<uint16_t> centre_;
 	NumberProperty<uint16_t> sub_centre_;
 	CodeTableProperty tables_version_;

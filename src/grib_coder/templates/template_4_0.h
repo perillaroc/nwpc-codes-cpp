@@ -14,7 +14,7 @@ public:
 
     bool parse(std::vector<unsigned char>& buffer) override;
 
-    bool decode(std::vector<std::shared_ptr<GribSection>> section_list) override;
+    bool decode(std::vector<std::shared_ptr<GribSection>> &section_list) override;
 
     void registerProperty(std::shared_ptr<GribSection> section) override;
 

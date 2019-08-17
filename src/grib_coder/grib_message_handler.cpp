@@ -38,7 +38,7 @@ bool GribMessageHandler::parseFile(std::FILE* file)
 	auto current_pos = std::ftell(file);
 
 	// check file end
-	auto section8_start_pos = start_pos + section_0->total_length_ - 4;
+    auto section8_start_pos = start_pos + section_0->getProperty("totalLength")->getLong() - 4;
 
 	while (current_pos < section8_start_pos) {
 		parseNextSection(file);
@@ -195,7 +195,7 @@ std::shared_ptr<GribSection> GribMessageHandler::getSection(int section_number, 
 	std::shared_ptr<GribSection> section;
 	for (auto iter = section_list_.begin() + begin_pos; iter != section_list_.end(); iter++) {
 		auto s = *iter;
-		if (s->section_number_ == section_number) {
+		if (s->getSectionLength() == section_number) {
 			return s;
 		}
 	}
@@ -203,7 +203,7 @@ std::shared_ptr<GribSection> GribMessageHandler::getSection(int section_number, 
 }
 
 GribProperty* GribMessageHandler::getProperty(const std::string& name) {
-	for (auto section : section_list_) {
+	for (auto &section : section_list_) {
 		auto p = section->getProperty(name);
 		if (p != nullptr) {
 			return p;

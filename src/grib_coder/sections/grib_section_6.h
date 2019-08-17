@@ -18,7 +18,6 @@ public:
 private:
 	void init();
 
-public:
 	NumberProperty<uint8_t> bit_map_indicator_;
 };
 
