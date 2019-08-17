@@ -41,14 +41,6 @@ public:
         return fmt::format("{}", value_);
 	}
 
-    void setDoubleArray(std::vector<double>& values) override {
-        throw std::exception("not implemented");
-    }
-
-    std::vector<double> getDoubleArray() override {
-        throw std::exception("not implemented");        
-    }
-
 private:
 	T value_;
 };

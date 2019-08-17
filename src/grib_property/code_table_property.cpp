@@ -62,16 +62,6 @@ std::string CodeTableProperty::getString() {
 	return record.title_;
 }
 
-void CodeTableProperty::setDoubleArray(std::vector<double>& values)
-{
-    throw std::exception("not supported");
-}
-
-std::vector<double> CodeTableProperty::getDoubleArray()
-{
-    throw std::exception("not supported");
-}
-
 std::string CodeTableProperty::getTitle()
 {
     auto default_value = fmt::format("{}", value_);

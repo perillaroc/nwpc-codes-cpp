@@ -20,8 +20,8 @@ public:
     virtual void setString(const std::string &value) = 0;
     virtual std::string getString() = 0;
 
-    virtual void setDoubleArray(std::vector<double> &values) = 0;
-    virtual std::vector<double> getDoubleArray() = 0;
+    virtual void setDoubleArray(std::vector<double> &values);
+    virtual std::vector<double> getDoubleArray();
 };
 
 } // namespace grib_coder
