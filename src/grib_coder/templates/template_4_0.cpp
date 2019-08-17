@@ -72,7 +72,7 @@ void Template_4_0::registerProperty(std::shared_ptr<GribSection> section)
 {
     section->registerProperty("parameterCategory", &parameter_category_);
     section->registerProperty("parameterNumber", &parameter_number_);
-    section->registerProperty("typeOfGenratingProcess", &type_of_generating_process_);
+    section->registerProperty("typeOfGeneratingProcess", &type_of_generating_process_);
     section->registerProperty("backgroundProcess", &background_process_);
     section->registerProperty("generatingProcessIdentifier", &generating_process_identifier_);
     section->registerProperty("hoursAfterDataCutoff", &hours_after_data_cutoff_);
@@ -82,7 +82,7 @@ void Template_4_0::registerProperty(std::shared_ptr<GribSection> section)
     section->registerProperty("typeOfFirstFixedSurface", &type_of_first_fixed_surface_);
     section->registerProperty("scaleFactorOfFirstFixedSurface", &scale_factor_of_first_fixed_surface_);
     section->registerProperty("scaledValueOfFirstFixedSurface", &scaled_value_of_first_fixed_surface_);
-    section->registerProperty("typeOfSecondFixedSurfact", &type_of_second_fixed_surface_);
+    section->registerProperty("typeOfSecondFixedSurface", &type_of_second_fixed_surface_);
     section->registerProperty("scaleFactorOfSecondFixedSurface", &scale_factor_of_second_fixed_surface_);
     section->registerProperty("scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_);
 }

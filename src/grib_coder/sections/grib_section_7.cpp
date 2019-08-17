@@ -49,7 +49,7 @@ bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> section_list
 
 bool GribSection7::decodeValues(std::vector<std::shared_ptr<GribSection>> section_list)
 {
-	if (raw_value_bytes_.size() == 0) {
+	if (raw_value_bytes_.empty()) {
 		return true;
 	}
 
