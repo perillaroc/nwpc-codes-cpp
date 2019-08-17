@@ -3,7 +3,7 @@
 #include <grib_property/grib_property.h>
 
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <memory>
 #include <cstdio>
 
@@ -34,7 +34,7 @@ public:
 	long section_length_;
 
 protected:
-	std::map<std::string, GribProperty*> property_map_;
+	std::unordered_map<std::string, GribProperty*> property_map_;
 };
 
 } // namespace grib_coder
