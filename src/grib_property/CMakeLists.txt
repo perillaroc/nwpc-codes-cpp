@@ -3,21 +3,20 @@ project(grib_property)
 add_library(grib_property STATIC)
 
 target_sources(grib_property
-        PRIVATE
+	PRIVATE
         grib_property.cpp
         code_table_property.cpp
-		number_property.cpp
 		grib_table.cpp
 		grib_table_database.cpp)
 
 
 target_include_directories(grib_property
-        PUBLIC
+    PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/../
         )
 
 target_link_libraries(grib_property
-		PUBLIC
+	PUBLIC
 		NwpcCodesCpp::vendor
 )
 
