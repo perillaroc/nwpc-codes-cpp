@@ -23,7 +23,7 @@ GribSection1::~GribSection1()
 {
 }
 
-bool GribSection1::parseFile(std::FILE* file)
+bool GribSection1::parseFile(std::FILE* file, bool header_only)
 {
 	auto buffer_length = section_length_ - 5;
 	std::vector<unsigned char> buffer(buffer_length);

@@ -13,7 +13,7 @@ public:
 	explicit GribSection6(int section_length);
 	~GribSection6();
 
-	bool parseFile(std::FILE* file) override;
+	bool parseFile(std::FILE* file, bool header_only = false) override;
 
 private:
 	void init() override;

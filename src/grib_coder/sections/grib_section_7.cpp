@@ -20,20 +20,25 @@ GribSection7::~GribSection7()
 {
 }
 
-bool GribSection7::parseFile(std::FILE* file)
+bool GribSection7::parseFile(std::FILE* file, bool header_only)
 {
-	auto buffer_length = section_length_ - 5;
+	const auto buffer_length = section_length_ - 5;
 	if (buffer_length == 0) {
 		return true;
 	}
-	std::vector<unsigned char> buffer(section_length_);
-	auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
-	if (read_count != buffer_length) {
-		return false;
-	}
 
-	raw_value_bytes_.resize(buffer_length);
-	std::copy(buffer.begin() + 5, buffer.end(), raw_value_bytes_.begin());
+    if(header_only) {
+        std::fseek(file, buffer_length, SEEK_CUR);
+    } else {
+        std::vector<unsigned char> buffer(section_length_);
+        const auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
+        if (read_count != buffer_length) {
+            return false;
+        }
+
+        raw_value_bytes_.resize(buffer_length);
+        std::copy(buffer.begin() + 5, buffer.end(), raw_value_bytes_.begin());
+    }
 
 	return true;
 }

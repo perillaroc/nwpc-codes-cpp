@@ -15,7 +15,7 @@ GribSection0::~GribSection0()
 {
 }
 
-bool GribSection0::parseFile(std::FILE* file)
+bool GribSection0::parseFile(std::FILE* file, bool header_only)
 {
 	unsigned char buffer[16];
 	auto result = std::fread(buffer, 1, 16, file);

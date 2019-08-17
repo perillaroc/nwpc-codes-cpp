@@ -16,7 +16,7 @@ int list_grib_file(const std::string &file_path) {
 
 	//auto start_time = std::chrono::system_clock::now();
 
-	grib_coder::GribFileHandler handler(f);
+	grib_coder::GribFileHandler handler(f, true);
 	auto current_index = 0;
 	auto message_handler = handler.next();
 

@@ -11,7 +11,7 @@ GribSection8::~GribSection8()
 {
 }
 
-bool GribSection8::parseFile(std::FILE* file)
+bool GribSection8::parseFile(std::FILE* file, bool header_only)
 {
 	char buffer[4];
 	auto result = std::fread(buffer, 1, 4, file);

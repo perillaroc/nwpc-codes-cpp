@@ -18,7 +18,7 @@ public:
 
 	void setSectionLength(long length);
 
-	virtual bool parseFile(std::FILE* file) = 0;
+	virtual bool parseFile(std::FILE* file, bool header_only=false) = 0;
 
 	virtual bool decode(std::vector<std::shared_ptr<GribSection>> section_list);
 

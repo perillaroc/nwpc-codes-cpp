@@ -15,7 +15,7 @@ public:
 	explicit GribSection7(int section_length);
 	~GribSection7();
 
-	bool parseFile(std::FILE* file) override;
+	bool parseFile(std::FILE* file, bool header_only=false) override;
 
 	bool decode(std::vector<std::shared_ptr<GribSection>> section_list) override;
 

@@ -168,7 +168,7 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		section = std::make_shared<GribSection7>(section_length);
 	}
 
-	auto flag = section->parseFile(file);
+	auto flag = section->parseFile(file, header_only_);
 	if (!flag) {
 		return false;
 	}
