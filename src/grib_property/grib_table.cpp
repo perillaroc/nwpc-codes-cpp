@@ -1,6 +1,6 @@
 #include "grib_table.h"
 
-namespace GribCoder {
+namespace grib_coder {
 
 std::optional<GribTableRecord> GribTable::getRecord(int code)
 {
@@ -12,6 +12,6 @@ std::optional<GribTableRecord> GribTable::getRecord(int code)
     return {};
 }
 
-} // namespace GribCoder
+} // namespace grib_coder
 
 

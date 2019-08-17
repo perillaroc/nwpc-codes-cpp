@@ -7,7 +7,7 @@
 #include <memory>
 #include <cstdio>
 
-namespace GribCoder {
+namespace grib_coder {
 
 class GribSection : public std::enable_shared_from_this<GribSection> {
 public:
@@ -37,4 +37,4 @@ protected:
 	std::map<std::string, GribProperty*> property_map_;
 };
 
-} // namespace GribCoder
+} // namespace grib_coder

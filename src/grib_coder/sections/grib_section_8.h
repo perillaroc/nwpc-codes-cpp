@@ -2,7 +2,7 @@
 
 #include "grib_section.h"
 
-namespace GribCoder {
+namespace grib_coder {
 
 class GribSection8 : public GribSection {
 public:
@@ -16,4 +16,4 @@ private:
 	void init() override;
 };
 
-} // namespace GribCoder
+} // namespace grib_coder

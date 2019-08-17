@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <cmath>
 
-namespace GribCoder {
+namespace grib_coder {
 GribSection7::GribSection7():
 	GribSection{7}
 {
@@ -79,4 +79,4 @@ bool GribSection7::decodeValues(std::vector<std::shared_ptr<GribSection>> sectio
 void GribSection7::init()
 {
 }
-} // GribCoder
+} // grib_coder

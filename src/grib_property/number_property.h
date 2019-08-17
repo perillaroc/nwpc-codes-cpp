@@ -1,15 +1,15 @@
 #pragma once
 
 #include "grib_property.h"
-#include "fmt/format.h"
+#include <fmt/format.h>
 
-namespace GribCoder {
+namespace grib_coder {
 
 template<class T>
 class NumberProperty : public GribProperty {
 public:
     NumberProperty() : GribProperty{}, value_{} {}
-	NumberProperty(T value) : value_{ value }, GribProperty {} {}
+	NumberProperty(T value) : GribProperty{}, value_{ value } {}
 
 	~NumberProperty() {}
 
@@ -44,4 +44,4 @@ private:
 	T value_;
 };
 
-} // namespace GribCoder
+} // namespace grib_coder

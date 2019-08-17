@@ -8,7 +8,7 @@
 
 #include <cstdint>
 
-namespace GribCoder {
+namespace grib_coder {
 
 class GribSection4 : public GribSection  {
 public:
@@ -30,4 +30,4 @@ public:
     std::shared_ptr<GribTemplate> product_definition_template_;
 };
 
-} // namespace GribCoder
+} // namespace grib_coder

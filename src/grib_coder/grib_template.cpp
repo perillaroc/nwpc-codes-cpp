@@ -1,6 +1,6 @@
 #include "grib_template.h"
 
-namespace GribCoder {
+namespace grib_coder {
 
 GribTemplate::GribTemplate(int template_length):
     template_length_{ template_length }
@@ -16,4 +16,4 @@ bool GribTemplate::decode(std::vector<std::shared_ptr<GribSection>> section_list
     return true;
 }
 
-} // namespace GribCoder
+} // namespace grib_coder

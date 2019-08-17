@@ -4,7 +4,7 @@
 #include <vector>
 #include <cassert>
 
-namespace GribCoder {
+namespace grib_coder {
 GribSection6::GribSection6():
 	GribSection{6}
 {
@@ -29,7 +29,7 @@ bool GribSection6::parseFile(std::FILE* file)
 		return false;
 	}
 
-	bit_map_indicator_ = convertBytesToUint8(&buffer[5]);
+	bit_map_indicator_ = convert_bytes_to_uint8(&buffer[5]);
 
 	return true;
 }
@@ -37,4 +37,4 @@ void GribSection6::init()
 {
 	property_map_["bitMapIndicator"] = &bit_map_indicator_;
 }
-} // namespace GribCoder
+} // namespace grib_coder

@@ -18,7 +18,7 @@ std::string& trim(std::string& s)
 	return s;
 }
 
-namespace GribCoder {
+namespace grib_coder {
 
 GribTableDatabase::GribTableDatabase()
 {
@@ -112,6 +112,6 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
 	return table;
 }
 
-} // namespace GribCoder
+} // namespace grib_coder
 
 

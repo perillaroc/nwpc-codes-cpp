@@ -6,22 +6,22 @@
 
 #include "openjpeg_decoder.h"
 
-float convertToFloat(uint32_t v) {
+float convert_to_float(uint32_t v) {
 	return *(reinterpret_cast<float*>(&v));
 }
 
 
 int main() {
-    std::string grib_file_path{"./dist/data/t.850hpa.000.grb2"};
+    const std::string grib_file_path{"./dist/data/t.850hpa.000.grb2"};
 	//std::string grib_file_path{ "./dist/data/39.grb2" };
 
-    auto start_pos = 0xB1;
-    auto raw_data_length = 0x98998 - 0xB1 + 1;
-	auto data_count = 1036800;
+    const auto start_pos = 0xB1;
+    const auto raw_data_length = 0x98998 - 0xB1 + 1;
+	const auto data_count = 1036800;
 
-	int binary_scale_factor = 0x0;
-	int decimal_scale_factor = 0x2;
-	float reference_value = convertToFloat(0x46B1298E);
+    const auto binary_scale_factor = 0x0;
+    const auto decimal_scale_factor = 0x2;
+    const auto reference_value = convert_to_float(0x46B1298E);
 
     auto buf = new unsigned char[raw_data_length];
 
@@ -35,11 +35,11 @@ int main() {
 	f.read(reinterpret_cast<char*>(buf), raw_data_length);
 	f.close();
 
-	auto val = GribCoder::decodeJPEG2000Values(buf, raw_data_length, data_count);
+	auto val = grib_coder::decodeJPEG2000Values(buf, raw_data_length, data_count);
 
     delete[] buf;
 
-	if (val.size() == 0) {
+	if (val.empty()) {
 		std::cerr << "value decode has error." << std::endl;
 		return 1;
 	}

@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace GribCoder {
+namespace grib_coder {
 
 class GribProperty {
 public:
@@ -23,5 +23,5 @@ protected:
 
 };
 
-} // namespace GribCoder
+} // namespace grib_coder
 

@@ -3,7 +3,7 @@
 #include "grib_property.h"
 #include "grib_table_database.h"
 
-namespace GribCoder {
+namespace grib_coder {
 
 class CodeTableProperty: public GribProperty {
 public:
@@ -41,4 +41,4 @@ private:
 };
 
 
-} // namespace GribCoder
+} // namespace grib_coder

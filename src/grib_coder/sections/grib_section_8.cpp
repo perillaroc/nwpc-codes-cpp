@@ -1,7 +1,7 @@
 #include "grib_section_8.h"
 
 
-namespace GribCoder {
+namespace grib_coder {
 GribSection8::GribSection8():
 	GribSection{8}
 {

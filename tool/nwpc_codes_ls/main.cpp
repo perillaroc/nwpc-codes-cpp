@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <chrono>
 #include <limits>
@@ -11,14 +10,14 @@
 #include <CLI11/CLI11.hpp>
 #include <fmt/printf.h>
 
-int listGribFile(const std::string file_path) {
+int list_grib_file(const std::string &file_path) {
     fmt::print("{file_path}\n", fmt::arg("file_path", file_path));
-	std::FILE* f = std::fopen(file_path.c_str(), "rb");
+	auto f = std::fopen(file_path.c_str(), "rb");
 
 	//auto start_time = std::chrono::system_clock::now();
 
-	GribCoder::GribFileHandler handler(f);
-	int current_index = 0;
+	grib_coder::GribFileHandler handler(f);
+	auto current_index = 0;
 	auto message_handler = handler.next();
 
 	while (message_handler) {
@@ -88,11 +87,11 @@ int main(int argc, char** argv) {
 	CLI::App app{"nwpc_codes_ls"};
 
 	std::string file_path;
-	app.add_option("file_path", file_path);
+    app.add_option("file_path", file_path);
 
 	CLI11_PARSE(app, argc, argv);
 
-	auto result = listGribFile(file_path);
+	auto result = list_grib_file(file_path);
 
     return result;
 }

@@ -2,8 +2,8 @@
 
 #include <cstring>
 
-namespace GribCoder {
-uint64_t convertBytesToUint64(const unsigned char* bytes, size_t length)
+namespace grib_coder {
+uint64_t convert_bytes_to_uint64(const unsigned char* bytes, size_t length)
 {
 	uint64_t n = 0;
 	n |= static_cast<uint64_t>(bytes[0]) << 56;
@@ -16,7 +16,7 @@ uint64_t convertBytesToUint64(const unsigned char* bytes, size_t length)
 	n |= static_cast<uint64_t>(bytes[7]);
 	return n;
 }
-uint32_t convertBytesToUint32(const unsigned char * bytes, size_t length)
+uint32_t convert_bytes_to_uint32(const unsigned char * bytes, size_t length)
 {
 	uint32_t n = 0;
 	n |= bytes[0] << 24;
@@ -25,7 +25,7 @@ uint32_t convertBytesToUint32(const unsigned char * bytes, size_t length)
 	n |= bytes[3];
 	return n;
 }
-int32_t convertBytesToInt32(const unsigned char* bytes, size_t length)
+int32_t convert_bytes_to_int32(const unsigned char* bytes, size_t length)
 {
 	int32_t n = 0;
 	n |= bytes[0] << 24;
@@ -41,14 +41,14 @@ int32_t convertBytesToInt32(const unsigned char* bytes, size_t length)
 	}
 	return n;
 }
-uint16_t convertBytesToUint16(const unsigned char* bytes, size_t length)
+uint16_t convert_bytes_to_uint16(const unsigned char* bytes, size_t length)
 {
 	uint16_t n = 0;
 	n |= bytes[0] << 8;
 	n |= bytes[1];
 	return n;
 }
-int16_t convertBytesToInt16(const unsigned char* bytes, size_t length)
+int16_t convert_bytes_to_int16(const unsigned char* bytes, size_t length)
 {
 	int16_t n = 0;
 	n |= bytes[0] << 8;
@@ -62,17 +62,17 @@ int16_t convertBytesToInt16(const unsigned char* bytes, size_t length)
 	}
 	return n;
 }
-uint8_t convertBytesToUint8(const unsigned char* bytes, size_t length)
+uint8_t convert_bytes_to_uint8(const unsigned char* bytes, size_t length)
 {
 	return uint8_t(*bytes);
 }
-int8_t convertBytesToInt8(const unsigned char* bytes, size_t length)
+int8_t convert_bytes_to_int8(const unsigned char* bytes, size_t length)
 {
 	return int8_t(*bytes);
 }
-float convertBytesToFloat(const unsigned char* bytes, size_t length)
+float convert_bytes_to_float(const unsigned char* bytes, size_t length)
 {
-	auto t = convertBytesToUint32(bytes, 4);
+	auto t = convert_bytes_to_uint32(bytes, 4);
 	return *(reinterpret_cast<float*>(&t));
 }
-} // namespace GribCoder
+} // namespace grib_coder

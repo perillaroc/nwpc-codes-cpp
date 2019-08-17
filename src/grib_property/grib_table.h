@@ -3,7 +3,7 @@
 #include <vector>
 #include <optional>
 
-namespace GribCoder {
+namespace grib_coder {
 
 const std::string RecordUnknownValue = "unknown";
 
@@ -27,4 +27,4 @@ public:
 };
 
 
-} // namespace GribCoder
+} // namespace grib_coder

@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-namespace GribCoder {
+namespace grib_coder {
 
 GribSection0::GribSection0():
 	GribSection{ 0 }
@@ -23,10 +23,10 @@ bool GribSection0::parseFile(std::FILE* file)
 		return false;
 	}
 	identifier_ = std::string(std::begin(buffer), std::begin(buffer) + 4);
-	auto discipline_number = convertBytesToInt8(&buffer[6]);
+	auto discipline_number = convert_bytes_to_int8(&buffer[6]);
 	discipline_.setLong(discipline_number);
-	edition_number_ = convertBytesToInt8(&buffer[7]);
-	total_length_ = convertBytesToUint64(&buffer[8], 8);
+	edition_number_ = convert_bytes_to_int8(&buffer[7]);
+	total_length_ = convert_bytes_to_uint64(&buffer[8], 8);
 	return true;
 }
 

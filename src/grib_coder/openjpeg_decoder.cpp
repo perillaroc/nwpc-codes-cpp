@@ -16,7 +16,7 @@ void openjpeg_info(const char* msg, void* client_data)
 {
 }
 
-namespace GribCoder {
+namespace grib_coder {
 
 std::vector<double> decodeJPEG2000Values(unsigned char *buf, size_t raw_data_length, size_t data_count) {
     int err = 0;
@@ -105,4 +105,4 @@ std::vector<double> decodeJPEG2000Values(unsigned char *buf, size_t raw_data_len
     return val;
 }
 
-} // namespace GribCoder
+} // namespace grib_coder

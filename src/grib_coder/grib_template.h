@@ -1,12 +1,12 @@
 #pragma once
 #include "grib_section.h"
 
-namespace GribCoder {
+namespace grib_coder {
 
 class GribTemplate {
 public:
-    GribTemplate(int template_length);
-    ~GribTemplate();
+    explicit GribTemplate(int template_length);
+    virtual ~GribTemplate();
 
     virtual bool parse(std::vector<unsigned char> &buffer) = 0;
     virtual bool decode(std::vector<std::shared_ptr<GribSection>> section_list);

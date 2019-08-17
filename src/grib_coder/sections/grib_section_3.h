@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace GribCoder {
+namespace grib_coder {
 class GribSection3 : public GribSection {
 public:
 	GribSection3();
@@ -45,4 +45,4 @@ public:
 	NumberProperty<uint32_t> j_direction_increment_;
 	NumberProperty<uint8_t> scanning_mode_;
 };
-} // namespace GribCoder
+} // namespace grib_coder

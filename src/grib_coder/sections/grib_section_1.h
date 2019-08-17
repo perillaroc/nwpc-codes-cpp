@@ -6,7 +6,7 @@
 
 #include <cstdint>
 
-namespace GribCoder {
+namespace grib_coder {
 class GribSection1 : public GribSection {
 public:
 	GribSection1();
@@ -35,4 +35,4 @@ public:
 };
 
 
-} // namespace GribCoder
+} // namespace grib_coder

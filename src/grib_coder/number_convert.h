@@ -3,19 +3,19 @@
 #include <cstddef>
 #include <cstdint>
 
-namespace GribCoder {
+namespace grib_coder {
 
-uint64_t convertBytesToUint64(const unsigned char* bytes, size_t length = 8);
+uint64_t convert_bytes_to_uint64(const unsigned char* bytes, size_t length = 8);
 
-uint32_t convertBytesToUint32(const unsigned char* bytes, size_t length = 4);
-int32_t convertBytesToInt32(const unsigned char* bytes, size_t length = 4);
+uint32_t convert_bytes_to_uint32(const unsigned char* bytes, size_t length = 4);
+int32_t convert_bytes_to_int32(const unsigned char* bytes, size_t length = 4);
 
-uint16_t convertBytesToUint16(const unsigned char* bytes, size_t length = 2);
-int16_t convertBytesToInt16(const unsigned char* bytes, size_t length = 2);
+uint16_t convert_bytes_to_uint16(const unsigned char* bytes, size_t length = 2);
+int16_t convert_bytes_to_int16(const unsigned char* bytes, size_t length = 2);
 
-uint8_t convertBytesToUint8(const unsigned char* bytes, size_t length = 1);
-int8_t convertBytesToInt8(const unsigned char* bytes, size_t length = 1);
+uint8_t convert_bytes_to_uint8(const unsigned char* bytes, size_t length = 1);
+int8_t convert_bytes_to_int8(const unsigned char* bytes, size_t length = 1);
 
-float convertBytesToFloat(const unsigned char* bytes, size_t length = 4);
+float convert_bytes_to_float(const unsigned char* bytes, size_t length = 4);
 
-} // namespace GribCoder
+} // namespace grib_coder

@@ -3,7 +3,7 @@
 
 #include "number_convert.h"
 
-namespace GribCoder {
+namespace grib_coder {
 
 Template_4_0::Template_4_0(int template_length):
     GribTemplate{ template_length }
@@ -17,27 +17,27 @@ Template_4_0::~Template_4_0()
 
 bool Template_4_0::parse(std::vector<unsigned char>& buffer)
 {
-    auto parameter_category = convertBytesToUint8(&buffer[9]);
+    auto parameter_category = convert_bytes_to_uint8(&buffer[9]);
     parameter_category_.setLong(parameter_category);
-    auto parameter_number = convertBytesToUint8(&buffer[10]);
+    auto parameter_number = convert_bytes_to_uint8(&buffer[10]);
     parameter_number_.setLong(parameter_number);
-    auto type_of_generating_process = convertBytesToUint8(&buffer[11]);
+    auto type_of_generating_process = convert_bytes_to_uint8(&buffer[11]);
     type_of_generating_process_.setLong(type_of_generating_process);
-    background_process_ = convertBytesToUint8(&buffer[12]);
-    generating_process_identifier_ = convertBytesToUint8(&buffer[13]);
-    hours_after_data_cutoff_ = convertBytesToUint16(&buffer[14], 2);
-    minutes_after_data_cutoff_ = convertBytesToUint8(&buffer[16]);
-    auto indicator_of_unit_of_time_range = convertBytesToUint8(&buffer[17]);
+    background_process_ = convert_bytes_to_uint8(&buffer[12]);
+    generating_process_identifier_ = convert_bytes_to_uint8(&buffer[13]);
+    hours_after_data_cutoff_ = convert_bytes_to_uint16(&buffer[14], 2);
+    minutes_after_data_cutoff_ = convert_bytes_to_uint8(&buffer[16]);
+    auto indicator_of_unit_of_time_range = convert_bytes_to_uint8(&buffer[17]);
     indicator_of_unit_of_time_range_.setLong(indicator_of_unit_of_time_range);
-    forecast_time_ = convertBytesToInt32(&buffer[18], 4);
-    auto type_of_first_fixed_surface = convertBytesToUint8(&buffer[22]);
+    forecast_time_ = convert_bytes_to_int32(&buffer[18], 4);
+    auto type_of_first_fixed_surface = convert_bytes_to_uint8(&buffer[22]);
     type_of_first_fixed_surface_.setLong(type_of_first_fixed_surface);
-    scale_factor_of_first_fixed_surface_ = convertBytesToInt8(&buffer[23]);
-    scaled_value_of_first_fixed_surface_ = convertBytesToUint32(&buffer[24], 4);
-    auto type_of_second_fixed_surface = convertBytesToUint8(&buffer[28]);
+    scale_factor_of_first_fixed_surface_ = convert_bytes_to_int8(&buffer[23]);
+    scaled_value_of_first_fixed_surface_ = convert_bytes_to_uint32(&buffer[24], 4);
+    auto type_of_second_fixed_surface = convert_bytes_to_uint8(&buffer[28]);
     type_of_second_fixed_surface_.setLong(type_of_second_fixed_surface);
-    scale_factor_of_second_fixed_surface_ = convertBytesToInt8(&buffer[29]);
-    scaled_value_of_second_fixed_surface_ = convertBytesToUint32(&buffer[30]);
+    scale_factor_of_second_fixed_surface_ = convert_bytes_to_int8(&buffer[29]);
+    scaled_value_of_second_fixed_surface_ = convert_bytes_to_uint32(&buffer[30]);
 
     return true;
 }
@@ -94,4 +94,4 @@ void Template_4_0::init()
     type_of_first_fixed_surface_.setCodeTableId("4.5");
     type_of_second_fixed_surface_.setCodeTableId("4.5");
 }
-} // namespace GribCoder
+} // namespace grib_coder

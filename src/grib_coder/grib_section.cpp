@@ -1,6 +1,6 @@
 #include "grib_section.h"
 
-namespace GribCoder {
+namespace grib_coder {
 
 GribSection::GribSection(int section_number):
 	section_number_{section_number},
@@ -45,4 +45,4 @@ void GribSection::registerProperty(const std::string& name, GribProperty* proper
     property_map_[name] = property;
 }
 
-} // namespace GribCoder
+} // namespace grib_coder

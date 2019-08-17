@@ -4,7 +4,7 @@
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
 
-namespace GribCoder {
+namespace grib_coder {
 
 class Template_4_0 : public GribTemplate {
 public:
@@ -38,4 +38,4 @@ private:
     NumberProperty<uint32_t> scaled_value_of_second_fixed_surface_;
 };
 
-} // namespace GribCoder
+} // namespace grib_coder

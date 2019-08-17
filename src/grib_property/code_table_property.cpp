@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fmt/format.h>
 
-namespace GribCoder{
+namespace grib_coder{
 
 CodeTableProperty::CodeTableProperty() {
 
@@ -121,4 +121,4 @@ std::optional<GribTableRecord> CodeTableProperty::getTableRecord()
     return record;
 }
 
-} // namespace GribCoder
+} // namespace grib_coder

@@ -5,7 +5,7 @@
 
 #include <cstdint>
 
-namespace GribCoder {
+namespace grib_coder {
 
 class GribSection6 : public GribSection {
 public:
@@ -22,4 +22,4 @@ public:
 	NumberProperty<uint8_t> bit_map_indicator_;
 };
 
-} // namespace GribCoder
+} // namespace grib_coder

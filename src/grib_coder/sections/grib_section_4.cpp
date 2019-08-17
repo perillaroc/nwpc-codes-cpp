@@ -8,7 +8,7 @@
 #include <sstream>
 #include <cassert>
 
-namespace GribCoder {
+namespace grib_coder {
 GribSection4::GribSection4():
 	GribSection{4}
 {
@@ -36,8 +36,8 @@ bool GribSection4::parseFile(std::FILE* file)
 		return false;
 	}
 
-	nv_ = convertBytesToUint16(&buffer[5], 2);
-	auto product_definition_template_number = convertBytesToUint16(&buffer[7], 2);
+	nv_ = convert_bytes_to_uint16(&buffer[5], 2);
+	auto product_definition_template_number = convert_bytes_to_uint16(&buffer[7], 2);
 
     // TODO: different product definition tempalte
 	assert(product_definition_template_number == 0 || product_definition_template_number == 8);
@@ -75,4 +75,4 @@ void GribSection4::init()
 	property_map_["productDefinitionTemplateNumber"] = &product_definition_template_number_;
 }
 
-} // namespace GribCoder
+} // namespace grib_coder

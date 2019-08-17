@@ -3,7 +3,7 @@
 #include "grib_message_handler.h"
 #include <grib_property/grib_table_database.h>
 
-namespace GribCoder {
+namespace grib_coder {
 class GribFileHandler {
 public:
 	explicit GribFileHandler(std::FILE *file, bool header_only=false);
@@ -18,4 +18,4 @@ private:
 
 	std::FILE* file_ = nullptr;
 };
-} // namespace GribCoder
+} // namespace grib_coder

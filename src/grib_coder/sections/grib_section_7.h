@@ -7,7 +7,7 @@
 #include <cstdint>
 #include <memory>
 
-namespace GribCoder {
+namespace grib_coder {
 
 class GribSection7 : public GribSection {
 public:
@@ -29,4 +29,4 @@ public:
 	std::vector<double> code_values_;
 };
 
-} // namespace GribCoder
+} // namespace grib_coder

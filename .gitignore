@@ -145,3 +145,5 @@ Testing/
 
 .vs
 CMakeSettings.json
+
+*.DotSettings.user

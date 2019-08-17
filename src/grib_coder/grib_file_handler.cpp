@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-namespace GribCoder {
+namespace grib_coder {
 
 GribFileHandler::GribFileHandler(std::FILE* file, bool header_only):
 	header_only_{header_only},
@@ -27,4 +27,4 @@ std::unique_ptr<GribMessageHandler> GribFileHandler::next()
 	}
 }
 
-} // namespace GribCoder
+} // namespace grib_coder

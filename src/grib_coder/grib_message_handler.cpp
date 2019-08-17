@@ -13,7 +13,7 @@
 #include <memory>
 #include <sstream>
 
-namespace GribCoder {
+namespace grib_coder {
 
 GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> db, bool header_only):
 	table_database_{ db },
@@ -141,8 +141,8 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 	if (result != 5) {
 		return false;
 	}
-	auto section_length = convertBytesToUint32(buffer, 4);
-	auto section_number = convertBytesToUint8(&buffer[4]);
+	auto section_length = convert_bytes_to_uint32(buffer, 4);
+	auto section_number = convert_bytes_to_uint8(&buffer[4]);
 
 	std::shared_ptr<GribSection> section;
 
@@ -212,4 +212,4 @@ GribProperty* GribMessageHandler::getProperty(const std::string& name) {
 	return nullptr;
 }
 
-} // namespace GribCoder
+} // namespace grib_coder

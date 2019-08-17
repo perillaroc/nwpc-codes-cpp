@@ -7,7 +7,7 @@
 #include <string>
 #include <cstdint>
 
-namespace GribCoder {
+namespace grib_coder {
 
 class GribSection0 : public GribSection {
 public:
@@ -27,4 +27,4 @@ public:
 	NumberProperty<uint64_t> total_length_ = 0;
 };
 
-} // namespace GribCoder
+} // namespace grib_coder

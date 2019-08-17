@@ -4,7 +4,7 @@
 
 #include "grib_table.h"
 
-namespace GribCoder{
+namespace grib_coder{
 
 class GribTableDatabase {
 public:
@@ -22,4 +22,4 @@ private:
 };
 
 
-} // namespace GribCoder
+} // namespace grib_coder

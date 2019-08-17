@@ -1,6 +1,6 @@
 #include "grib_property.h"
 
-namespace GribCoder {
+namespace grib_coder {
 
 GribProperty::GribProperty() {
 
@@ -10,4 +10,4 @@ GribProperty::~GribProperty() {
 
 }
 
-} // namespace GribCoder
+} // namespace grib_coder

@@ -3,7 +3,7 @@
 #include "grib_section.h"
 #include <grib_property/grib_table_database.h>
 
-namespace GribCoder {
+namespace grib_coder {
 
 class GribMessageHandler {
 public:
@@ -34,5 +34,5 @@ private:
 	bool header_only_ = false;
 };
 
-} // namespace GribCoder
+} // namespace grib_coder
 
