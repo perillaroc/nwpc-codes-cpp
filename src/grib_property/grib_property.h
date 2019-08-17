@@ -1,14 +1,15 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 namespace grib_coder {
 
 class GribProperty {
 public:
-    GribProperty();
+    GribProperty() = default;
 
-    virtual ~GribProperty();
+    virtual ~GribProperty() = default;
 
     virtual void setLong(long value) = 0;
     virtual long getLong() = 0;
@@ -19,8 +20,8 @@ public:
     virtual void setString(const std::string &value) = 0;
     virtual std::string getString() = 0;
 
-protected:
-
+    virtual void setDoubleArray(std::vector<double> &values) = 0;
+    virtual std::vector<double> getDoubleArray() = 0;
 };
 
 } // namespace grib_coder

@@ -9,7 +9,7 @@ const std::string RecordUnknownValue = "unknown";
 
 class GribTableRecord {
 public:
-	bool isValid() {
+	bool isValid() const {
 		return code_ != -1;
 	}
 

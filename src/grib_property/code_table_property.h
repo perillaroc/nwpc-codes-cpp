@@ -22,6 +22,9 @@ public:
     void setString(const std::string &value) override;
     std::string getString() override;
 
+    void setDoubleArray(std::vector<double>& values) override;
+    std::vector<double> getDoubleArray() override;
+
     std::string getTitle();
     std::string getAbbreviation();
     std::string getUnits();
