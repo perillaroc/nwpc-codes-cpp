@@ -17,4 +17,4 @@ protected:
     std::string template_name_;
     int template_length_ = -1;
 };
-}
+} // namespace grib_coder

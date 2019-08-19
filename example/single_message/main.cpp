@@ -7,7 +7,7 @@ int main() {
 	const std::string grib_file_path{"./dist/data/t.850hpa.000.grb2"};
 	//const std::string grib_file_path{ "./dist/data/39.grb2" };
 	
-	std::FILE* f = std::fopen(grib_file_path.c_str(), "rb");
+	auto f = std::fopen(grib_file_path.c_str(), "rb");
 
 	grib_coder::GribFileHandler handler(f);
 

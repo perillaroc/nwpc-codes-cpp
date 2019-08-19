@@ -3,6 +3,7 @@
 
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
+#include <grib_property/level_property.h>
 
 namespace grib_coder {
 
@@ -31,11 +32,13 @@ private:
     CodeTableProperty indicator_of_unit_of_time_range_;
     NumberProperty<int32_t> forecast_time_;
     CodeTableProperty type_of_first_fixed_surface_;
-    NumberProperty<uint8_t> scale_factor_of_first_fixed_surface_;
+    NumberProperty<int8_t> scale_factor_of_first_fixed_surface_;
     NumberProperty<uint32_t> scaled_value_of_first_fixed_surface_;
     CodeTableProperty type_of_second_fixed_surface_;
-    NumberProperty<uint8_t> scale_factor_of_second_fixed_surface_;
+    NumberProperty<int8_t> scale_factor_of_second_fixed_surface_;
     NumberProperty<uint32_t> scaled_value_of_second_fixed_surface_;
+
+    LevelProperty level_;
 };
 
 } // namespace grib_coder

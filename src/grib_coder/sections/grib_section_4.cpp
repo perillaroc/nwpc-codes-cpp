@@ -34,7 +34,7 @@ bool GribSection4::parseFile(std::FILE* file, bool header_only)
 	nv_ = convert_bytes_to_uint16(&buffer[5], 2);
 	auto product_definition_template_number = convert_bytes_to_uint16(&buffer[7], 2);
 
-    // TODO: different product definition tempalte
+    // TODO: different product definition template
 	assert(product_definition_template_number == 0 || product_definition_template_number == 8);
 
 	product_definition_template_number_.setLong(product_definition_template_number);
@@ -50,8 +50,8 @@ bool GribSection4::parseFile(std::FILE* file, bool header_only)
     else {
         throw std::exception("template not implemented");
     }
-    product_definition_template_->parse(buffer);
     product_definition_template_->registerProperty(shared_from_this());
+    product_definition_template_->parse(buffer);
 
 	return true;
 }

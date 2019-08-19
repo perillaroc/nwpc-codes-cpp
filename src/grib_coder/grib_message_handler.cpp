@@ -16,6 +16,7 @@
 namespace grib_coder {
 
 GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> db, bool header_only):
+    GribPropertyContainer{},
 	table_database_{ db },
 	header_only_{ header_only }
 {
@@ -168,6 +169,9 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		section = std::make_shared<GribSection7>(section_length);
 	}
 
+    // NOTE: where to put this line
+    section_list_.push_back(section);
+
 	auto flag = section->parseFile(file, header_only_);
 	if (!flag) {
 		return false;
@@ -184,8 +188,6 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 			return false;
 		}
 	}
-
-	section_list_.push_back(section);
 
 	return true;
 }

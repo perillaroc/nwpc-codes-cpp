@@ -42,15 +42,7 @@ int list_grib_file(const std::string &file_path) {
 		auto levelType = message_handler->getString("typeOfFirstFixedSurface");
 
 		//		level
-		auto levelNumberFactor = message_handler->getLong("scaleFactorOfFirstFixedSurface");
-		auto levelNumberValue = message_handler->getLong("scaledValueOfFirstFixedSurface");
-        std::string level;
-        if (levelNumberFactor == std::numeric_limits<uint8_t>::max() || levelNumberValue == levelNumberValue == std::numeric_limits<uint32_t>::max()) {
-            level = "MISSING";
-        } else {
-            double level_value = std::pow(10, levelNumberFactor) * levelNumberValue;
-            level = fmt::format("{}", level_value);
-        }
+        auto level = message_handler->getString("level");
 
 		//		stepRange
 		auto forecastTime = message_handler->getLong("forecastTime");

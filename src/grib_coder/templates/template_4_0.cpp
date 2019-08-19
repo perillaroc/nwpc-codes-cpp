@@ -1,7 +1,8 @@
 #include "template_4_0.h"
 #include "sections/grib_section_0.h"
-
 #include "number_convert.h"
+
+#include <grib_property/grib_property_container.h>
 
 namespace grib_coder {
 
@@ -49,6 +50,8 @@ bool Template_4_0::decode(GribPropertyContainer* container)
         fmt::arg("category", parameter_category_.getLong()));
     parameter_number_.setCodeTableId(number_table_id);
 
+    level_.decode(container);
+
     return true;
 }
 
@@ -69,6 +72,7 @@ void Template_4_0::registerProperty(std::shared_ptr<GribSection> section)
     section->registerProperty("typeOfSecondFixedSurface", &type_of_second_fixed_surface_);
     section->registerProperty("scaleFactorOfSecondFixedSurface", &scale_factor_of_second_fixed_surface_);
     section->registerProperty("scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_);
+    section->registerProperty("level", &level_);
 }
 
 void Template_4_0::init()

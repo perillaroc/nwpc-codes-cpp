@@ -93,7 +93,7 @@ void GribSection3::init()
 	registerProperty("latitudeOfLastGridPoint", &latitude_of_last_grid_point_);
 	registerProperty("longitudeOfLastGridPoint", &longitude_of_last_grid_point_);
 	registerProperty("iDirectionIncrement", &i_direction_increment_);
-	registerProperty("jDirectionIncrement", &j_direction_increment_;
+	registerProperty("jDirectionIncrement", &j_direction_increment_);
 	registerProperty("scanningMode", &scanning_mode_);
 }
 
