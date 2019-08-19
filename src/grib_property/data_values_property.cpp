@@ -40,7 +40,7 @@ bool DataValuesProperty::decodeValues(GribPropertyContainer* container)
     const auto reference_value = float(container->getDouble("referenceValue"));
 
     const auto data_count = container->getLong("numberOfValues");
-    code_values_ = decodeJPEG2000Values(&raw_value_bytes_[0], raw_value_bytes_.size(), data_count);
+    code_values_ = decode_jpeg2000_values(&raw_value_bytes_[0], raw_value_bytes_.size(), data_count);
     std::transform(code_values_.begin(), code_values_.end(), code_values_.begin(), [=](double v) {
         return (reference_value + v * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
     });

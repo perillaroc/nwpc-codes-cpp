@@ -6,7 +6,7 @@ namespace grib_coder {
 class GribTemplate {
 public:
     explicit GribTemplate(int template_length);
-    virtual ~GribTemplate();
+    virtual ~GribTemplate() = default;
 
     virtual bool parse(std::vector<unsigned char> &buffer) = 0;
     virtual bool decode(GribPropertyContainer *container);

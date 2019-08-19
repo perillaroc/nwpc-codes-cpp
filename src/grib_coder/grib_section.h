@@ -2,7 +2,6 @@
 
 #include <grib_property/grib_property.h>
 #include <grib_property/number_property.h>
-#include <grib_property/grib_property_container.h>
 
 #include <vector>
 #include <unordered_map>
@@ -16,7 +15,7 @@ public:
 	explicit GribSection(int section_number);
 	GribSection(int section_number, long section_length);
 
-	virtual ~GribSection();
+	virtual ~GribSection() = default;
 
 	void setSectionLength(long length);
     long getSectionLength() const;

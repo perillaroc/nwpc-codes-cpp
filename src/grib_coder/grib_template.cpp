@@ -7,10 +7,6 @@ GribTemplate::GribTemplate(int template_length):
 {
 }
 
-GribTemplate::~GribTemplate()
-{
-}
-
 bool GribTemplate::decode(GribPropertyContainer* container)
 {
     return true;

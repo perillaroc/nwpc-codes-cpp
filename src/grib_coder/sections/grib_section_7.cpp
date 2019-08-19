@@ -13,10 +13,6 @@ GribSection7::GribSection7(int section_length):
 {
 }
 
-GribSection7::~GribSection7()
-{
-}
-
 bool GribSection7::parseFile(std::FILE* file, bool header_only)
 {
 	const auto buffer_length = section_length_ - 5;

@@ -15,11 +15,6 @@ GribSection::GribSection(int section_number, long section_length):
 {
 }
 
-GribSection::~GribSection()
-{
-
-}
-
 void GribSection::setSectionLength(long length)
 {
 	section_length_.setLong(length);

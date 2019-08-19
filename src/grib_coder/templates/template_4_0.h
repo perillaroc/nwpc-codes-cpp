@@ -10,7 +10,7 @@ class Template_4_0 : public GribTemplate {
 public:
     Template_4_0(int template_length);
 
-    ~Template_4_0();
+    ~Template_4_0() = default;
 
     bool parse(std::vector<unsigned char>& buffer) override;
 

@@ -15,16 +15,11 @@ GribSection4::GribSection4():
 	init();
 }
 
-GribSection4::GribSection4(int section_length_):
-	GribSection{4, section_length_}
+GribSection4::GribSection4(int section_length):
+	GribSection{4, section_length}
 {
 	assert(section_length_ == 34 || section_length_ == 58);
 	init();
-}
-
-GribSection4::~GribSection4()
-{
-
 }
 
 bool GribSection4::parseFile(std::FILE* file, bool header_only)

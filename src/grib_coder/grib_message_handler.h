@@ -29,7 +29,7 @@ private:
 
 	GribProperty* getProperty(const std::string& name);
 
-	std::vector < std::shared_ptr<GribSection>> section_list_;
+	std::vector<std::shared_ptr<GribSection>> section_list_;
 	std::shared_ptr<GribTableDatabase> table_database_;
 
 	bool header_only_ = false;

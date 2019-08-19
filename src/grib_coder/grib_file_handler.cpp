@@ -1,7 +1,5 @@
 #include "grib_file_handler.h"
 
-#include <iostream>
-
 namespace grib_coder {
 
 GribFileHandler::GribFileHandler(std::FILE* file, bool header_only):
@@ -22,9 +20,8 @@ std::unique_ptr<GribMessageHandler> GribFileHandler::next()
 	if (result) {
 		return message_handler;
 	}
-	else {
-		return nullptr;
-	}
+
+	return nullptr;
 }
 
 } // namespace grib_coder

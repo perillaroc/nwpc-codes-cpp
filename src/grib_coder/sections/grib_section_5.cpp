@@ -18,10 +18,6 @@ GribSection5::GribSection5(int section_length):
 	init();
 }
 
-GribSection5::~GribSection5()
-{
-}
-
 bool GribSection5::parseFile(std::FILE* file, bool header_only)
 {
 	auto buffer_length = section_length_ - 5;

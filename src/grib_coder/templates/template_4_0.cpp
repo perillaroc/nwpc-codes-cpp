@@ -11,10 +11,6 @@ Template_4_0::Template_4_0(int template_length):
     init();
 }
 
-Template_4_0::~Template_4_0()
-{
-}
-
 bool Template_4_0::parse(std::vector<unsigned char>& buffer)
 {
     const auto parameter_category = convert_bytes_to_uint8(&buffer[9]);

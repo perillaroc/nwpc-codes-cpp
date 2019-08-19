@@ -13,7 +13,7 @@ class GribSection0 : public GribSection {
 public:
 	GribSection0();
 
-	virtual ~GribSection0();
+	~GribSection0() = default;
 
 	bool parseFile(std::FILE* file, bool header_only = false) override;
 

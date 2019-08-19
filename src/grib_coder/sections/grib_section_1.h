@@ -11,7 +11,8 @@ class GribSection1 : public GribSection {
 public:
 	GribSection1();
 	explicit GribSection1(long section_length);
-	~GribSection1();
+
+	~GribSection1() = default;
 
 	bool parseFile(std::FILE* file, bool header_only = false) override;
 

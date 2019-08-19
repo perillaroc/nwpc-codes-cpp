@@ -9,10 +9,6 @@ GribSection0::GribSection0():
 	init();
 }
 
-GribSection0::~GribSection0()
-{
-}
-
 bool GribSection0::parseFile(std::FILE* file, bool header_only)
 {
 	unsigned char buffer[16];
