@@ -5,6 +5,8 @@
 
 namespace grib_coder {
 
+class GribPropertyContainer;
+
 class GribProperty {
 public:
     GribProperty() = default;
@@ -22,6 +24,8 @@ public:
 
     virtual void setDoubleArray(std::vector<double> &values);
     virtual std::vector<double> getDoubleArray();
+
+    virtual bool decode(GribPropertyContainer* container);
 };
 
 } // namespace grib_coder

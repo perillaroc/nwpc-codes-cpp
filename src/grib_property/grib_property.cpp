@@ -33,4 +33,8 @@ std::vector<double> GribProperty::getDoubleArray()
 {
     throw std::exception("not implemented");
 }
+bool GribProperty::decode(GribPropertyContainer* container)
+{
+    return true;
+}
 } // namespace grib_coder

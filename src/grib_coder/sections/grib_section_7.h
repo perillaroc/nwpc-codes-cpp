@@ -1,7 +1,7 @@
 #pragma once 
 
 #include "grib_section.h"
-#include "grib_section_5.h"
+#include <grib_property/data_values_property.h>
 
 #include <vector>
 #include <cstdint>
@@ -24,8 +24,7 @@ public:
 private:
 	void init();
 
-	std::vector<unsigned char> raw_value_bytes_;
-	std::vector<double> code_values_;
+    DataValuesProperty data_values_;
 };
 
 } // namespace grib_coder
