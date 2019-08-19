@@ -1,8 +1,6 @@
 #include "grib_section_0.h"
 #include "number_convert.h"
 
-#include <algorithm>
-
 namespace grib_coder {
 
 GribSection0::GribSection0():
@@ -33,9 +31,9 @@ bool GribSection0::parseFile(std::FILE* file, bool header_only)
 void GribSection0::init()
 {
 	discipline_.setCodeTableId("0.0");
-	property_map_["discipline"] = &discipline_;
-	property_map_["editionNumber"] = &edition_number_;
-	property_map_["totalLength"] = &total_length_;
+	registerProperty("discipline", &discipline_);
+	registerProperty("editionNumber", &edition_number_);
+	registerProperty("totalLength", &total_length_);
 }
 
 }

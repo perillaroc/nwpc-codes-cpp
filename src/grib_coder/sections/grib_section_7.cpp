@@ -52,7 +52,7 @@ bool GribSection7::decodeValues(GribPropertyContainer* container)
 }
 void GribSection7::init()
 {
-    property_map_["dataValues"] = &data_values_;
-    property_map_["values"] = &data_values_;
+    registerProperty("dataValues", &data_values_);
+    registerProperty("values", &data_values_);
 }
 } // grib_coder

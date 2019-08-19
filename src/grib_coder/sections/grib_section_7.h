@@ -3,10 +3,6 @@
 #include "grib_section.h"
 #include <grib_property/data_values_property.h>
 
-#include <vector>
-#include <cstdint>
-#include <memory>
-
 namespace grib_coder {
 
 class GribSection7 : public GribSection {

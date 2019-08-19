@@ -71,8 +71,8 @@ void GribSection4::init()
 	product_definition_template_number_.setOctetCount(2);
 	product_definition_template_number_.setCodeTableId("4.0");
 
-	property_map_["nv"] = &nv_;
-	property_map_["productDefinitionTemplateNumber"] = &product_definition_template_number_;
+    registerProperty("nv", &nv_);
+    registerProperty("productDefinitionTemplateNumber", &product_definition_template_number_);
 }
 
 } // namespace grib_coder

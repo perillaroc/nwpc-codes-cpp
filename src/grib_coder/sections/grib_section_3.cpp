@@ -74,31 +74,31 @@ void GribSection3::init()
 
 	shape_of_earth_.setCodeTableId("3.2");
 
-	property_map_["sourceOfGridDefinition"] = &source_of_grid_definition_;
-	property_map_["numberOfDataPoints"] = &number_of_data_points_;
-	property_map_["numberOfOctectsForNumberOfPoints"] = &number_of_octects_for_number_of_points_;
-	property_map_["interpretationOfNumberOfPoints"] = &interpretation_of_number_of_points_;
-	property_map_["gridDefinitionTemplateNumber"] = &grid_definition_template_number_;
+	registerProperty("sourceOfGridDefinition", &source_of_grid_definition_);
+	registerProperty("numberOfDataPoints", &number_of_data_points_);
+	registerProperty("numberOfOctectsForNumberOfPoints", &number_of_octects_for_number_of_points_);
+	registerProperty("interpretationOfNumberOfPoints", &interpretation_of_number_of_points_);
+	registerProperty("gridDefinitionTemplateNumber", &grid_definition_template_number_);
 
-	property_map_["shapeOfEarth"] = &shape_of_earth_;
-	property_map_["scaleFactorOfRadiusOfSphericalEarth"] = &scale_factor_of_radius_of_spherical_earth_;
-	property_map_["scaledValueOfRadiusOfSphericalEarth"] = &scaled_value_of_radius_of_spherical_earth_;
-	property_map_["scaleFactorOfEarthMajorAxis"] = &scale_factor_of_earth_major_axis_;
-	property_map_["scaledValueOfEarthMajorAxis"] = &scaled_value_of_earth_major_axis_;
-	property_map_["scaleFactorOfEarthMinorAxis"] = &scale_factor_of_earth_minor_axis_;
-	property_map_["scaledValueOfEarthMinorAxis"] = &scaled_value_of_earth_minor_axis_;
-	property_map_["ni"] = &ni_;
-	property_map_["nj"] = &nj_;
-	property_map_["basciAngleOfTheInitialProductionDomain"] = &basic_angle_of_the_initial_production_domain_;
-	property_map_["subdivisionsOfBasicAngle"] = &subdivisions_of_basic_angle_;
-	property_map_["latitudeOfFirstGridPoint"] = &latitude_of_first_grid_point_;
-	property_map_["longitudeOfFirstGridPoint"] = &longitude_of_first_grid_point_;
-	property_map_["resolutionAndComponentFlags"] = &resolution_and_component_flags_;
-	property_map_["latitudeOfLastGridPoint"] = &latitude_of_last_grid_point_;
-	property_map_["longitudeOfLastGridPoint"] = &longitude_of_last_grid_point_;
-	property_map_["iDirectionIncrement"] = &i_direction_increment_;
-	property_map_["jDirectionIncrement"] = &j_direction_increment_;
-	property_map_["scanningMode"] = &scanning_mode_;
+	registerProperty("shapeOfEarth", &shape_of_earth_);
+	registerProperty("scaleFactorOfRadiusOfSphericalEarth", &scale_factor_of_radius_of_spherical_earth_);
+	registerProperty("scaledValueOfRadiusOfSphericalEarth", &scaled_value_of_radius_of_spherical_earth_);
+	registerProperty("scaleFactorOfEarthMajorAxis", &scale_factor_of_earth_major_axis_);
+	registerProperty("scaledValueOfEarthMajorAxis", &scaled_value_of_earth_major_axis_);
+	registerProperty("scaleFactorOfEarthMinorAxis", &scale_factor_of_earth_minor_axis_);
+	registerProperty("scaledValueOfEarthMinorAxis", &scaled_value_of_earth_minor_axis_);
+	registerProperty("ni", &ni_);
+	registerProperty("nj", &nj_);
+	registerProperty("basicAngleOfTheInitialProductionDomain", &basic_angle_of_the_initial_production_domain_);
+	registerProperty("subdivisionsOfBasicAngle", &subdivisions_of_basic_angle_);
+	registerProperty("latitudeOfFirstGridPoint", &latitude_of_first_grid_point_);
+	registerProperty("longitudeOfFirstGridPoint", &longitude_of_first_grid_point_);
+	registerProperty("resolutionAndComponentFlags", &resolution_and_component_flags_);
+	registerProperty("latitudeOfLastGridPoint", &latitude_of_last_grid_point_);
+	registerProperty("longitudeOfLastGridPoint", &longitude_of_last_grid_point_);
+	registerProperty("iDirectionIncrement", &i_direction_increment_);
+	registerProperty("jDirectionIncrement", &j_direction_increment_;
+	registerProperty("scanningMode", &scanning_mode_);
 }
 
 } // namespace grib_coder

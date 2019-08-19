@@ -34,6 +34,6 @@ bool GribSection6::parseFile(std::FILE* file, bool header_only)
 }
 void GribSection6::init()
 {
-	property_map_["bitMapIndicator"] = &bit_map_indicator_;
+    registerProperty("bitMapIndicator", &bit_map_indicator_);
 }
 } // namespace grib_coder
