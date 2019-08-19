@@ -42,35 +42,22 @@ bool GribSection7::parseFile(std::FILE* file, bool header_only)
 
 	return true;
 }
-bool GribSection7::decode(std::vector<std::shared_ptr<GribSection>> &section_list)
+bool GribSection7::decode(GribPropertyContainer* container)
 {
 	return true;
 }
 
-bool GribSection7::decodeValues(std::vector<std::shared_ptr<GribSection>> &section_list)
+bool GribSection7::decodeValues(GribPropertyContainer* container)
 {
 	if (raw_value_bytes_.empty()) {
 		return true;
 	}
 
-	// find section 5
-	std::shared_ptr<GribSection5> section_5;
-	for (auto iter = section_list.rbegin(); iter != section_list.rend(); iter++) {
-		auto s = *iter;
-		if (s->getSectionNumber() == 5) {
-			section_5 = std::static_pointer_cast<GribSection5>(s);
-			break;
-		}
-	}
-	if (!section_5) {
-		return false;
-	}
+    const auto binary_scale_factor = int(container->getLong("binaryScaleFactor"));
+    const auto decimal_scale_factor = int(container->getLong("decimalScaleFactor"));
+    const auto reference_value = float(container->getDouble("referenceValue"));
 
-    auto binary_scale_factor = int(section_5->getProperty("binaryScaleFactor")->getLong());
-	auto decimal_scale_factor = int(section_5->getProperty("decimalScaleFactor")->getLong());
-	auto reference_value = float(section_5->getProperty("referenceValue")->getDouble());
-
-	auto data_count = section_5->getProperty("numberOfValues")->getLong();
+    const auto data_count = container->getLong("numberOfValues");
 
 	code_values_ = decodeJPEG2000Values(&raw_value_bytes_[0], raw_value_bytes_.size(), data_count);
 	std::transform(code_values_.begin(), code_values_.end(), code_values_.begin(), [=](double v) {

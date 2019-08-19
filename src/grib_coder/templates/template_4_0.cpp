@@ -42,21 +42,9 @@ bool Template_4_0::parse(std::vector<unsigned char>& buffer)
     return true;
 }
 
-bool Template_4_0::decode(std::vector<std::shared_ptr<GribSection>> &section_list)
+bool Template_4_0::decode(GribPropertyContainer* container)
 {
-    std::shared_ptr<GribSection0> section_0;
-    for (auto iter = std::rbegin(section_list); iter != std::rend(section_list); ++iter) {
-        auto s = *iter;
-        if (s->getSectionNumber() == 0) {
-            section_0 = std::static_pointer_cast<GribSection0>(s);
-            break;
-        }
-    }
-    if (!section_0) {
-        return false;
-    }
-
-    const auto discipline = section_0->getProperty("discipline")->getLong();
+    const auto discipline = container->getLong("discipline");
     const auto category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);
 

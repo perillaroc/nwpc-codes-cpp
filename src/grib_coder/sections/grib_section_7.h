@@ -17,9 +17,9 @@ public:
 
 	bool parseFile(std::FILE* file, bool header_only=false) override;
 
-	bool decode(std::vector<std::shared_ptr<GribSection>> &section_list) override;
+	bool decode(GribPropertyContainer* container) override;
 
-	bool decodeValues(std::vector<std::shared_ptr<GribSection>> &section_list);
+	bool decodeValues(GribPropertyContainer* container);
 
 private:
 	void init();

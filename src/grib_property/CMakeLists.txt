@@ -5,6 +5,7 @@ add_library(grib_property STATIC)
 target_sources(grib_property
 	PRIVATE
         grib_property.cpp
+		grib_property_container.cpp
         code_table_property.cpp
 		grib_table.cpp
 		grib_table_database.cpp)

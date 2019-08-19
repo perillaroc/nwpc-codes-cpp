@@ -173,14 +173,14 @@ bool GribMessageHandler::parseNextSection(std::FILE* file)
 		return false;
 	}
 
-    flag = section->decode(section_list_);
+    flag = section->decode(this);
 	if (!flag) {
 		return false;
 	}
 
 	if (section_number == 7 && !header_only_) {
 		auto section7 = std::static_pointer_cast<GribSection7>(section);
-		if(!section7->decodeValues(section_list_)) {
+		if(!section7->decodeValues(this)) {
 			return false;
 		}
 	}

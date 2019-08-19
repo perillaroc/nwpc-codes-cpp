@@ -2,6 +2,7 @@
 
 #include <grib_property/grib_property.h>
 #include <grib_property/number_property.h>
+#include <grib_property/grib_property_container.h>
 
 #include <vector>
 #include <unordered_map>
@@ -24,7 +25,7 @@ public:
 
 	virtual bool parseFile(std::FILE* file, bool header_only=false) = 0;
 
-	virtual bool decode(std::vector<std::shared_ptr<GribSection>> &section_list);
+	virtual bool decode(GribPropertyContainer *container);
 
 	GribProperty* getProperty(const std::string& name);
 

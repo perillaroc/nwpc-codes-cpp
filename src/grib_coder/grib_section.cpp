@@ -35,7 +35,7 @@ int GribSection::getSectionNumber() const
     return static_cast<int>(section_number_);
 }
 
-bool GribSection::decode(std::vector<std::shared_ptr<GribSection>> &section_list)
+bool GribSection::decode(GribPropertyContainer* container)
 {
 	return true;
 }
