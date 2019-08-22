@@ -17,6 +17,7 @@ void DataDateProperty::setLong(long value)
 
 long DataDateProperty::getLong()
 {
+    // YYYYMMDD
     return year_*10000 + month_*100 + day_;
 }
 
@@ -27,17 +28,25 @@ void DataDateProperty::setDouble(double value)
 
 double DataDateProperty::getDouble()
 {
+    // YYYYMMDD
     return static_cast<double>(getLong());
 }
 
 void DataDateProperty::setString(const std::string& value)
 {
-    return setLong(std::stol(value));
+    // YYYY-MM-DD
+    year_ = std::stoi(value.substr(0, 4));
+    month_ = std::stoi(value.substr(5, 2));
+    day_ = std::stoi(value.substr(8, 2));
 }
 
 std::string DataDateProperty::getString()
 {
-    return fmt::format("{}", getLong());
+    // YYYY-MM-DD
+    return fmt::format("{year:04}-{month:02}-{day:02}", 
+        fmt::arg("year", year_),
+        fmt::arg("month", month_),
+        fmt::arg("day", day_));
 }
 
 bool DataDateProperty::decode(GribPropertyContainer* container)

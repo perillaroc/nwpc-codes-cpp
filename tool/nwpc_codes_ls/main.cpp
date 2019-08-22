@@ -28,7 +28,7 @@ int list_grib_file(const std::string &file_path) {
 		auto centre = message_handler->getString("centre");
 
 		//		dataDate
-        auto dataDate = message_handler->getLong("dataDate");
+        auto dataDate = message_handler->getString("dataDate");
 
 		auto dataType = message_handler->getString("typeOfProcessedData");
 
