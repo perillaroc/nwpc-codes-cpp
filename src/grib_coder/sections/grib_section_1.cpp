@@ -60,6 +60,9 @@ bool GribSection1::parseFile(std::FILE* file, bool header_only)
 bool GribSection1::decode(GribPropertyContainer* container)
 {
     auto result = data_date_.decode(container);
+    if (!result) return false;
+
+    result = data_time_.decode(container);
     return result;
 }
 
@@ -86,6 +89,7 @@ void GribSection1::init()
         {"productionStatusOfProcessedData", &production_status_of_processed_data_},
         {"typeOfProcessedData", &type_of_processed_data_},
         {"dataDate", &data_date_},
+        {"dataTime", &data_time_}
     };
 
     for(const auto &item: properties)

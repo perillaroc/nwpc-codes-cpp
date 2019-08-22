@@ -29,6 +29,7 @@ int list_grib_file(const std::string &file_path) {
 
 		//		dataDate
         auto dataDate = message_handler->getString("dataDate");
+        auto dataTime = message_handler->getString("dataTime");
 
 		auto dataType = message_handler->getString("typeOfProcessedData");
 
@@ -52,10 +53,11 @@ int list_grib_file(const std::string &file_path) {
 
 		auto category = message_handler->getString("parameterCategory");
 		auto number = message_handler->getString("parameterNumber");
-		fmt::print("{edition} | {centre} | {dataDate} | {dataType} | {category} | {number} | {stepRange} | {levelType} | {level} \n",
+		fmt::print("{edition} | {centre} | {dataDate} {dataTime} | {dataType} | {category} | {number} | {stepRange} | {levelType} | {level} \n",
 			fmt::arg("edition", edition),
 			fmt::arg("centre", centre),
 			fmt::arg("dataDate", dataDate),
+            fmt::arg("dataTime", dataTime),
 			fmt::arg("dataType", dataType),
 			fmt::arg("category", category),
 			fmt::arg("number", number),

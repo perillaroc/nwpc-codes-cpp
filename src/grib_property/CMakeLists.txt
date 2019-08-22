@@ -17,6 +17,7 @@ target_sources(grib_property
         code_table_property.cpp
 		data_values_property.cpp
 		data_date_property.cpp
+		data_time_property.cpp
 		level_property.cpp
 		grib_table.cpp
 		grib_table_database.cpp)
