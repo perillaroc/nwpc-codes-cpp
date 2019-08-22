@@ -3,6 +3,7 @@
 #include "grib_section.h"
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
+#include <grib_property/data_date_property.h>
 
 #include <cstdint>
 
@@ -15,6 +16,8 @@ public:
 	~GribSection1() = default;
 
 	bool parseFile(std::FILE* file, bool header_only = false) override;
+
+    bool decode(GribPropertyContainer* container) override;
 
 private:
 	void init();
@@ -32,6 +35,8 @@ private:
 	NumberProperty<uint8_t> second_;
 	CodeTableProperty production_status_of_processed_data_;
 	CodeTableProperty type_of_processed_data_;
+
+    DataDateProperty data_date_;
 };
 
 

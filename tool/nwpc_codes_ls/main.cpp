@@ -28,10 +28,8 @@ int list_grib_file(const std::string &file_path) {
 		auto centre = message_handler->getString("centre");
 
 		//		dataDate
-		auto year = message_handler->getLong("year");
-		auto month = message_handler->getLong("month");
-		auto day = message_handler->getLong("day");
-		auto dataDate = year * 10000 + month * 100 + day;
+        auto dataDate = message_handler->getLong("dataDate");
+
 		auto dataType = message_handler->getString("typeOfProcessedData");
 
 		// section 3
