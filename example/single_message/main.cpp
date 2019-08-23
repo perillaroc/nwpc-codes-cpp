@@ -4,21 +4,21 @@
 #include <grib_file_handler.h>
 
 int main() {
-	const std::string grib_file_path{"./dist/data/t.850hpa.000.grb2"};
-	//const std::string grib_file_path{ "./dist/data/39.grb2" };
-	
-	auto f = std::fopen(grib_file_path.c_str(), "rb");
+    const std::string grib_file_path{"./dist/data/t.850hpa.000.grb2"};
+    //const std::string grib_file_path{ "./dist/data/39.grb2" };
 
-	grib_coder::GribFileHandler handler(f);
+    auto f = std::fopen(grib_file_path.c_str(), "rb");
 
-	auto message_handler = handler.next();  
+    grib_coder::GribFileHandler handler(f);
 
-	auto discipline = message_handler->getLong("discipline");
-	auto ni = message_handler->getLong("ni");
-	auto nj = message_handler->getString("nj");
-	auto category = message_handler->getString("parameterCategory");
+    auto message_handler = handler.next();
 
-	std::fclose(f);
-	
+    auto discipline = message_handler->getLong("discipline");
+    auto ni = message_handler->getLong("ni");
+    auto nj = message_handler->getString("nj");
+    auto category = message_handler->getString("parameterCategory");
+
+    std::fclose(f);
+
     return 0;
 }

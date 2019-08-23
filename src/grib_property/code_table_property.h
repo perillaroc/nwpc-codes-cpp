@@ -5,13 +5,13 @@
 
 namespace grib_coder {
 
-class CodeTableProperty: public GribProperty {
+class CodeTableProperty : public GribProperty {
 public:
     CodeTableProperty();
     ~CodeTableProperty();
 
-	void setTableDatabase(std::shared_ptr<GribTableDatabase> db);
-	void setTablesVersion(const std::string& version);
+    void setTableDatabase(std::shared_ptr<GribTableDatabase> db);
+    void setTablesVersion(const std::string& version);
 
     void setLong(long value) override;
     long getLong() override;
@@ -19,14 +19,14 @@ public:
     void setDouble(double value) override;
     double getDouble() override;
 
-    void setString(const std::string &value) override;
+    void setString(const std::string& value) override;
     std::string getString() override;
 
     std::string getTitle();
     std::string getAbbreviation();
     std::string getUnits();
 
-    void setCodeTableId(const std::string &code_table_id);
+    void setCodeTableId(const std::string& code_table_id);
     void setOctetCount(size_t count);
 
 private:
@@ -36,8 +36,8 @@ private:
     size_t octet_count_ = 1;
     long value_ = 255;
 
-	std::string tables_version_;
-	std::shared_ptr<GribTableDatabase> table_database_;
+    std::string tables_version_;
+    std::shared_ptr<GribTableDatabase> table_database_;
 };
 
 

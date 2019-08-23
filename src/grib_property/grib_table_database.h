@@ -4,21 +4,21 @@
 
 #include "grib_table.h"
 
-namespace grib_coder{
+namespace grib_coder {
 
 class GribTableDatabase {
 public:
-	GribTableDatabase();
-	~GribTableDatabase();
-	
-	std::shared_ptr<GribTable> getGribTable(const std::string& table_version, const std::string& name);
+    GribTableDatabase();
+    ~GribTableDatabase();
+
+    std::shared_ptr<GribTable> getGribTable(const std::string& table_version, const std::string& name);
 
 private:
-	std::shared_ptr<GribTable> loadGribTable(const std::string& table_version, const std::string& name);
+    std::shared_ptr<GribTable> loadGribTable(const std::string& table_version, const std::string& name);
 
-	// table_version.table_id
-	std::map<std::string, std::shared_ptr<GribTable>> tables_;
-	std::string eccodes_definition_path_;
+    // table_version.table_id
+    std::map<std::string, std::shared_ptr<GribTable>> tables_;
+    std::string eccodes_definition_path_;
 };
 
 

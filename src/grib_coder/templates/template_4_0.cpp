@@ -7,13 +7,11 @@
 namespace grib_coder {
 
 Template_4_0::Template_4_0(int template_length):
-    GribTemplate{ template_length }
-{
+    GribTemplate{template_length} {
     init();
 }
 
-bool Template_4_0::parse(std::vector<unsigned char>& buffer)
-{
+bool Template_4_0::parse(std::vector<unsigned char>& buffer) {
     const auto parameter_category = convert_bytes_to_uint8(&buffer[9]);
     parameter_category_.setLong(parameter_category);
     const auto parameter_number = convert_bytes_to_uint8(&buffer[10]);
@@ -39,15 +37,14 @@ bool Template_4_0::parse(std::vector<unsigned char>& buffer)
     return true;
 }
 
-bool Template_4_0::decode(GribPropertyContainer* container)
-{
+bool Template_4_0::decode(GribPropertyContainer* container) {
     const auto discipline = container->getLong("discipline");
     const auto category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);
 
     const auto number_table_id = fmt::format("4.2.{discipline}.{category}",
-        fmt::arg("discipline", discipline),
-        fmt::arg("category", parameter_category_.getLong()));
+                                             fmt::arg("discipline", discipline),
+                                             fmt::arg("category", parameter_category_.getLong()));
     parameter_number_.setCodeTableId(number_table_id);
 
     level_.decode(container);
@@ -56,8 +53,7 @@ bool Template_4_0::decode(GribPropertyContainer* container)
     return true;
 }
 
-void Template_4_0::registerProperty(std::shared_ptr<GribSection> section)
-{
+void Template_4_0::registerProperty(std::shared_ptr<GribSection> section) {
     section->registerProperty("parameterCategory", &parameter_category_);
     section->registerProperty("parameterNumber", &parameter_number_);
     section->registerProperty("typeOfGeneratingProcess", &type_of_generating_process_);
@@ -77,8 +73,7 @@ void Template_4_0::registerProperty(std::shared_ptr<GribSection> section)
     section->registerProperty("typeOfLevel", &type_of_level_);
 }
 
-void Template_4_0::init()
-{
+void Template_4_0::init() {
     type_of_generating_process_.setCodeTableId("4.3");
     indicator_of_unit_of_time_range_.setCodeTableId("4.4");
     type_of_first_fixed_surface_.setCodeTableId("4.5");

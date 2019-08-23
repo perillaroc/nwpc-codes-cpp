@@ -6,7 +6,7 @@ namespace grib_coder {
 
 class GribProperty;
 
-class GribPropertyContainer{
+class GribPropertyContainer {
 public:
     GribPropertyContainer() = default;
     virtual ~GribPropertyContainer() = default;

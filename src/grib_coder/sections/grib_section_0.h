@@ -11,19 +11,19 @@ namespace grib_coder {
 
 class GribSection0 : public GribSection {
 public:
-	GribSection0();
+    GribSection0();
 
-	~GribSection0() = default;
+    ~GribSection0() = default;
 
-	bool parseFile(std::FILE* file, bool header_only = false) override;
+    bool parseFile(std::FILE* file, bool header_only = false) override;
 
 private:
-	void init();
+    void init();
 
-	std::string identifier_ = "GRIB";
-	CodeTableProperty discipline_;
-	NumberProperty<uint8_t> edition_number_ = 0;
-	NumberProperty<uint64_t> total_length_ = 0;
+    std::string identifier_ = "GRIB";
+    CodeTableProperty discipline_;
+    NumberProperty<uint8_t> edition_number_ = 0;
+    NumberProperty<uint64_t> total_length_ = 0;
 };
 
 } // namespace grib_coder

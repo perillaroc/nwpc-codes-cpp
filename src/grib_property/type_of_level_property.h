@@ -3,7 +3,7 @@
 
 namespace grib_coder {
 
-class TypeOfLevelProperty: public GribProperty{
+class TypeOfLevelProperty : public GribProperty {
 public:
     TypeOfLevelProperty() = default;
     ~TypeOfLevelProperty() = default;

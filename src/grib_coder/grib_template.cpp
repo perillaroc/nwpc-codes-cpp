@@ -3,12 +3,10 @@
 namespace grib_coder {
 
 GribTemplate::GribTemplate(int template_length):
-    template_length_{ template_length }
-{
+    template_length_{template_length} {
 }
 
-bool GribTemplate::decode(GribPropertyContainer* container)
-{
+bool GribTemplate::decode(GribPropertyContainer* container) {
     return true;
 }
 

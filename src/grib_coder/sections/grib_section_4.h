@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include "grib_section.h"
 #include "grib_template.h"
@@ -10,21 +10,21 @@
 
 namespace grib_coder {
 
-class GribSection4 : public GribSection  {
+class GribSection4 : public GribSection {
 public:
-	GribSection4();
-	explicit GribSection4(int section_length);
-	~GribSection4() = default;
+    GribSection4();
+    explicit GribSection4(int section_length);
+    ~GribSection4() = default;
 
-	bool parseFile(std::FILE* file, bool header_only = false) override;
+    bool parseFile(std::FILE* file, bool header_only = false) override;
 
-	bool decode(GribPropertyContainer* container) override;
+    bool decode(GribPropertyContainer* container) override;
 
 private:
-	void init();
+    void init();
 
-	NumberProperty<uint16_t> nv_;
-	CodeTableProperty product_definition_template_number_;
+    NumberProperty<uint16_t> nv_;
+    CodeTableProperty product_definition_template_number_;
 
     std::shared_ptr<GribTemplate> product_definition_template_;
 };

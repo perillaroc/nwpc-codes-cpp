@@ -7,25 +7,21 @@
 namespace grib_coder {
 
 GribSection1::GribSection1() :
-    GribSection(1)
-{
+    GribSection(1) {
     init();
 }
 
 GribSection1::GribSection1(long section_length) :
-    GribSection(1, section_length)
-{
+    GribSection(1, section_length) {
     assert(section_length == 21);
     init();
 }
 
-bool GribSection1::parseFile(std::FILE* file, bool header_only)
-{
+bool GribSection1::parseFile(std::FILE* file, bool header_only) {
     auto buffer_length = section_length_ - 5;
     std::vector<unsigned char> buffer(buffer_length);
     auto read_count = std::fread(&buffer[0], 1, buffer_length, file);
-    if (read_count != buffer_length)
-    {
+    if (read_count != buffer_length) {
         return false;
     }
 
@@ -57,8 +53,7 @@ bool GribSection1::parseFile(std::FILE* file, bool header_only)
     return true;
 }
 
-bool GribSection1::decode(GribPropertyContainer* container)
-{
+bool GribSection1::decode(GribPropertyContainer* container) {
     auto result = data_date_.decode(container);
     if (!result) return false;
 
@@ -66,8 +61,7 @@ bool GribSection1::decode(GribPropertyContainer* container)
     return result;
 }
 
-void GribSection1::init()
-{
+void GribSection1::init() {
     tables_version_.setCodeTableId("1.0");
     local_tables_version_.setCodeTableId("1.1");
     significance_of_reference_time_.setCodeTableId("1.2");
@@ -92,8 +86,7 @@ void GribSection1::init()
         {"dataTime", &data_time_}
     };
 
-    for(const auto &item: properties)
-    {
+    for (const auto& item : properties) {
         registerProperty(std::get<0>(item), std::get<1>(item));
     }
 }

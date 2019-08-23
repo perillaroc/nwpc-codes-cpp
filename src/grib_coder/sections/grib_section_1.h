@@ -11,31 +11,31 @@
 namespace grib_coder {
 class GribSection1 : public GribSection {
 public:
-	GribSection1();
-	explicit GribSection1(long section_length);
+    GribSection1();
+    explicit GribSection1(long section_length);
 
-	~GribSection1() = default;
+    ~GribSection1() = default;
 
-	bool parseFile(std::FILE* file, bool header_only = false) override;
+    bool parseFile(std::FILE* file, bool header_only = false) override;
 
     bool decode(GribPropertyContainer* container) override;
 
 private:
-	void init();
+    void init();
 
-	NumberProperty<uint16_t> centre_;
-	NumberProperty<uint16_t> sub_centre_;
-	CodeTableProperty tables_version_;
-	CodeTableProperty local_tables_version_;
-	CodeTableProperty significance_of_reference_time_;
-	NumberProperty<uint16_t> year_;
-	NumberProperty<uint8_t> month_;
-	NumberProperty<uint8_t> day_;
-	NumberProperty<uint8_t> hour_;
-	NumberProperty<uint8_t> minute_;
-	NumberProperty<uint8_t> second_;
-	CodeTableProperty production_status_of_processed_data_;
-	CodeTableProperty type_of_processed_data_;
+    NumberProperty<uint16_t> centre_;
+    NumberProperty<uint16_t> sub_centre_;
+    CodeTableProperty tables_version_;
+    CodeTableProperty local_tables_version_;
+    CodeTableProperty significance_of_reference_time_;
+    NumberProperty<uint16_t> year_;
+    NumberProperty<uint8_t> month_;
+    NumberProperty<uint8_t> day_;
+    NumberProperty<uint8_t> hour_;
+    NumberProperty<uint8_t> minute_;
+    NumberProperty<uint8_t> second_;
+    CodeTableProperty production_status_of_processed_data_;
+    CodeTableProperty type_of_processed_data_;
 
     DataDateProperty data_date_;
     DataTimeProperty data_time_;

@@ -3,7 +3,7 @@
 
 namespace grib_coder {
 
-class DataValuesProperty: public GribProperty {
+class DataValuesProperty : public GribProperty {
 public:
     DataValuesProperty();
     ~DataValuesProperty();
@@ -13,12 +13,10 @@ public:
 
     void setRawValues(std::vector<unsigned char>&& raw_values);
 
-    bool decodeValues(GribPropertyContainer *container);
+    bool decodeValues(GribPropertyContainer* container);
 
 private:
     std::vector<unsigned char> raw_value_bytes_;
     std::vector<double> code_values_;
-
-
 };
 } // namespace grib_coder

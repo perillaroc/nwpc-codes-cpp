@@ -7,30 +7,24 @@
 
 namespace grib_coder {
 
-DataValuesProperty::DataValuesProperty()
-{
+DataValuesProperty::DataValuesProperty() {
 }
 
-DataValuesProperty::~DataValuesProperty()
-{
+DataValuesProperty::~DataValuesProperty() {
 }
 
-void DataValuesProperty::setDoubleArray(std::vector<double>& values)
-{
+void DataValuesProperty::setDoubleArray(std::vector<double>& values) {
 }
 
-std::vector<double> DataValuesProperty::getDoubleArray()
-{
+std::vector<double> DataValuesProperty::getDoubleArray() {
     return std::vector<double>();
 }
 
-void DataValuesProperty::setRawValues(std::vector<unsigned char>&& raw_values)
-{
+void DataValuesProperty::setRawValues(std::vector<unsigned char>&& raw_values) {
     raw_value_bytes_ = std::move(raw_values);
 }
 
-bool DataValuesProperty::decodeValues(GribPropertyContainer* container)
-{
+bool DataValuesProperty::decodeValues(GribPropertyContainer* container) {
     if (raw_value_bytes_.empty()) {
         return true;
     }

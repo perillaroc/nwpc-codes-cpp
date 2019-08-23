@@ -3,7 +3,7 @@
 
 namespace grib_coder {
 
-class LevelProperty: public GribProperty {
+class LevelProperty : public GribProperty {
 public:
     LevelProperty();
     ~LevelProperty() = default;
@@ -13,7 +13,7 @@ public:
     }
 
     std::string getString() override;
-    
+
     bool decode(GribPropertyContainer* container) override;
 
 private:

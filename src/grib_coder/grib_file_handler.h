@@ -6,16 +6,16 @@
 namespace grib_coder {
 class GribFileHandler {
 public:
-	explicit GribFileHandler(std::FILE *file, bool header_only=false);
+    explicit GribFileHandler(std::FILE* file, bool header_only = false);
 
-	~GribFileHandler();
+    ~GribFileHandler();
 
-	std::unique_ptr<GribMessageHandler> next();
+    std::unique_ptr<GribMessageHandler> next();
 
 private:
-	bool header_only_ = false;
-	std::shared_ptr<GribTableDatabase> table_database_;
+    bool header_only_ = false;
+    std::shared_ptr<GribTableDatabase> table_database_;
 
-	std::FILE* file_ = nullptr;
+    std::FILE* file_ = nullptr;
 };
 } // namespace grib_coder

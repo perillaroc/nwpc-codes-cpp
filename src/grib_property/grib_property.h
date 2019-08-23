@@ -19,14 +19,13 @@ public:
     virtual void setDouble(double value);
     virtual double getDouble();
 
-    virtual void setString(const std::string &value);
+    virtual void setString(const std::string& value);
     virtual std::string getString();
 
-    virtual void setDoubleArray(std::vector<double> &values);
+    virtual void setDoubleArray(std::vector<double>& values);
     virtual std::vector<double> getDoubleArray();
 
     virtual bool decode(GribPropertyContainer* container);
 };
 
 } // namespace grib_coder
-

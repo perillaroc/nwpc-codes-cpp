@@ -2,8 +2,7 @@
 
 namespace grib_coder {
 
-std::optional<GribTableRecord> GribTable::getRecord(int code)
-{
+std::optional<GribTableRecord> GribTable::getRecord(int code) {
     for (auto& i : records_) {
         if (i.code_ == code) {
             return i;
@@ -13,5 +12,3 @@ std::optional<GribTableRecord> GribTable::getRecord(int code)
 }
 
 } // namespace grib_coder
-
-

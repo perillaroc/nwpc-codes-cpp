@@ -4,30 +4,27 @@
 #include <cassert>
 
 
-void openjpeg_warning(const char* msg, void* client_data)
-{
+void openjpeg_warning(const char* msg, void* client_data) {
 }
 
-void openjpeg_error(const char* msg, void* client_data)
-{
+void openjpeg_error(const char* msg, void* client_data) {
 }
 
-void openjpeg_info(const char* msg, void* client_data)
-{
+void openjpeg_info(const char* msg, void* client_data) {
 }
 
 namespace grib_coder {
 
-std::vector<double> decode_jpeg2000_values(unsigned char *buf, size_t raw_data_length, size_t data_count) {
+std::vector<double> decode_jpeg2000_values(unsigned char* buf, size_t raw_data_length, size_t data_count) {
     int err = 0;
     unsigned long mask;
     std::vector<double> val;
 
-    opj_dparameters_t parameters = {0,};    /* decompression parameters */
-    opj_stream_t *stream = nullptr;
+    opj_dparameters_t parameters = {0,}; /* decompression parameters */
+    opj_stream_t* stream = nullptr;
     opj_memory_stream mstream;
-    opj_image_t *image = nullptr;
-    opj_codec_t *codec = nullptr;
+    opj_image_t* image = nullptr;
+    opj_codec_t* codec = nullptr;
     opj_image_comp_t comp = {0,};
 
     /* set decoding parameters to default values */
@@ -74,7 +71,7 @@ std::vector<double> decode_jpeg2000_values(unsigned char *buf, size_t raw_data_l
 
     assert(image->comps[0].sgnd == 0);
     assert(comp.prec <= sizeof(image->comps[0].data[0]) * 8 -
-                        1); /* BR: -1 because I don't know what happens if the sign bit is set */
+        1); /* BR: -1 because I don't know what happens if the sign bit is set */
 
     assert(image->comps[0].prec < sizeof(mask) * 8 - 1);
 
@@ -85,7 +82,7 @@ std::vector<double> decode_jpeg2000_values(unsigned char *buf, size_t raw_data_l
         auto count = image->comps[0].w * image->comps[0].h;
 
         val.resize(count);
-		for (auto i = 0; i < count; i++) {
+        for (auto i = 0; i < count; i++) {
             auto v = data[i];
             val[i] = v & mask;
         }
@@ -96,7 +93,7 @@ std::vector<double> decode_jpeg2000_values(unsigned char *buf, size_t raw_data_l
     }
 
 
-    cleanup:
+cleanup:
     /* close the byte stream */
     if (codec) opj_destroy_codec(codec);
     if (stream) opj_stream_destroy(stream);

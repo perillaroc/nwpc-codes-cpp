@@ -3,7 +3,7 @@
 
 namespace grib_coder {
 
-class DataDateProperty: public GribProperty{
+class DataDateProperty : public GribProperty {
 public:
     DataDateProperty() = default;
     ~DataDateProperty() = default;

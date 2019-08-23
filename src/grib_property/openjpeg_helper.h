@@ -3,22 +3,22 @@
 #include <openjpeg.h>
 
 struct j2k_encode_helper {
-	size_t           buffer_size;
+    size_t buffer_size;
 
-	long             width;
-	long             height;
-	long             bits_per_value;
+    long width;
+    long height;
+    long bits_per_value;
 
-	float            compression;
+    float compression;
 
-	long             no_values;
-	const double* values;
-	double           reference_value;
-	double           divisor;
-	double           decimal;
+    long no_values;
+    const double* values;
+    double reference_value;
+    double divisor;
+    double decimal;
 
-	long             jpeg_length;
-	unsigned char* jpeg_buffer;
+    long jpeg_length;
+    unsigned char* jpeg_buffer;
 };
 
 /* OpenJPEG 2.1 version of grib_openjpeg_encoding.c */
@@ -26,12 +26,11 @@ struct j2k_encode_helper {
 /* opj_* Helper code from https://groups.google.com/forum/#!topic/openjpeg/8cebr0u7JgY */
 /* These routines are added to use memory instead of a file for input and output */
 /* struct need to treat memory as a stream */
-struct opj_memory_stream
-{
-	OPJ_UINT8* pData;       /* our data */
-	OPJ_SIZE_T dataSize;    /* how big is our data */
-	OPJ_SIZE_T offset;      /* where we are currently in our data */
-	j2k_encode_helper* helper;
+struct opj_memory_stream {
+    OPJ_UINT8* pData; /* our data */
+    OPJ_SIZE_T dataSize; /* how big is our data */
+    OPJ_SIZE_T offset; /* where we are currently in our data */
+    j2k_encode_helper* helper;
 };
 
 /* This will read from our memory to the buffer */
@@ -50,4 +49,3 @@ void opj_memory_stream_do_nothing(void* p_user_data);
 
 /* Create a stream to use memory as the input or output */
 opj_stream_t* opj_stream_create_default_memory_stream(opj_memory_stream* memoryStream, OPJ_BOOL is_read_stream);
-

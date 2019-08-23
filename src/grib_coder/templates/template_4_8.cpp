@@ -9,13 +9,11 @@
 namespace grib_coder {
 
 Template_4_8::Template_4_8(int template_length):
-    GribTemplate{ template_length }
-{
+    GribTemplate{template_length} {
     init();
 }
 
-bool Template_4_8::parse(std::vector<unsigned char>& buffer)
-{
+bool Template_4_8::parse(std::vector<unsigned char>& buffer) {
     const auto parameter_category = convert_bytes_to_uint8(&buffer[9]);
     parameter_category_.setLong(parameter_category);
     const auto parameter_number = convert_bytes_to_uint8(&buffer[10]);
@@ -41,15 +39,14 @@ bool Template_4_8::parse(std::vector<unsigned char>& buffer)
     return true;
 }
 
-bool Template_4_8::decode(GribPropertyContainer* container)
-{
+bool Template_4_8::decode(GribPropertyContainer* container) {
     const auto discipline = container->getLong("discipline");
     const auto category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);
 
     const auto number_table_id = fmt::format("4.2.{discipline}.{category}",
-        fmt::arg("discipline", discipline),
-        fmt::arg("category", parameter_category_.getLong()));
+                                             fmt::arg("discipline", discipline),
+                                             fmt::arg("category", parameter_category_.getLong()));
     parameter_number_.setCodeTableId(number_table_id);
 
     level_.decode(container);
@@ -58,13 +55,12 @@ bool Template_4_8::decode(GribPropertyContainer* container)
     return true;
 }
 
-void Template_4_8::registerProperty(std::shared_ptr<GribSection> section)
-{
+void Template_4_8::registerProperty(std::shared_ptr<GribSection> section) {
     const std::vector<std::tuple<std::string, GribProperty*>> properties = {
         {"parameterCategory", &parameter_category_},
-        {"parameterNumber", &parameter_number_ },
-        {"typeOfGeneratingProcess", &type_of_generating_process_ },
-        {"backgroundProcess", &background_process_ },
+        {"parameterNumber", &parameter_number_},
+        {"typeOfGeneratingProcess", &type_of_generating_process_},
+        {"backgroundProcess", &background_process_},
         {"generatingProcessIdentifier", &generating_process_identifier_},
         {"hoursAfterDataCutoff", &hours_after_data_cutoff_},
         {"minutesAfterDataCutoff", &minutes_after_data_cutoff_},
@@ -79,19 +75,18 @@ void Template_4_8::registerProperty(std::shared_ptr<GribSection> section)
         {"level", &level_},
         {"typeOfLevel", &type_of_level_},
     };
-    
-    for (auto & item : properties) {
+
+    for (auto& item : properties) {
         section->registerProperty(std::get<0>(item), std::get<1>(item));
-    }    
+    }
 }
 
-void Template_4_8::init()
-{
+void Template_4_8::init() {
     const std::vector<std::tuple<CodeTableProperty*, std::string>> properties = {
         {&type_of_generating_process_, "4.3"},
-        {&indicator_of_unit_of_time_range_, "4.3" },
-        {&type_of_first_fixed_surface_, "4.5" },
-        {&type_of_second_fixed_surface_, "4.5" },
+        {&indicator_of_unit_of_time_range_, "4.3"},
+        {&type_of_first_fixed_surface_, "4.5"},
+        {&type_of_second_fixed_surface_, "4.5"},
     };
 
     for (const auto& item : properties) {

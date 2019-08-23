@@ -4,23 +4,20 @@
 
 namespace grib_coder {
 GribSection7::GribSection7():
-	GribSection{7}
-{
+    GribSection{7} {
 }
 
 GribSection7::GribSection7(int section_length):
-	GribSection{7, section_length}
-{
+    GribSection{7, section_length} {
 }
 
-bool GribSection7::parseFile(std::FILE* file, bool header_only)
-{
-	const auto buffer_length = section_length_ - 5;
-	if (buffer_length == 0) {
-		return true;
-	}
+bool GribSection7::parseFile(std::FILE* file, bool header_only) {
+    const auto buffer_length = section_length_ - 5;
+    if (buffer_length == 0) {
+        return true;
+    }
 
-    if(header_only) {
+    if (header_only) {
         std::fseek(file, buffer_length, SEEK_CUR);
     } else {
         std::vector<unsigned char> buffer(section_length_);
@@ -35,19 +32,18 @@ bool GribSection7::parseFile(std::FILE* file, bool header_only)
         data_values_.setRawValues(std::move(raw_value_bytes));
     }
 
-	return true;
-}
-bool GribSection7::decode(GribPropertyContainer* container)
-{
-	return true;
+    return true;
 }
 
-bool GribSection7::decodeValues(GribPropertyContainer* container)
-{
+bool GribSection7::decode(GribPropertyContainer* container) {
+    return true;
+}
+
+bool GribSection7::decodeValues(GribPropertyContainer* container) {
     return data_values_.decodeValues(container);
 }
-void GribSection7::init()
-{
+
+void GribSection7::init() {
     registerProperty("dataValues", &data_values_);
     registerProperty("values", &data_values_);
 }
