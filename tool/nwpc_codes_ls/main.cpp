@@ -1,9 +1,6 @@
 #include <iostream>
 #include <string>
 #include <chrono>
-#include <limits>
-#include <cstdint>
-#include <cmath>
 
 #include <grib_file_handler.h>
 
@@ -38,7 +35,7 @@ int list_grib_file(const std::string &file_path) {
 
 		// section 4
 		//		typeOfLevel
-		auto levelType = message_handler->getString("typeOfFirstFixedSurface");
+        auto typeOfLevel = message_handler->getString("typeOfLevel");
 
 		//		level
         auto level = message_handler->getString("level");
@@ -53,7 +50,7 @@ int list_grib_file(const std::string &file_path) {
 
 		auto category = message_handler->getString("parameterCategory");
 		auto number = message_handler->getString("parameterNumber");
-		fmt::print("{edition} | {centre} | {dataDate} {dataTime} | {dataType} | {category} | {number} | {stepRange} | {levelType} | {level} \n",
+		fmt::print("{edition} | {centre} | {dataDate} {dataTime} | {dataType} | {category} | {number} | {stepRange} | {typeOfLevel} | {level} \n",
 			fmt::arg("edition", edition),
 			fmt::arg("centre", centre),
 			fmt::arg("dataDate", dataDate),
@@ -62,7 +59,7 @@ int list_grib_file(const std::string &file_path) {
 			fmt::arg("category", category),
 			fmt::arg("number", number),
 			fmt::arg("stepRange", stepRange),
-			fmt::arg("levelType", levelType), 
+			fmt::arg("typeOfLevel", typeOfLevel),
 			fmt::arg("level", level));
 		message_handler = handler.next();
 	}

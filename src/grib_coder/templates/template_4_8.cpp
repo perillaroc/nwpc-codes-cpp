@@ -53,6 +53,7 @@ bool Template_4_8::decode(GribPropertyContainer* container)
     parameter_number_.setCodeTableId(number_table_id);
 
     level_.decode(container);
+    type_of_level_.decode(container);
 
     return true;
 }
@@ -76,6 +77,7 @@ void Template_4_8::registerProperty(std::shared_ptr<GribSection> section)
         {"scaleFactorOfSecondFixedSurface", &scale_factor_of_second_fixed_surface_},
         {"scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_},
         {"level", &level_},
+        {"typeOfLevel", &type_of_level_},
     };
     
     for (auto & item : properties) {
