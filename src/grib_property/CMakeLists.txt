@@ -15,14 +15,15 @@ target_sources(grib_property
         grib_property.cpp
 		grib_property_container.cpp
         code_table_property.cpp
+		computed/openjpeg_helper.cpp
+		computed/openjpeg_decoder.cpp
 		computed/data_values_property.cpp
 		computed/data_date_property.cpp
 		computed/data_time_property.cpp
 		computed/level_property.cpp
 		computed/type_of_level_property.cpp
 		computed/packing_type_property.cpp
-		computed/openjpeg_helper.cpp
-		computed/openjpeg_decoder.cpp)
+		computed/grid_type_property.cpp)
 
 
 target_include_directories(grib_property

@@ -2,6 +2,7 @@
 #include "grib_section.h"
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
+#include <grib_property/computed/grid_type_property.h>
 
 #include <cstdint>
 
@@ -13,6 +14,8 @@ public:
     ~GribSection3() = default;
 
     bool parseFile(std::FILE* file, bool header_only = false) override;
+
+    bool decode(GribPropertyContainer* container) override;
 
 private:
     void init();
@@ -43,5 +46,7 @@ private:
     NumberProperty<uint32_t> i_direction_increment_;
     NumberProperty<uint32_t> j_direction_increment_;
     NumberProperty<uint8_t> scanning_mode_;
+
+    GridTypeProperty grid_type_;
 };
 } // namespace grib_coder

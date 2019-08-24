@@ -57,6 +57,12 @@ bool GribSection3::parseFile(std::FILE* file, bool header_only) {
     return true;
 }
 
+bool GribSection3::decode(GribPropertyContainer* container)
+{
+    auto result = grid_type_.decode(container);
+    return result;
+}
+
 void GribSection3::init() {
     source_of_grid_definition_.setCodeTableId("3.0");
     interpretation_of_number_of_points_.setCodeTableId("3.11");
@@ -91,6 +97,8 @@ void GribSection3::init() {
     registerProperty("iDirectionIncrement", &i_direction_increment_);
     registerProperty("jDirectionIncrement", &j_direction_increment_);
     registerProperty("scanningMode", &scanning_mode_);
+
+    registerProperty("gridType", &grid_type_);
 }
 
 } // namespace grib_coder

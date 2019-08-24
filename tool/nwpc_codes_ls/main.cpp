@@ -32,6 +32,7 @@ int list_grib_file(const std::string& file_path) {
 
         // section 3
         //		grid type
+        auto grid_type = message_handler->getString("gridType");
 
         // section 4
         //		typeOfLevel
@@ -52,12 +53,13 @@ int list_grib_file(const std::string& file_path) {
         auto category = message_handler->getString("parameterCategory");
         auto number = message_handler->getString("parameterNumber");
         fmt::print(
-            "{edition} | {centre} | {dataDate} {dataTime} | {dataType} | {category} | {number} | {stepRange} | {typeOfLevel} | {level} | {packing_type} \n",
+            "{edition} | {centre} | {dataDate} {dataTime} | {dataType} | {grid_type} | {category} | {number} | {stepRange} | {typeOfLevel} | {level} | {packing_type} \n",
             fmt::arg("edition", edition),
             fmt::arg("centre", centre),
             fmt::arg("dataDate", dataDate),
             fmt::arg("dataTime", dataTime),
             fmt::arg("dataType", dataType),
+            fmt::arg("grid_type", grid_type),
             fmt::arg("category", category),
             fmt::arg("number", number),
             fmt::arg("stepRange", stepRange),
