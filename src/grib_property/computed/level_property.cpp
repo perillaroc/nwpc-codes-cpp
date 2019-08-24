@@ -23,9 +23,16 @@ std::string LevelProperty::getString() {
 bool LevelProperty::decode(GribPropertyContainer* container) {
     const auto level_number_factor = container->getLong("scaleFactorOfFirstFixedSurface");
     const auto level_number_value = container->getLong("scaledValueOfFirstFixedSurface");
+    const auto type_of_first_fixed_surface = container->getLong("typeOfFirstFixedSurface");
+
     std::string level;
     if (level_number_factor == std::numeric_limits<uint8_t>::max() ||
         level_number_value == std::numeric_limits<uint32_t>::max()) {
+
+        if(type_of_first_fixed_surface < 10) {
+            value_ = 0;
+        }
+
         return true;
     }
 
