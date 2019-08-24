@@ -3,8 +3,8 @@
 #include "grib_section.h"
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
-#include <grib_property/data_date_property.h>
-#include <grib_property/data_time_property.h>
+#include <grib_property/computed/data_date_property.h>
+#include <grib_property/computed/data_time_property.h>
 
 #include <cstdint>
 

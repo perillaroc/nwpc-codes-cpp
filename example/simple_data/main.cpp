@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <cmath>
 
-#include "grib_property/openjpeg_decoder.h"
+#include <grib_property/computed/openjpeg_decoder.h>
 
 float convert_to_float(uint32_t v) {
     return *(reinterpret_cast<float*>(&v));

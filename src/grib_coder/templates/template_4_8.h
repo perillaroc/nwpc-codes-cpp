@@ -3,8 +3,8 @@
 
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
-#include <grib_property/level_property.h>
-#include <grib_property/type_of_level_property.h>
+#include <grib_property/computed/level_property.h>
+#include <grib_property/computed/type_of_level_property.h>
 
 namespace grib_coder {
 

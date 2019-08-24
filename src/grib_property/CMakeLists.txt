@@ -10,18 +10,18 @@ add_library(grib_property STATIC)
 
 target_sources(grib_property
 	PRIVATE
-		openjpeg_helper.cpp
-		openjpeg_decoder.cpp
+		grib_table.cpp
+		grib_table_database.cpp
         grib_property.cpp
 		grib_property_container.cpp
         code_table_property.cpp
-		data_values_property.cpp
-		data_date_property.cpp
-		data_time_property.cpp
-		level_property.cpp
-		type_of_level_property.cpp
-		grib_table.cpp
-		grib_table_database.cpp)
+		computed/data_values_property.cpp
+		computed/data_date_property.cpp
+		computed/data_time_property.cpp
+		computed/level_property.cpp
+		computed/type_of_level_property.cpp
+		computed/openjpeg_helper.cpp
+		computed/openjpeg_decoder.cpp)
 
 
 target_include_directories(grib_property

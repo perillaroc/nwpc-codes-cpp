@@ -1,7 +1,7 @@
 #pragma once
 
 #include "grib_section.h"
-#include <grib_property/data_values_property.h>
+#include <grib_property/computed/data_values_property.h>
 
 namespace grib_coder {
 

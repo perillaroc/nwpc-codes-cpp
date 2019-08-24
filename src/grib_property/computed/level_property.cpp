@@ -1,5 +1,5 @@
 #include "level_property.h"
-#include "grib_property_container.h"
+#include <grib_property/grib_property_container.h>
 
 #include <fmt/format.h>
 
@@ -24,8 +24,8 @@ bool LevelProperty::decode(GribPropertyContainer* container) {
     const auto level_number_factor = container->getLong("scaleFactorOfFirstFixedSurface");
     const auto level_number_value = container->getLong("scaledValueOfFirstFixedSurface");
     std::string level;
-    if (level_number_factor == std::numeric_limits<uint8_t>::max() || level_number_value == std::numeric_limits<uint32_t
-    >::max()) {
+    if (level_number_factor == std::numeric_limits<uint8_t>::max() ||
+        level_number_value == std::numeric_limits<uint32_t>::max()) {
         return true;
     }
 

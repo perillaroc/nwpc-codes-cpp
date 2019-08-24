@@ -1,5 +1,5 @@
 #pragma once
-#include "grib_property.h"
+#include <grib_property/grib_property.h>
 
 namespace grib_coder {
 

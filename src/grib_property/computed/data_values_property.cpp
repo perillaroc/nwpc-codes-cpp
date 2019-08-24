@@ -1,5 +1,5 @@
 #include "data_values_property.h"
-#include "grib_property_container.h"
+#include <grib_property/grib_property_container.h>
 #include "openjpeg_decoder.h"
 
 #include <algorithm>

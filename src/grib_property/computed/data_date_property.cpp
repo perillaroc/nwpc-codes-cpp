@@ -1,5 +1,5 @@
 #include "data_date_property.h"
-#include "grib_property_container.h"
+#include <grib_property/grib_property_container.h>
 
 #include <fmt/format.h>
 

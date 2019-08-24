@@ -1,12 +1,12 @@
 #pragma once
-#include "grib_property.h"
+#include <grib_property/grib_property.h>
 
 namespace grib_coder {
 
-class DataDateProperty : public GribProperty {
+class DataTimeProperty : public GribProperty {
 public:
-    DataDateProperty() = default;
-    ~DataDateProperty() = default;
+    DataTimeProperty() = default;
+    ~DataTimeProperty() = default;
 
     void setLong(long value) override;
     long getLong() override;
@@ -20,9 +20,9 @@ public:
     bool decode(GribPropertyContainer* container) override;
 
 private:
-    int year_;
-    int month_;
-    int day_;
+    int hour_ = -1;
+    int minute_ = -1;
+    int second_ = -1;
 };
 
 } // namespace grib_coder
