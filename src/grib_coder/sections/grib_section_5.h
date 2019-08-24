@@ -3,6 +3,7 @@
 #include "grib_section.h"
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
+#include <grib_property/computed/packing_type_property.h>
 
 #include <cstdint>
 
@@ -16,6 +17,8 @@ public:
     ~GribSection5() = default;
 
     bool parseFile(std::FILE* file, bool header_only = false) override;
+
+    bool decode(GribPropertyContainer* container) override;
 
 private:
     void init();
@@ -31,6 +34,8 @@ private:
     CodeTableProperty type_of_original_field_values_;
     CodeTableProperty type_of_compression_used_;
     NumberProperty<uint8_t> target_compression_ratio_;
+
+    PackingTypeProperty packing_type_;
 };
 
 } // namespace grib_coder

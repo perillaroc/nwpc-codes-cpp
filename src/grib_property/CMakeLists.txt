@@ -20,6 +20,7 @@ target_sources(grib_property
 		computed/data_time_property.cpp
 		computed/level_property.cpp
 		computed/type_of_level_property.cpp
+		computed/packing_type_property.cpp
 		computed/openjpeg_helper.cpp
 		computed/openjpeg_decoder.cpp)
 

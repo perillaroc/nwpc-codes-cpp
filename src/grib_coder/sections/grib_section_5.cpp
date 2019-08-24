@@ -40,6 +40,12 @@ bool GribSection5::parseFile(std::FILE* file, bool header_only) {
     return true;
 }
 
+bool GribSection5::decode(GribPropertyContainer* container)
+{
+    auto result = packing_type_.decode(container);
+    return result;
+}
+
 void GribSection5::init() {
     data_representation_template_number_.setCodeTableId("5.0");
     data_representation_template_number_.setOctetCount(2);
@@ -57,5 +63,7 @@ void GribSection5::init() {
     registerProperty("typeOfOriginalFieldValues", &type_of_original_field_values_);
     registerProperty("typeOfCompressionUsed", &type_of_compression_used_);
     registerProperty("targetCompressionRatio", &target_compression_ratio_);
+
+    registerProperty("packingType", &packing_type_);
 }
 } // namespace grib_coder

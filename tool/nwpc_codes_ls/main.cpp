@@ -47,11 +47,12 @@ int list_grib_file(const std::string& file_path) {
 
         // section 5
         //		packagingType
+        auto packing_type = message_handler->getString("packingType");
 
         auto category = message_handler->getString("parameterCategory");
         auto number = message_handler->getString("parameterNumber");
         fmt::print(
-            "{edition} | {centre} | {dataDate} {dataTime} | {dataType} | {category} | {number} | {stepRange} | {typeOfLevel} | {level} \n",
+            "{edition} | {centre} | {dataDate} {dataTime} | {dataType} | {category} | {number} | {stepRange} | {typeOfLevel} | {level} | {packing_type} \n",
             fmt::arg("edition", edition),
             fmt::arg("centre", centre),
             fmt::arg("dataDate", dataDate),
@@ -61,7 +62,8 @@ int list_grib_file(const std::string& file_path) {
             fmt::arg("number", number),
             fmt::arg("stepRange", stepRange),
             fmt::arg("typeOfLevel", typeOfLevel),
-            fmt::arg("level", level));
+            fmt::arg("level", level),
+            fmt::arg("packing_type", packing_type));
         message_handler = handler.next();
     }
 
