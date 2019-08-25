@@ -25,26 +25,27 @@ int list_grib_file(const std::string& file_path) {
         auto centre = message_handler->getString("centre");
 
         //		dataDate
-        auto dataDate = message_handler->getString("dataDate");
-        auto dataTime = message_handler->getString("dataTime");
+        auto data_date = message_handler->getString("dataDate");
+        auto data_time = message_handler->getString("dataTime");
 
-        auto dataType = message_handler->getString("typeOfProcessedData");
+        auto data_type = message_handler->getString("typeOfProcessedData");
 
         // section 3
         //		grid type
         auto grid_type = message_handler->getString("gridType");
 
         // section 4
-        //		typeOfLevel
-        auto typeOfLevel = message_handler->getString("typeOfLevel");
+        //		type_of_level
+        auto type_of_level = message_handler->getString("typeOfLevel");
 
         //		level
         auto level = message_handler->getString("level");
 
         //		stepRange
-        auto forecastTime = message_handler->getLong("forecastTime");
+        auto forecast_time = message_handler->getLong("forecastTime");
+        // auto step_units = message_handler->getLong("stepUnits");
         auto indicator_of_unit_of_time_range = message_handler->getLong("indicatorOfUnitOfTimeRange");
-        auto stepRange = fmt::format("{forecastTime}", fmt::arg("forecastTime", forecastTime));
+        auto step_range = fmt::format("{forecastTime}", fmt::arg("forecastTime", forecast_time));
 
         // section 5
         //		packagingType
@@ -53,17 +54,18 @@ int list_grib_file(const std::string& file_path) {
         auto category = message_handler->getString("parameterCategory");
         auto number = message_handler->getString("parameterNumber");
         fmt::print(
-            "{edition} | {centre} | {dataDate} {dataTime} | {dataType} | {grid_type} | {category} | {number} | {stepRange} | {typeOfLevel} | {level} | {packing_type} \n",
+            "{edition} | {centre} | {data_date} {data_time} | {data_type} | {grid_type} | "
+            " {category} | {number} | {step_range} | {type_of_level} | {level} | {packing_type} \n",
             fmt::arg("edition", edition),
             fmt::arg("centre", centre),
-            fmt::arg("dataDate", dataDate),
-            fmt::arg("dataTime", dataTime),
-            fmt::arg("dataType", dataType),
+            fmt::arg("data_date", data_date),
+            fmt::arg("data_time", data_time),
+            fmt::arg("data_type", data_type),
             fmt::arg("grid_type", grid_type),
             fmt::arg("category", category),
             fmt::arg("number", number),
-            fmt::arg("stepRange", stepRange),
-            fmt::arg("typeOfLevel", typeOfLevel),
+            fmt::arg("step_range", step_range),
+            fmt::arg("type_of_level", type_of_level),
             fmt::arg("level", level),
             fmt::arg("packing_type", packing_type));
         message_handler = handler.next();

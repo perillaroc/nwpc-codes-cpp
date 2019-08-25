@@ -39,6 +39,23 @@ private:
     NumberProperty<int8_t> scale_factor_of_second_fixed_surface_;
     NumberProperty<uint32_t> scaled_value_of_second_fixed_surface_;
 
+    NumberProperty<uint16_t> year_of_end_of_overall_time_interval_;
+    NumberProperty<uint8_t> month_of_end_of_overall_time_interval_;
+    NumberProperty<uint8_t> day_of_end_of_overall_time_interval_;
+    NumberProperty<uint8_t> hour_of_end_of_overall_time_interval_;
+    NumberProperty<uint8_t> minute_of_end_of_overall_time_interval_;
+    NumberProperty<uint8_t> second_of_end_of_overall_time_interval_;
+    NumberProperty<uint8_t> number_of_time_range_;
+    NumberProperty<uint32_t> number_of_missing_statistical_process_;
+
+    CodeTableProperty type_of_statistical_processing_;
+    CodeTableProperty type_of_time_increment_;
+    CodeTableProperty indicator_of_unit_for_time_range_;
+    NumberProperty<uint32_t> length_of_time_range_;
+    CodeTableProperty indicator_of_unit_for_time_increment_;
+    NumberProperty<uint32_t> time_increment_;
+
+    // computed
     LevelProperty level_;
     TypeOfLevelProperty type_of_level_;
 };

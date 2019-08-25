@@ -34,7 +34,26 @@ bool Template_4_8::parse(std::vector<unsigned char>& buffer) {
     const auto type_of_second_fixed_surface = convert_bytes_to_uint8(&buffer[28]);
     type_of_second_fixed_surface_.setLong(type_of_second_fixed_surface);
     scale_factor_of_second_fixed_surface_ = convert_bytes_to_int8(&buffer[29]);
-    scaled_value_of_second_fixed_surface_ = convert_bytes_to_uint32(&buffer[30]);
+    scaled_value_of_second_fixed_surface_ = convert_bytes_to_uint32(&buffer[30], 4);
+
+    year_of_end_of_overall_time_interval_ = convert_bytes_to_uint16(&buffer[34], 2);
+    month_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[36]);
+    day_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[37]);
+    hour_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[38]);
+    minute_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[39]);
+    second_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[40]);
+    number_of_time_range_ = convert_bytes_to_uint8(&buffer[41]);
+    number_of_missing_statistical_process_ = convert_bytes_to_uint32(&buffer[42], 4);
+    const auto type_of_statistical_processing = convert_bytes_to_uint8(&buffer[46]);
+    type_of_statistical_processing_.setLong(type_of_statistical_processing);
+    const auto type_of_time_increment = convert_bytes_to_uint8(&buffer[47]);
+    type_of_time_increment_.setLong(type_of_time_increment);
+    const auto indicator_of_unit_for_time_range = convert_bytes_to_uint8(&buffer[48]);
+    indicator_of_unit_for_time_range_.setLong(indicator_of_unit_for_time_range);
+    length_of_time_range_ = convert_bytes_to_uint32(&buffer[49], 4);
+    const auto indicator_of_unit_for_time_increment = convert_bytes_to_uint8(&buffer[53]);
+    indicator_of_unit_for_time_increment_.setLong(indicator_of_unit_for_time_increment);
+    time_increment_ = convert_bytes_to_uint32(&buffer[54], 4);
 
     return true;
 }
@@ -72,6 +91,22 @@ void Template_4_8::registerProperty(std::shared_ptr<GribSection> section) {
         {"typeOfSecondFixedSurface", &type_of_second_fixed_surface_},
         {"scaleFactorOfSecondFixedSurface", &scale_factor_of_second_fixed_surface_},
         {"scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_},
+
+        {"yearOfEndOfOverallTimeInterval", &year_of_end_of_overall_time_interval_},
+        {"monthOfEndOfOverallTimeInterval", &month_of_end_of_overall_time_interval_},
+        {"dayOfEndOfOverallTimeInterval", &day_of_end_of_overall_time_interval_},
+        {"hourOfEndOfOverallTimeInterval", &hour_of_end_of_overall_time_interval_},
+        {"minuteOfEndOfOverallTimeInterval", &minute_of_end_of_overall_time_interval_},
+        {"secondOfEndOfOverallTimeInterval", &second_of_end_of_overall_time_interval_},
+        {"numberOfTimeRange", &number_of_time_range_},
+        {"numberOfMissingInStatisticalProcess", &number_of_missing_statistical_process_},
+        {"typeOfStatisticalProcessing", &type_of_statistical_processing_},
+        {"typeOfTimeIncrement", &type_of_time_increment_},
+        {"indicatorOfUnitForTimeRange", &indicator_of_unit_for_time_range_},
+        {"lengthOfTimeRange", &length_of_time_range_},
+        {"indicatorOfUnitForTimeIncrement", &indicator_of_unit_for_time_increment_},
+        {"timeIncrement", &time_increment_},
+
         {"level", &level_},
         {"typeOfLevel", &type_of_level_},
     };
@@ -84,9 +119,13 @@ void Template_4_8::registerProperty(std::shared_ptr<GribSection> section) {
 void Template_4_8::init() {
     const std::vector<std::tuple<CodeTableProperty*, std::string>> properties = {
         {&type_of_generating_process_, "4.3"},
-        {&indicator_of_unit_of_time_range_, "4.3"},
+        {&indicator_of_unit_of_time_range_, "4.4"},
         {&type_of_first_fixed_surface_, "4.5"},
         {&type_of_second_fixed_surface_, "4.5"},
+        {&type_of_statistical_processing_, "4.10"},
+        {&type_of_time_increment_, "4.11"},
+        {&indicator_of_unit_for_time_range_, "4.4"},
+        {&indicator_of_unit_for_time_increment_, "4.4"}
     };
 
     for (const auto& item : properties) {
