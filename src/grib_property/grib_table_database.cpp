@@ -31,14 +31,17 @@ GribTableDatabase::~GribTableDatabase() {
 }
 
 std::shared_ptr<GribTable> GribTableDatabase::getGribTable(const std::string& table_version, const std::string& name) {
-    if (tables_.find(name) != tables_.end()) {
-        return tables_[name];
+    const auto table_name = table_version + "." + name;
+    if (tables_.find(table_name) != tables_.end()) {
+        return tables_[table_name];
     }
     auto table = loadGribTable(table_version, name);
     return table;
 }
 
 std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& table_version, const std::string& name) {
+    const auto table_name = table_version + "." + name;
+
     if (eccodes_definition_path_.empty()) {
         throw std::exception("ECCODES_DEFINITION_PATH must be set.");
     }
@@ -49,6 +52,7 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
     table_stream.open(table_path);
     if (!table_stream.is_open()) {
         std::cerr << "table file " << name << " can't be opened." << std::endl;
+        tables_[table_name] = nullptr;
         return std::shared_ptr<GribTable>();
     }
     auto table = std::make_shared<GribTable>();
@@ -82,13 +86,13 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
         }
 
         auto title_start_pos = abbreviation_end_pos + 1;
-        auto title_end_pos = line.find_last_of("(");
+        auto title_end_pos = line.find_last_of('(');
         if (title_end_pos == std::string::npos) {
             record.title_ = line.substr(title_start_pos);
         } else {
             record.title_ = line.substr(title_start_pos, title_end_pos - title_start_pos - 1);
             auto unit_start_pos = title_end_pos + 1;
-            auto unit_end_pos = line.find_last_of(")");
+            auto unit_end_pos = line.find_last_of(')');
             if (unit_end_pos == std::string::npos) {
                 throw std::exception("table record line has error");
             }
@@ -100,7 +104,7 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
 
     table_stream.close();
 
-    tables_[table_version + "." + name] = table;
+    tables_[table_name] = table;
 
     return table;
 }
