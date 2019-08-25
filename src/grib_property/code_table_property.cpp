@@ -5,12 +5,6 @@
 
 namespace grib_coder {
 
-CodeTableProperty::CodeTableProperty() {
-}
-
-CodeTableProperty::~CodeTableProperty() {
-}
-
 void CodeTableProperty::setTableDatabase(std::shared_ptr<GribTableDatabase> db) {
     table_database_ = db;
 }
@@ -104,7 +98,7 @@ void CodeTableProperty::setOctetCount(size_t count) {
 std::optional<GribTableRecord> CodeTableProperty::getTableRecord() {
     auto table = table_database_->getGribTable(tables_version_, code_table_id_);
     if (!table) {
-        std::cerr << "grib table (" << code_table_id_ << ") is not found." << std::endl;
+        // std::cerr << "grib table (" << code_table_id_ << ") is not found." << std::endl;
         return std::optional<GribTableRecord>();
     }
 

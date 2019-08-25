@@ -7,8 +7,8 @@ namespace grib_coder {
 
 class CodeTableProperty : public GribProperty {
 public:
-    CodeTableProperty();
-    ~CodeTableProperty();
+    CodeTableProperty() = default;
+    ~CodeTableProperty() = default;
 
     void setTableDatabase(std::shared_ptr<GribTableDatabase> db);
     void setTablesVersion(const std::string& version);
