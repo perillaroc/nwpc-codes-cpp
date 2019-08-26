@@ -70,6 +70,7 @@ bool Template_4_8::decode(GribPropertyContainer* container) {
 
     level_.decode(container);
     type_of_level_.decode(container);
+    step_range_.decode(container);
 
     return true;
 }
@@ -109,6 +110,7 @@ void Template_4_8::registerProperty(std::shared_ptr<GribSection> section) {
 
         {"level", &level_},
         {"typeOfLevel", &type_of_level_},
+        {"stepRange", &step_range_},
     };
 
     for (auto& item : properties) {

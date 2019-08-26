@@ -42,10 +42,7 @@ int list_grib_file(const std::string& file_path) {
         auto level = message_handler->getString("level");
 
         //		stepRange
-        auto forecast_time = message_handler->getLong("forecastTime");
-        // auto step_units = message_handler->getLong("stepUnits");
-        auto indicator_of_unit_of_time_range = message_handler->getLong("indicatorOfUnitOfTimeRange");
-        auto step_range = fmt::format("{forecastTime}", fmt::arg("forecastTime", forecast_time));
+        auto step_range = message_handler->getString("stepRange");
 
         // section 5
         //		packagingType

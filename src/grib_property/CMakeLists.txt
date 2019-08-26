@@ -23,7 +23,8 @@ target_sources(grib_property
 		computed/level_property.cpp
 		computed/type_of_level_property.cpp
 		computed/packing_type_property.cpp
-		computed/grid_type_property.cpp)
+		computed/grid_type_property.cpp
+		computed/step_range_property.cpp)
 
 
 target_include_directories(grib_property

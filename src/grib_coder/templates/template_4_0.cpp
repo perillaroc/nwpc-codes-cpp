@@ -49,6 +49,7 @@ bool Template_4_0::decode(GribPropertyContainer* container) {
 
     level_.decode(container);
     type_of_level_.decode(container);
+    step_range_.decode(container);
 
     return true;
 }
@@ -71,6 +72,7 @@ void Template_4_0::registerProperty(std::shared_ptr<GribSection> section) {
     section->registerProperty("scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_);
     section->registerProperty("level", &level_);
     section->registerProperty("typeOfLevel", &type_of_level_);
+    section->registerProperty("stepRange", &step_range_);
 }
 
 void Template_4_0::init() {
