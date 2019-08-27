@@ -3,13 +3,16 @@
 #include "grib_section.h"
 #include <grib_property/grib_table_database.h>
 #include <grib_property/grib_property_container.h>
+#include <grib_property/number_property.h>
 
 namespace grib_coder {
 
 class GribMessageHandler : public GribPropertyContainer {
 public:
-    GribMessageHandler(std::shared_ptr<GribTableDatabase> db, bool header_only = false);
+    GribMessageHandler(std::shared_ptr<GribTableDatabase> &db, bool header_only = false);
     ~GribMessageHandler();
+
+    void setCount(long count);
 
     bool parseFile(std::FILE* file);
 
@@ -29,10 +32,15 @@ private:
 
     GribProperty* getProperty(const std::string& name);
 
+    bool header_only_ = false;
+
     std::vector<std::shared_ptr<GribSection>> section_list_;
     std::shared_ptr<GribTableDatabase> table_database_;
 
-    bool header_only_ = false;
+    NumberProperty<uint64_t> offset_;
+    NumberProperty<uint64_t> count_;
+
+    std::unordered_map<std::string, GribProperty*> property_map_;
 };
 
 } // namespace grib_coder

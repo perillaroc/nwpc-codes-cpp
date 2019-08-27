@@ -17,5 +17,6 @@ private:
     std::shared_ptr<GribTableDatabase> table_database_;
 
     std::FILE* file_ = nullptr;
+    uint64_t count_ = 0;
 };
 } // namespace grib_coder

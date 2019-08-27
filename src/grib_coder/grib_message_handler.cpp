@@ -10,22 +10,29 @@
 #include "sections/grib_section_8.h"
 #include "number_convert.h"
 
+#include <fmt/format.h>
+
 #include <memory>
-#include <sstream>
 
 namespace grib_coder {
 
-GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> db, bool header_only):
-    GribPropertyContainer{},
+GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> &db, bool header_only):
     table_database_{db},
     header_only_{header_only} {
+    property_map_["count"] = &count_;
+    property_map_["offset"] = &offset_;
 }
 
 GribMessageHandler::~GribMessageHandler() {
 }
 
+void GribMessageHandler::setCount(long count) {
+    count_ = count;
+}
+
 bool GribMessageHandler::parseFile(std::FILE* file) {
     auto start_pos = std::ftell(file);
+    offset_ = start_pos;
     auto section_0 = std::make_shared<GribSection0>();
     auto result = section_0->parseFile(file);
     if (!result) {
@@ -100,10 +107,8 @@ void GribMessageHandler::setString(const std::string& key, const std::string& va
     if (code_table_property) {
         // set grib2 table database
         auto table_version = getLong("tablesVersion");
-        std::stringstream table_vsersion_stream;
-        table_vsersion_stream << table_version;
         code_table_property->setTableDatabase(table_database_);
-        code_table_property->setTablesVersion(table_vsersion_stream.str());
+        code_table_property->setTablesVersion(fmt::format("{}", table_version));
     }
     property->setString(value);
 }
@@ -117,10 +122,8 @@ std::string GribMessageHandler::getString(const std::string& key) {
     if (code_table_property) {
         // set grib2 table database
         auto table_version = getLong("tablesVersion");
-        std::stringstream table_vsersion_stream;
-        table_vsersion_stream << table_version;
         code_table_property->setTableDatabase(table_database_);
-        code_table_property->setTablesVersion(table_vsersion_stream.str());
+        code_table_property->setTablesVersion(fmt::format("{}", table_version));
     }
     return property->getString();
 }
@@ -194,6 +197,12 @@ GribProperty* GribMessageHandler::getProperty(const std::string& name) {
             return p;
         }
     }
+    for (auto& item : property_map_) {
+        if(std::get<0>(item) == name) {
+            return std::get<1>(item);
+        }
+    }
+
     return nullptr;
 }
 

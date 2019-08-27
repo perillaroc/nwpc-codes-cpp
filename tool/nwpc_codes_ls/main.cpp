@@ -19,10 +19,16 @@ int list_grib_file(const std::string& file_path) {
 
     while (message_handler) {
         current_index++;
-        auto edition = message_handler->getLong("editionNumber");
+
+        // message
+        auto count = message_handler->getLong("count");
+        auto offset = message_handler->getLong("offset");
+
+        // section 0
+        //auto edition = message_handler->getLong("editionNumber");
 
         // section 1
-        auto centre = message_handler->getString("centre");
+        //auto centre = message_handler->getString("centre");
 
         //		dataDate
         auto data_date = message_handler->getString("dataDate");
@@ -51,10 +57,10 @@ int list_grib_file(const std::string& file_path) {
         auto category = message_handler->getString("parameterCategory");
         auto number = message_handler->getString("parameterNumber");
         fmt::print(
-            "{edition} | {centre} | {data_date} {data_time} | {data_type} | {grid_type} | "
+            "{count} | {offset} | {data_date} {data_time} | {data_type} | {grid_type} | "
             " {category} | {number} | {step_range} | {type_of_level} | {level} | {packing_type} \n",
-            fmt::arg("edition", edition),
-            fmt::arg("centre", centre),
+            fmt::arg("count", count),
+            fmt::arg("offset", offset),
             fmt::arg("data_date", data_date),
             fmt::arg("data_time", data_time),
             fmt::arg("data_type", data_type),

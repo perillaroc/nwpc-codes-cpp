@@ -37,7 +37,8 @@ protected:
     NumberProperty<long> section_length_;
 };
 
-GribProperty* get_property_from_section_list(const std::string& name,
-                                             std::vector<std::shared_ptr<GribSection>>& section_list);
+GribProperty* get_property_from_section_list(
+    const std::string& name,
+    std::vector<std::shared_ptr<GribSection>>& section_list);
 
 } // namespace grib_coder
