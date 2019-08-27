@@ -7,11 +7,37 @@
 #include <CLI11/CLI11.hpp>
 #include <fmt/printf.h>
 
+enum class property_type {
+    Long,
+    Double,
+    String,
+};
+
+struct PropertyItem {
+    std::string name;
+    property_type type;
+};
+
 int list_grib_file(const std::string& file_path) {
     fmt::print("{file_path}\n", fmt::arg("file_path", file_path));
     auto f = std::fopen(file_path.c_str(), "rb");
 
     //auto start_time = std::chrono::system_clock::now();
+
+    std::vector<PropertyItem> property_list{
+        {"count", property_type::String},
+        {"offset", property_type::String},
+        {"dataDate", property_type::String},
+        {"dataTime", property_type::String},
+        {"typeOfProcessedData", property_type::String},
+        {"gridType", property_type::String},
+        {"parameterCategory", property_type::String},
+        {"parameterNumber", property_type::String},
+        {"typeOfLevel", property_type::String},
+        {"level", property_type::String},
+        {"stepRange", property_type::String},
+        {"packingType", property_type::String},
+    };
 
     grib_coder::GribFileHandler handler(f, true);
     auto current_index = 0;
@@ -19,58 +45,26 @@ int list_grib_file(const std::string& file_path) {
 
     while (message_handler) {
         current_index++;
+        std::vector<std::string> tokens;
+        for(const auto& property_item: property_list) {
+            const auto property_type = property_item.type;
+            const auto property_name = property_item.name;
+            switch(property_type) {
+            case property_type::Long:
+                tokens.emplace_back(fmt::format("{}", message_handler->getLong(property_name)));
+                break;
+            case property_type::Double:
+                tokens.emplace_back(fmt::format("{}", message_handler->getDouble(property_name)));
+                break;
+            case property_type::String:
+            default:
+                tokens.emplace_back(fmt::format("{}", message_handler->getString(property_name)));
+                break;
+            }
+        }
 
-        // message
-        auto count = message_handler->getLong("count");
-        auto offset = message_handler->getLong("offset");
+        fmt::print("{}\n", fmt::join(tokens, " | "));
 
-        // section 0
-        //auto edition = message_handler->getLong("editionNumber");
-
-        // section 1
-        //auto centre = message_handler->getString("centre");
-
-        //		dataDate
-        auto data_date = message_handler->getString("dataDate");
-        auto data_time = message_handler->getString("dataTime");
-
-        auto data_type = message_handler->getString("typeOfProcessedData");
-
-        // section 3
-        //		grid type
-        auto grid_type = message_handler->getString("gridType");
-
-        // section 4
-        //		type_of_level
-        auto type_of_level = message_handler->getString("typeOfLevel");
-
-        //		level
-        auto level = message_handler->getString("level");
-
-        //		stepRange
-        auto step_range = message_handler->getString("stepRange");
-
-        // section 5
-        //		packagingType
-        auto packing_type = message_handler->getString("packingType");
-
-        auto category = message_handler->getString("parameterCategory");
-        auto number = message_handler->getString("parameterNumber");
-        fmt::print(
-            "{count} | {offset} | {data_date} {data_time} | {data_type} | {grid_type} | "
-            " {category} | {number} | {step_range} | {type_of_level} | {level} | {packing_type} \n",
-            fmt::arg("count", count),
-            fmt::arg("offset", offset),
-            fmt::arg("data_date", data_date),
-            fmt::arg("data_time", data_time),
-            fmt::arg("data_type", data_type),
-            fmt::arg("grid_type", grid_type),
-            fmt::arg("category", category),
-            fmt::arg("number", number),
-            fmt::arg("step_range", step_range),
-            fmt::arg("type_of_level", type_of_level),
-            fmt::arg("level", level),
-            fmt::arg("packing_type", packing_type));
         message_handler = handler.next();
     }
 
