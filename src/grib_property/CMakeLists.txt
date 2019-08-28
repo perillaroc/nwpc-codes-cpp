@@ -39,9 +39,12 @@ target_link_libraries(grib_property
 		NwpcCodesCpp::vendor
 )
 
+OPTION(OPENJPEG_STATIC ON)
+IF(OPENJPEG_STATIC)
 target_compile_definitions(grib_property
 	PUBLIC
 		OPJ_STATIC
 )
+ENDIF()
 
 add_library(NwpcCodesCpp::GribProperty ALIAS grib_property)
