@@ -3,6 +3,7 @@
 
 #include <fmt/format.h>
 #include <fmt/printf.h>
+#include <stdexcept>
 
 std::string grib_coder::StepRangeProperty::getString()
 {
@@ -36,7 +37,7 @@ bool grib_coder::StepRangeProperty::decode(GribPropertyContainer* container)
             return false;
         }
         end_ = lengthOfTimeRange;
-    } catch(std::exception &e) {
+    } catch(std::runtime_error &e) {
         // skip
     }
 

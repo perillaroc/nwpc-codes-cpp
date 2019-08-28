@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
-#include <exception>
+#include <stdexcept>
 
 std::string& trim(std::string& s) {
     if (s.empty()) {
@@ -43,7 +43,7 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
     const auto table_name = table_version + "." + name;
 
     if (eccodes_definition_path_.empty()) {
-        throw std::exception("ECCODES_DEFINITION_PATH must be set.");
+        throw std::runtime_error("ECCODES_DEFINITION_PATH must be set.");
     }
     std::filesystem::path table_path = eccodes_definition_path_;
     table_path = table_path.append("grib2").append("tables").append(table_version).append(name + ".table");
@@ -94,7 +94,7 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
             auto unit_start_pos = title_end_pos + 1;
             auto unit_end_pos = line.find_last_of(')');
             if (unit_end_pos == std::string::npos) {
-                throw std::exception("table record line has error");
+                throw std::runtime_error("table record line has error");
             }
             record.units_ = line.substr(unit_start_pos, unit_end_pos - unit_start_pos);
         }

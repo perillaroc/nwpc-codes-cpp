@@ -9,10 +9,10 @@
 #include "sections/grib_section_7.h"
 #include "sections/grib_section_8.h"
 #include "number_convert.h"
-
 #include <fmt/format.h>
 
 #include <memory>
+#include <stdexcept>
 
 namespace grib_coder {
 
@@ -69,7 +69,7 @@ bool GribMessageHandler::parseFile(std::FILE* file) {
 void GribMessageHandler::setLong(const std::string& key, long value) {
     auto property = getProperty(key);
     if (property == nullptr) {
-        throw std::exception("key is not found");
+        throw std::runtime_error("key is not found");
     }
     property->setLong(value);
 }
@@ -77,7 +77,7 @@ void GribMessageHandler::setLong(const std::string& key, long value) {
 long GribMessageHandler::getLong(const std::string& key) {
     auto property = getProperty(key);
     if (property == nullptr) {
-        throw std::exception("key is not found");
+        throw std::runtime_error("key is not found");
     }
     return property->getLong();
 }
@@ -85,7 +85,7 @@ long GribMessageHandler::getLong(const std::string& key) {
 void GribMessageHandler::setDouble(const std::string& key, double value) {
     auto property = getProperty(key);
     if (property == nullptr) {
-        throw std::exception("key is not found");
+        throw std::runtime_error("key is not found");
     }
     property->setDouble(value);
 }
@@ -93,7 +93,7 @@ void GribMessageHandler::setDouble(const std::string& key, double value) {
 double GribMessageHandler::getDouble(const std::string& key) {
     auto property = getProperty(key);
     if (property == nullptr) {
-        throw std::exception("key is not found");
+        throw std::runtime_error("key is not found");
     }
     return property->getDouble();
 }
@@ -101,7 +101,7 @@ double GribMessageHandler::getDouble(const std::string& key) {
 void GribMessageHandler::setString(const std::string& key, const std::string& value) {
     auto property = getProperty(key);
     if (property == nullptr) {
-        throw std::exception("key is not found");
+        throw std::runtime_error("key is not found");
     }
     auto code_table_property = dynamic_cast<CodeTableProperty*>(property);
     if (code_table_property) {
@@ -116,7 +116,7 @@ void GribMessageHandler::setString(const std::string& key, const std::string& va
 std::string GribMessageHandler::getString(const std::string& key) {
     auto property = getProperty(key);
     if (property == nullptr) {
-        throw std::exception("key is not found");
+        throw std::runtime_error("key is not found");
     }
     auto code_table_property = dynamic_cast<CodeTableProperty*>(property);
     if (code_table_property) {
@@ -143,7 +143,7 @@ bool GribMessageHandler::parseNextSection(std::FILE* file) {
     if (section_number == 1) {
         section = std::make_shared<GribSection1>(section_length);
     } else if (section_number == 2) {
-        throw std::exception();
+        throw std::runtime_error("section 2 is not supported");
     } else if (section_number == 3) {
         section = std::make_shared<GribSection3>(section_length);
     } else if (section_number == 4) {

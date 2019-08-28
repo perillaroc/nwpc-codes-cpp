@@ -7,6 +7,7 @@
 #include <vector>
 #include <sstream>
 #include <cassert>
+#include <stdexcept>
 
 namespace grib_coder {
 GribSection4::GribSection4():
@@ -43,7 +44,7 @@ bool GribSection4::parseFile(std::FILE* file, bool header_only) {
     } else if (product_definition_template_number == 8) {
         product_definition_template_ = std::make_shared<Template_4_8>(template_length);
     } else {
-        throw std::exception("template not implemented");
+        throw std::runtime_error("template not implemented");
     }
     product_definition_template_->registerProperty(shared_from_this());
     product_definition_template_->parse(buffer);
