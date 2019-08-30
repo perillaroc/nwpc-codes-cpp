@@ -82,9 +82,15 @@ int main(int argc, char** argv) {
     CLI::App app{"nwpc_codes_ls"};
 
     std::string file_path;
-    app.add_option("file_path", file_path);
+    app.add_option("file_path", file_path, "grib file path")
+        ->check(CLI::ExistingFile);
 
     CLI11_PARSE(app, argc, argv);
+
+    if(file_path.empty()) {
+        fmt::print("{}\n", app.help());
+        return 0;
+    }
 
     auto result = list_grib_file(file_path);
 
