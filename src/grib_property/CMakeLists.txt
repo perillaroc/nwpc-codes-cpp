@@ -39,12 +39,15 @@ target_link_libraries(grib_property
 		NwpcCodesCpp::vendor
 )
 
-OPTION(OPENJPEG_STATIC ON)
-IF(OPENJPEG_STATIC)
+# OPTION(OPENJPEG_STATIC "Use static version of OpenJPEG" ON)
+IF(NOT OPENJPEG_BUILD_SHARED_LIBS)
+message("Use OpenJPEG static")
 target_compile_definitions(grib_property
 	PUBLIC
 		OPJ_STATIC
 )
+ELSE()
+message("Use OpenJPEG dynamic")
 ENDIF()
 
 add_library(NwpcCodesCpp::GribProperty ALIAS grib_property)
