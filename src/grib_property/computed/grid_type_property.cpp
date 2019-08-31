@@ -6,7 +6,7 @@
 
 namespace grib_coder {
 
-std::vector<
+const std::vector<
     std::tuple<
         std::string,
         std::vector<

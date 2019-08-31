@@ -147,3 +147,4 @@ Testing/
 CMakeSettings.json
 
 *.DotSettings.user
+cmake-debug-*

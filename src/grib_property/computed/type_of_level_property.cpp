@@ -5,7 +5,17 @@
 
 namespace grib_coder {
 
-std::vector<std::tuple<std::string, std::vector<std::tuple<std::string, int>>>> type_of_level_list{
+const std::vector<
+    std::tuple<
+        std::string,
+        std::vector<
+            std::tuple<
+                std::string,
+                int
+            >
+        >
+    >
+> type_of_level_list{
     {
         "surface",
         {

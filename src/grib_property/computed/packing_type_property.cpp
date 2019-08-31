@@ -5,8 +5,17 @@
 
 namespace grib_coder {
 
-
-std::vector<std::tuple<std::string, std::vector<std::tuple<std::string, int>>>> packing_type_list{
+const std::vector<
+    std::tuple<
+        std::string,
+        std::vector<
+            std::tuple<
+                std::string,
+                int
+            >
+        >
+    >
+> packing_type_list{
     {
         "grid_simple",
         {
