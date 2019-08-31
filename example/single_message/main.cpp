@@ -13,10 +13,10 @@ int main() {
 
     auto message_handler = handler.next();
 
-    auto discipline = message_handler->getLong("discipline");
-    auto ni = message_handler->getLong("ni");
-    auto nj = message_handler->getString("nj");
-    auto category = message_handler->getString("parameterCategory");
+    auto discipline = message_handler->get<long>("discipline");
+    auto ni = message_handler->get<long>("ni");
+    auto nj = message_handler->get<std::string>("nj");
+    auto category = message_handler->get<std::string>("parameterCategory");
 
     std::fclose(f);
 
