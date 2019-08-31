@@ -8,9 +8,9 @@
 namespace grib_coder {
 
 void DataDateProperty::setLong(long value) {
-    year_ = std::floor(value / 10000);
+    year_ = static_cast<int>(std::floor(value / 10000));
     const auto month_day = value % 10000;
-    month_ = std::floor(month_day / 100);
+    month_ = static_cast<int>(std::floor(month_day / 100));
     day_ = month_day % 100;
 }
 

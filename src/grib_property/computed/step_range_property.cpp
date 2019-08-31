@@ -37,7 +37,7 @@ bool grib_coder::StepRangeProperty::decode(GribPropertyContainer* container)
             return false;
         }
         end_ = lengthOfTimeRange;
-    } catch(std::runtime_error &e) {
+    } catch(std::runtime_error &) {
         // skip
     }
 

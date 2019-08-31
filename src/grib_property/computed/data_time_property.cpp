@@ -7,7 +7,7 @@
 
 namespace grib_coder {
 void DataTimeProperty::setLong(long value) {
-    hour_ = std::floor(value / 100);
+    hour_ = static_cast<int>(std::floor(value / 100));
     minute_ = value % 100;
     second_ = 0;
 }
