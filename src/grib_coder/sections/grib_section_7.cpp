@@ -44,7 +44,12 @@ bool GribSection7::decodeValues(GribPropertyContainer* container) {
 }
 
 void GribSection7::init() {
-    registerProperty("dataValues", &data_values_);
-    registerProperty("values", &data_values_);
+    std::vector<std::tuple<std::string, GribProperty*>> properties_name{
+        { "dataValues", &data_values_ },
+        { "values", &data_values_ },
+    };
+    for (const auto& item : properties_name) {
+        registerProperty(std::get<0>(item), std::get<1>(item));
+    }
 }
 } // grib_coder

@@ -9,7 +9,7 @@ GribSection8::GribSection8():
 
 bool GribSection8::parseFile(std::FILE* file, bool header_only) {
     char buffer[4];
-    auto result = std::fread(buffer, 1, 4, file);
+    const auto result = std::fread(buffer, 1, 4, file);
     if (result != 4) {
         return false;
     }
@@ -23,4 +23,4 @@ bool GribSection8::parseFile(std::FILE* file, bool header_only) {
 
 void GribSection8::init() {
 }
-}
+} // namespace grib_coder

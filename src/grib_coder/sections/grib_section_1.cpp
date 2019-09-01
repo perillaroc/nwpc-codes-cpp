@@ -18,9 +18,9 @@ GribSection1::GribSection1(long section_length) :
 }
 
 bool GribSection1::parseFile(std::FILE* file, bool header_only) {
-    auto buffer_length = section_length_ - 5;
+    const auto buffer_length = section_length_ - 5;
     std::vector<unsigned char> buffer(buffer_length);
-    auto read_count = std::fread(&buffer[0], 1, buffer_length, file);
+    const auto read_count = std::fread(&buffer[0], 1, buffer_length, file);
     if (read_count != buffer_length) {
         return false;
     }
@@ -28,13 +28,13 @@ bool GribSection1::parseFile(std::FILE* file, bool header_only) {
     centre_ = convert_bytes_to_uint16(&buffer[0], 2);
     sub_centre_ = convert_bytes_to_uint16(&buffer[2], 2);
 
-    auto tables_version = convert_bytes_to_uint8(&buffer[4]);
+    const auto tables_version = convert_bytes_to_uint8(&buffer[4]);
     tables_version_.setLong(tables_version);
 
-    auto local_tables_version = convert_bytes_to_uint8(&buffer[5]);
+    const auto local_tables_version = convert_bytes_to_uint8(&buffer[5]);
     local_tables_version_.setLong(local_tables_version);
 
-    auto significance_of_reference_time = convert_bytes_to_uint8(&buffer[6]);
+    const auto significance_of_reference_time = convert_bytes_to_uint8(&buffer[6]);
     significance_of_reference_time_.setLong(significance_of_reference_time);
 
     year_ = convert_bytes_to_uint16(&buffer[7], 2);
@@ -44,10 +44,10 @@ bool GribSection1::parseFile(std::FILE* file, bool header_only) {
     minute_ = convert_bytes_to_uint8(&buffer[12]);
     second_ = convert_bytes_to_uint8(&buffer[13]);
 
-    auto production_status_of_processed_data = convert_bytes_to_uint8(&buffer[14]);
+    const auto production_status_of_processed_data = convert_bytes_to_uint8(&buffer[14]);
     production_status_of_processed_data_.setLong(production_status_of_processed_data);
 
-    auto type_of_processed_data = convert_bytes_to_uint8(&buffer[15]);
+    const auto type_of_processed_data = convert_bytes_to_uint8(&buffer[15]);
     type_of_processed_data_.setLong(type_of_processed_data);
 
     return true;
@@ -62,11 +62,16 @@ bool GribSection1::decode(GribPropertyContainer* container) {
 }
 
 void GribSection1::init() {
-    tables_version_.setCodeTableId("1.0");
-    local_tables_version_.setCodeTableId("1.1");
-    significance_of_reference_time_.setCodeTableId("1.2");
-    production_status_of_processed_data_.setCodeTableId("1.3");
-    type_of_processed_data_.setCodeTableId("1.4");
+    std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
+        { &tables_version_, "1.0" },
+        { &local_tables_version_, "1.1" },
+        { &significance_of_reference_time_, "1.2" },
+        { &production_status_of_processed_data_, "1.3" },
+        { &type_of_processed_data_, "1.4" },
+    };
+    for (const auto& item : tables_id) {
+        std::get<0>(item)->setCodeTableId(std::get<1>(item));
+    }
 
     std::vector<std::tuple<std::string, GribProperty*>> properties = {
         {"centre", &centre_},

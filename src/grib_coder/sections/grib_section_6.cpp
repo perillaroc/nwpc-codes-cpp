@@ -14,9 +14,9 @@ GribSection6::GribSection6(int section_length):
 }
 
 bool GribSection6::parseFile(std::FILE* file, bool header_only) {
-    auto buffer_length = section_length_ - 5;
+    const auto buffer_length = section_length_ - 5;
     std::vector<unsigned char> buffer(section_length_);
-    auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
+    const auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
     if (read_count != buffer_length) {
         return false;
     }
@@ -27,6 +27,11 @@ bool GribSection6::parseFile(std::FILE* file, bool header_only) {
 }
 
 void GribSection6::init() {
-    registerProperty("bitMapIndicator", &bit_map_indicator_);
+    std::vector<std::tuple<std::string, GribProperty*>> properties_name{
+        { "bitMapIndicator", &bit_map_indicator_ },
+    };
+    for (const auto& item : properties_name) {
+        registerProperty(std::get<0>(item), std::get<1>(item));
+    }
 }
 } // namespace grib_coder

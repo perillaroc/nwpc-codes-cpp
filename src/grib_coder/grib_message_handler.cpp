@@ -17,8 +17,8 @@
 namespace grib_coder {
 
 GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> &db, bool header_only):
-    table_database_{db},
-    header_only_{header_only} {
+    header_only_{header_only},
+    table_database_{db} {
     property_map_["count"] = &count_;
     property_map_["offset"] = &offset_;
 }
@@ -31,7 +31,7 @@ void GribMessageHandler::setCount(long count) {
 }
 
 bool GribMessageHandler::parseFile(std::FILE* file) {
-    auto start_pos = std::ftell(file);
+    const auto start_pos = std::ftell(file);
     offset_ = start_pos;
     auto section_0 = std::make_shared<GribSection0>();
     auto result = section_0->parseFile(file);
@@ -43,7 +43,7 @@ bool GribMessageHandler::parseFile(std::FILE* file) {
     auto current_pos = std::ftell(file);
 
     // check file end
-    auto section8_start_pos = start_pos + section_0->getProperty("totalLength")->getLong() - 4;
+    const auto section8_start_pos = start_pos + section_0->getProperty("totalLength")->getLong() - 4;
 
     while (current_pos < section8_start_pos) {
         parseNextSection(file);
@@ -106,7 +106,7 @@ void GribMessageHandler::setString(const std::string& key, const std::string& va
     auto code_table_property = dynamic_cast<CodeTableProperty*>(property);
     if (code_table_property) {
         // set grib2 table database
-        auto table_version = getLong("tablesVersion");
+        const auto table_version = getLong("tablesVersion");
         code_table_property->setTableDatabase(table_database_);
         code_table_property->setTablesVersion(fmt::format("{}", table_version));
     }
@@ -121,7 +121,7 @@ std::string GribMessageHandler::getString(const std::string& key) {
     auto code_table_property = dynamic_cast<CodeTableProperty*>(property);
     if (code_table_property) {
         // set grib2 table database
-        auto table_version = getLong("tablesVersion");
+        const auto table_version = getLong("tablesVersion");
         code_table_property->setTableDatabase(table_database_);
         code_table_property->setTablesVersion(fmt::format("{}", table_version));
     }
@@ -135,8 +135,8 @@ bool GribMessageHandler::parseNextSection(std::FILE* file) {
     if (result != 5) {
         return false;
     }
-    auto section_length = convert_bytes_to_uint32(buffer, 4);
-    auto section_number = convert_bytes_to_uint8(&buffer[4]);
+    const auto section_length = convert_bytes_to_uint32(buffer, 4);
+    const auto section_number = convert_bytes_to_uint8(&buffer[4]);
 
     std::shared_ptr<GribSection> section;
 
@@ -181,7 +181,7 @@ bool GribMessageHandler::parseNextSection(std::FILE* file) {
 
 std::shared_ptr<GribSection> GribMessageHandler::getSection(int section_number, size_t begin_pos) {
     std::shared_ptr<GribSection> section;
-    for (auto iter = section_list_.begin() + begin_pos; iter != section_list_.end(); iter++) {
+    for (auto iter = section_list_.begin() + begin_pos; iter != section_list_.end(); ++iter) {
         auto s = *iter;
         if (s->getSectionLength() == section_number) {
             return s;

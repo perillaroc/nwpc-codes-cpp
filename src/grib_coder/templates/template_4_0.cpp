@@ -55,30 +55,41 @@ bool Template_4_0::decode(GribPropertyContainer* container) {
 }
 
 void Template_4_0::registerProperty(std::shared_ptr<GribSection> section) {
-    section->registerProperty("parameterCategory", &parameter_category_);
-    section->registerProperty("parameterNumber", &parameter_number_);
-    section->registerProperty("typeOfGeneratingProcess", &type_of_generating_process_);
-    section->registerProperty("backgroundProcess", &background_process_);
-    section->registerProperty("generatingProcessIdentifier", &generating_process_identifier_);
-    section->registerProperty("hoursAfterDataCutoff", &hours_after_data_cutoff_);
-    section->registerProperty("minutesAfterDataCutoff", &minutes_after_data_cutoff_);
-    section->registerProperty("indicatorOfUnitOfTimeRange", &indicator_of_unit_of_time_range_);
-    section->registerProperty("forecastTime", &forecast_time_);
-    section->registerProperty("typeOfFirstFixedSurface", &type_of_first_fixed_surface_);
-    section->registerProperty("scaleFactorOfFirstFixedSurface", &scale_factor_of_first_fixed_surface_);
-    section->registerProperty("scaledValueOfFirstFixedSurface", &scaled_value_of_first_fixed_surface_);
-    section->registerProperty("typeOfSecondFixedSurface", &type_of_second_fixed_surface_);
-    section->registerProperty("scaleFactorOfSecondFixedSurface", &scale_factor_of_second_fixed_surface_);
-    section->registerProperty("scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_);
-    section->registerProperty("level", &level_);
-    section->registerProperty("typeOfLevel", &type_of_level_);
-    section->registerProperty("stepRange", &step_range_);
+
+    std::vector<std::tuple<std::string, GribProperty*>> properties_name{
+        { "parameterCategory", &parameter_category_ },
+        { "parameterNumber", &parameter_number_ },
+        { "typeOfGeneratingProcess", &type_of_generating_process_ },
+        { "backgroundProcess", &background_process_ },
+        { "generatingProcessIdentifier", &generating_process_identifier_ },
+        { "hoursAfterDataCutoff", &hours_after_data_cutoff_ },
+        { "minutesAfterDataCutoff", &minutes_after_data_cutoff_ },
+        { "indicatorOfUnitOfTimeRange", &indicator_of_unit_of_time_range_ },
+        { "forecastTime", &forecast_time_ },
+        { "typeOfFirstFixedSurface", &type_of_first_fixed_surface_ },
+        { "scaleFactorOfFirstFixedSurface", &scale_factor_of_first_fixed_surface_ },
+        { "scaledValueOfFirstFixedSurface", &scaled_value_of_first_fixed_surface_ },
+        { "typeOfSecondFixedSurface", &type_of_second_fixed_surface_ },
+        { "scaleFactorOfSecondFixedSurface", &scale_factor_of_second_fixed_surface_ },
+        { "scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_ },
+        { "level", &level_ },
+        { "typeOfLevel", &type_of_level_ },
+        { "stepRange", &step_range_ },
+    };
+    for (const auto& item : properties_name) {
+        section->registerProperty(std::get<0>(item), std::get<1>(item));
+    }
 }
 
 void Template_4_0::init() {
-    type_of_generating_process_.setCodeTableId("4.3");
-    indicator_of_unit_of_time_range_.setCodeTableId("4.4");
-    type_of_first_fixed_surface_.setCodeTableId("4.5");
-    type_of_second_fixed_surface_.setCodeTableId("4.5");
+    std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
+        { &type_of_generating_process_, "4.3" },
+        { &indicator_of_unit_of_time_range_, "4.4" },
+        { &type_of_first_fixed_surface_, "4.5" },
+        { &type_of_second_fixed_surface_, "4.5" },
+    };
+    for (const auto& item : tables_id) {
+        std::get<0>(item)->setCodeTableId(std::get<1>(item));
+    }
 }
 } // namespace grib_coder

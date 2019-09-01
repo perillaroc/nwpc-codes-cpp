@@ -22,15 +22,15 @@ GribSection4::GribSection4(int section_length):
 }
 
 bool GribSection4::parseFile(std::FILE* file, bool header_only) {
-    auto buffer_length = section_length_ - 5;
+    const auto buffer_length = section_length_ - 5;
     std::vector<unsigned char> buffer(section_length_);
-    auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
+    const auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
     if (read_count != buffer_length) {
         return false;
     }
 
     nv_ = convert_bytes_to_uint16(&buffer[5], 2);
-    auto product_definition_template_number = convert_bytes_to_uint16(&buffer[7], 2);
+    const auto product_definition_template_number = convert_bytes_to_uint16(&buffer[7], 2);
 
     // TODO: different product definition template
     assert(product_definition_template_number == 0 || product_definition_template_number == 8);
@@ -57,11 +57,23 @@ bool GribSection4::decode(GribPropertyContainer* container) {
 }
 
 void GribSection4::init() {
-    product_definition_template_number_.setOctetCount(2);
-    product_definition_template_number_.setCodeTableId("4.0");
+    std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
+        { &product_definition_template_number_, "4.0" },
+    };
+    for (const auto& item : tables_id) {
+        std::get<0>(item)->setCodeTableId(std::get<1>(item));
+    }
 
-    registerProperty("nv", &nv_);
-    registerProperty("productDefinitionTemplateNumber", &product_definition_template_number_);
+    product_definition_template_number_.setOctetCount(2);
+
+
+    std::vector<std::tuple<std::string, GribProperty*>> properties_name{
+        { "nv", &nv_ },
+        { "productDefinitionTemplateNumber", &product_definition_template_number_ },
+    };
+    for (const auto& item : properties_name) {
+        registerProperty(std::get<0>(item), std::get<1>(item));
+    }
 }
 
 } // namespace grib_coder
