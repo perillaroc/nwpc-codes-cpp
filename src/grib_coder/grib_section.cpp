@@ -30,12 +30,11 @@ bool GribSection::decode(GribPropertyContainer* container) {
 }
 
 GribProperty* GribSection::getProperty(const std::string& name) {
-    for (auto const& i : property_map_) {
-        if (i.first == name) {
-            return i.second;
-        }
+    const auto property = property_map_.find(name);
+    if(property == std::end(property_map_)) {
+        return nullptr;
     }
-    return nullptr;
+    return property->second;
 }
 
 void GribSection::registerProperty(const std::string& name, GribProperty* property) {
