@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
     std::string file_path;
     app.add_option("file_path", file_path, "grib file path")
         ->check(CLI::ExistingFile);
-    std::string conditions_option = "";
+    std::string conditions_option;
     app.add_option("-w", conditions_option, "filter condition");
 
     CLI11_PARSE(app, argc, argv);

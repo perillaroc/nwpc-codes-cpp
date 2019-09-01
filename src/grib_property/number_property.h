@@ -41,7 +41,7 @@ public:
     }
 
     void setString(const std::string& value) override {
-        auto v = std::stod(value);
+        const auto v = std::stod(value);
         setDouble(v);
     }
 

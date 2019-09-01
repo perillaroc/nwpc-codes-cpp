@@ -39,7 +39,7 @@ bool GridTypeProperty::decode(GribPropertyContainer* container)
 
     property_map["gridDefinitionTemplateNumber"] = container->getLong("gridDefinitionTemplateNumber");
 
-    auto numberOfOctectsForNumberOfPoints = container->getLong("numberOfOctectsForNumberOfPoints");
+    const auto numberOfOctectsForNumberOfPoints = container->getLong("numberOfOctectsForNumberOfPoints");
     if(numberOfOctectsForNumberOfPoints == 0) {
         property_map["PLPresent"] = 0;
     } else {
@@ -47,8 +47,8 @@ bool GridTypeProperty::decode(GribPropertyContainer* container)
     }
 
     for (const auto& item : grid_type_list) {
-        auto type_name = std::get<0>(item);
-        auto conditions = std::get<1>(item);
+        const auto& type_name = std::get<0>(item);
+        const auto& conditions = std::get<1>(item);
         auto flag = true;
         for (const auto& condition : conditions) {
             const auto& property_name = std::get<0>(condition);

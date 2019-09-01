@@ -11,23 +11,20 @@ std::string& trim(std::string& s) {
         return s;
     }
 
-    s.erase(0, s.find_first_not_of(" "));
-    s.erase(s.find_last_not_of(" ") + 1);
+    s.erase(0, s.find_first_not_of(' '));
+    s.erase(s.find_last_not_of(' ') + 1);
     return s;
 }
 
 namespace grib_coder {
 
 GribTableDatabase::GribTableDatabase() {
-    auto eccodes_env = std::getenv("ECCODES_DEFINITION_PATH");
+    const auto eccodes_env = std::getenv("ECCODES_DEFINITION_PATH");
     if (eccodes_env == nullptr) {
         std::cerr << "Please set ECCODES_DEFINITION_PATH to use Grib Table Database." << std::endl;
     } else {
         eccodes_definition_path_.append(eccodes_env);
     }
-}
-
-GribTableDatabase::~GribTableDatabase() {
 }
 
 std::shared_ptr<GribTable> GribTableDatabase::getGribTable(const std::string& table_version, const std::string& name) {

@@ -25,7 +25,7 @@ bool GribSection4::parseFile(std::FILE* file, bool header_only) {
     const auto buffer_length = section_length_ - 5;
     std::vector<unsigned char> buffer(section_length_);
     const auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
-    if (read_count != buffer_length) {
+    if (static_cast<long>(read_count) != buffer_length) {
         return false;
     }
 

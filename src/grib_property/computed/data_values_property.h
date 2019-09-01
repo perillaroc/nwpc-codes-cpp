@@ -5,8 +5,8 @@ namespace grib_coder {
 
 class DataValuesProperty : public GribProperty {
 public:
-    DataValuesProperty();
-    ~DataValuesProperty();
+    DataValuesProperty() = default;
+    ~DataValuesProperty() = default;
 
     void setDoubleArray(std::vector<double>& values) override;
     std::vector<double> getDoubleArray() override;

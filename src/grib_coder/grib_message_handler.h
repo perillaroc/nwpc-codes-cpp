@@ -10,7 +10,7 @@ namespace grib_coder {
 class GribMessageHandler : public GribPropertyContainer {
 public:
     GribMessageHandler(std::shared_ptr<GribTableDatabase> &db, bool header_only = false);
-    ~GribMessageHandler();
+    ~GribMessageHandler() = default;
 
     void setCount(long count);
 

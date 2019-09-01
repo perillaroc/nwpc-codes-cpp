@@ -23,9 +23,6 @@ GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> &db, b
     property_map_["offset"] = &offset_;
 }
 
-GribMessageHandler::~GribMessageHandler() {
-}
-
 void GribMessageHandler::setCount(long count) {
     count_ = count;
 }
@@ -131,7 +128,7 @@ std::string GribMessageHandler::getString(const std::string& key) {
 
 bool GribMessageHandler::parseNextSection(std::FILE* file) {
     unsigned char buffer[5];
-    auto result = std::fread(buffer, 1, 5, file);
+    const auto result = std::fread(buffer, 1, 5, file);
     if (result != 5) {
         return false;
     }

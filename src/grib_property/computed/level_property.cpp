@@ -26,8 +26,8 @@ bool LevelProperty::decode(GribPropertyContainer* container) {
     const auto type_of_first_fixed_surface = container->getLong("typeOfFirstFixedSurface");
 
     std::string level;
-    if (level_number_factor == std::numeric_limits<uint8_t>::max() ||
-        level_number_value == std::numeric_limits<uint32_t>::max()) {
+    if (static_cast<uint8_t>(level_number_factor) == std::numeric_limits<uint8_t>::max() ||
+        static_cast<uint32_t>(level_number_value) == std::numeric_limits<uint32_t>::max()) {
 
         if(type_of_first_fixed_surface < 10) {
             value_ = 0;

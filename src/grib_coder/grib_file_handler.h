@@ -8,7 +8,7 @@ class GribFileHandler {
 public:
     explicit GribFileHandler(std::FILE* file, bool header_only = false);
 
-    ~GribFileHandler();
+    ~GribFileHandler() = default;
 
     std::unique_ptr<GribMessageHandler> next();
 

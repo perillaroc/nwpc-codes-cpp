@@ -1,6 +1,5 @@
 #include "code_table_property.h"
 
-#include <iostream>
 #include <fmt/format.h>
 
 namespace grib_coder {
@@ -33,56 +32,54 @@ void CodeTableProperty::setString(const std::string& value) {
 }
 
 std::string CodeTableProperty::getString() {
-    auto default_value = fmt::format("{}", value_);
+    const auto default_value = fmt::format("{}", value_);
 
-    auto record_result = getTableRecord();
+    const auto record_result = getTableRecord();
     if (!record_result.has_value()) {
         return default_value;
     }
 
-    auto record = record_result.value();
+    const auto record = record_result.value();
 
     if (record.abbreviation_ == RecordUnknownValue) {
         return record.title_;
-    } else {
-        return record.abbreviation_;
     }
 
-    return record.title_;
+    return record.abbreviation_;
 }
 
 std::string CodeTableProperty::getTitle() {
-    auto default_value = fmt::format("{}", value_);
+    const auto default_value = fmt::format("{}", value_);
 
-    auto record_result = getTableRecord();
+    const auto record_result = getTableRecord();
     if (!record_result.has_value()) {
         return default_value;
     }
-    auto record = record_result.value();
+    const auto record = record_result.value();
 
     return record.title_;
 }
 
 std::string CodeTableProperty::getAbbreviation() {
-    auto default_value = fmt::format("{}", value_);
+    const auto default_value = fmt::format("{}", value_);
 
-    auto record_result = getTableRecord();
+    const auto record_result = getTableRecord();
     if (!record_result.has_value()) {
         return default_value;
     }
-    auto record = record_result.value();
+    const auto record = record_result.value();
 
     return record.abbreviation_;
 }
 
 std::string CodeTableProperty::getUnits() {
-    auto default_value = fmt::format("{}", value_);
+    const auto default_value = fmt::format("{}", value_);
 
-    auto record_result = getTableRecord();
+    const auto record_result = getTableRecord();
     if (!record_result.has_value()) {
         return default_value;
     }
-    auto record = record_result.value();
+    const auto record = record_result.value();
 
     return record.units_;
 }

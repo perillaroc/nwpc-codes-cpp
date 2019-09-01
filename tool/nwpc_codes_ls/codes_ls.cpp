@@ -92,7 +92,7 @@ int list_grib_file(const std::string& file_path, const std::vector<Condition> &c
 
 
 Condition parse_condition(const std::string& condition) {
-    auto pos = condition.find('=');
+    const auto pos = condition.find('=');
     if(pos == std::string::npos) {
         throw std::runtime_error("parse condition error");
     }

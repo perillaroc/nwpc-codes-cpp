@@ -7,12 +7,6 @@
 
 namespace grib_coder {
 
-DataValuesProperty::DataValuesProperty() {
-}
-
-DataValuesProperty::~DataValuesProperty() {
-}
-
 void DataValuesProperty::setDoubleArray(std::vector<double>& values) {
 }
 

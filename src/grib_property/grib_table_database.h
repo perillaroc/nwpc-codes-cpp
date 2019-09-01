@@ -9,7 +9,7 @@ namespace grib_coder {
 class GribTableDatabase {
 public:
     GribTableDatabase();
-    ~GribTableDatabase();
+    ~GribTableDatabase() = default;
 
     std::shared_ptr<GribTable> getGribTable(const std::string& table_version, const std::string& name);
 

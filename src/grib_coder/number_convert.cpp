@@ -1,6 +1,5 @@
 #include "number_convert.h"
 
-#include <cstring>
 
 namespace grib_coder {
 uint64_t convert_bytes_to_uint64(const unsigned char* bytes, size_t length) {
@@ -31,9 +30,9 @@ int32_t convert_bytes_to_int32(const unsigned char* bytes, size_t length) {
     n |= bytes[1] << 16;
     n |= bytes[2] << 8;
     n |= bytes[3];
-    int32_t magic = 0x80000000;
-    auto a = n & magic;
-    if ((n & magic) == magic) {
+    const int32_t magic = 0x80000000;
+    const auto a = n & magic;
+    if (a == magic) {
         n = ~n;
         n |= magic;
         n += 1;
@@ -52,9 +51,9 @@ int16_t convert_bytes_to_int16(const unsigned char* bytes, size_t length) {
     int16_t n = 0;
     n |= bytes[0] << 8;
     n |= bytes[1];
-    int16_t magic = 0x8000;
-    auto a = n & magic;
-    if ((n & magic) == magic) {
+    const int16_t magic = 0x8000;
+    const auto a = n & magic;
+    if (a == magic) {
         n = ~n;
         n |= magic;
         n += 1;
