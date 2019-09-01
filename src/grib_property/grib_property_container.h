@@ -22,6 +22,8 @@ public:
 
     virtual void setDoubleArray(const std::string& key, std::vector<double>& values);
     virtual std::vector<double> getDoubleArray(const std::string& key);
+
+    virtual bool hasProperty(const std::string& key) = 0;
 };
 
 } // namespace grib_coder

@@ -23,23 +23,23 @@ bool grib_coder::StepRangeProperty::decode(GribPropertyContainer* container)
         fmt::print(stderr, "indicatorOfUnitOfTimeRange must be hour(1), got {}", time_unit);
         return false;
     }
-    try {
-        const auto indicatorOfUnitForTimeRange = container->getLong("indicatorOfUnitForTimeRange");
-        const auto typeOfTimeIncrement = container->getLong("typeOfTimeIncrement");
-        const auto lengthOfTimeRange = container->getLong("lengthOfTimeRange");
 
-        if (typeOfTimeIncrement != 2) {
-            fmt::print(stderr, "typeOfTimeIncrement must be 2, got {}", typeOfTimeIncrement);
-            return false;
-        }
-        if(indicatorOfUnitForTimeRange != 1) {
-            fmt::print(stderr, "indicatorOfUnitForTimeRange must be hour(1), got {}", indicatorOfUnitForTimeRange);
-            return false;
-        }
-        end_ = lengthOfTimeRange;
-    } catch(std::runtime_error &) {
-        // skip
+    if(!container->hasProperty("indicatorOfUnitForTimeRange")) {
+        return true;
     }
 
+    const auto indicator_of_unit_for_time_range = container->getLong("indicatorOfUnitForTimeRange");
+    const auto type_of_time_increment = container->getLong("typeOfTimeIncrement");
+    const auto length_of_time_range = container->getLong("lengthOfTimeRange");
+
+    if (type_of_time_increment != 2) {
+        fmt::print(stderr, "typeOfTimeIncrement must be 2, got {}", type_of_time_increment);
+        return false;
+    }
+    if(indicator_of_unit_for_time_range != 1) {
+        fmt::print(stderr, "indicatorOfUnitForTimeRange must be hour(1), got {}", indicator_of_unit_for_time_range);
+        return false;
+    }
+    end_ = length_of_time_range;
     return true;
 }

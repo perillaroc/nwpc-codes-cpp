@@ -25,6 +25,9 @@ public:
     void setString(const std::string& key, const std::string& value) override;
     std::string getString(const std::string& key) override;
 
+    // NOTE: need to optimization
+    bool hasProperty(const std::string& key) override;
+
     template<typename T> T get(const std::string& key);
 
 private:

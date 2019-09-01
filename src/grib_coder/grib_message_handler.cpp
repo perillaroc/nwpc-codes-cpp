@@ -125,6 +125,12 @@ std::string GribMessageHandler::getString(const std::string& key) {
     return property->getString();
 }
 
+bool GribMessageHandler::hasProperty(const std::string& key)
+{
+    const auto property = getProperty(key);
+    return property != nullptr;
+}
+
 
 bool GribMessageHandler::parseNextSection(std::FILE* file) {
     unsigned char buffer[5];
