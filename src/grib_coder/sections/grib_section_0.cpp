@@ -10,12 +10,12 @@ GribSection0::GribSection0():
 }
 
 bool GribSection0::parseFile(std::FILE* file, bool header_only) {
-    unsigned char buffer[16];
-    auto result = std::fread(buffer, 1, 16, file);
+    std::vector<std::byte> buffer(16);
+    auto result = std::fread(&buffer[0], 1, 16, file);
     if (result != 16) {
         return false;
     }
-    identifier_ = std::string(std::begin(buffer), std::begin(buffer) + 4);
+    // identifier_ = std::string(reinterpret_cast<unsigned char*>(&buffer[0]), reinterpret_cast<unsigned char*>(&buffer[4]));
     const auto discipline_number = convert_bytes_to_int8(&buffer[6]);
     discipline_.setLong(discipline_number);
     edition_number_ = convert_bytes_to_int8(&buffer[7]);

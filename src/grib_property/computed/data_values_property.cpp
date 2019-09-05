@@ -14,7 +14,7 @@ std::vector<double> DataValuesProperty::getDoubleArray() {
     return std::vector<double>();
 }
 
-void DataValuesProperty::setRawValues(std::vector<unsigned char>&& raw_values) {
+void DataValuesProperty::setRawValues(std::vector<std::byte>&& raw_values) {
     raw_value_bytes_ = std::move(raw_values);
 }
 

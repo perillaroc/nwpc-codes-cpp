@@ -20,13 +20,13 @@ bool GribSection7::parseFile(std::FILE* file, bool header_only) {
     if (header_only) {
         std::fseek(file, buffer_length, SEEK_CUR);
     } else {
-        std::vector<unsigned char> buffer(section_length_);
+        std::vector<std::byte> buffer(section_length_);
         const auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
         if (static_cast<long>(read_count) != buffer_length) {
             return false;
         }
 
-        std::vector<unsigned char> raw_value_bytes;
+        std::vector<std::byte> raw_value_bytes;
         raw_value_bytes.resize(buffer_length);
         std::copy(buffer.begin() + 5, buffer.end(), raw_value_bytes.begin());
         data_values_.setRawValues(std::move(raw_value_bytes));

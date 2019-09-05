@@ -133,7 +133,7 @@ bool GribMessageHandler::hasProperty(const std::string& key)
 
 
 bool GribMessageHandler::parseNextSection(std::FILE* file) {
-    unsigned char buffer[5];
+    std::byte buffer[5];
     const auto result = std::fread(buffer, 1, 5, file);
     if (result != 5) {
         return false;

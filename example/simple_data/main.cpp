@@ -23,7 +23,7 @@ int main() {
     const auto decimal_scale_factor = 0x2;
     const auto reference_value = convert_to_float(0x46B1298E);
 
-    auto buf = new unsigned char[raw_data_length];
+    auto buf = new std::byte[raw_data_length];
 
     //std::FILE* f = std::fopen(grib_file_path.c_str(), "rb");
     //std::fseek(f, start_pos, SEEK_SET);

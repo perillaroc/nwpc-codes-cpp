@@ -13,7 +13,7 @@ Template_4_8::Template_4_8(int template_length):
     init();
 }
 
-bool Template_4_8::parse(std::vector<unsigned char>& buffer) {
+bool Template_4_8::parse(std::vector<std::byte>& buffer) {
     const auto parameter_category = convert_bytes_to_uint8(&buffer[9]);
     parameter_category_.setLong(parameter_category);
     const auto parameter_number = convert_bytes_to_uint8(&buffer[10]);

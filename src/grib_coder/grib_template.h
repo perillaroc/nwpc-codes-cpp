@@ -8,7 +8,7 @@ public:
     explicit GribTemplate(int template_length);
     virtual ~GribTemplate() = default;
 
-    virtual bool parse(std::vector<unsigned char>& buffer) = 0;
+    virtual bool parse(std::vector<std::byte>& buffer) = 0;
     virtual bool decode(GribPropertyContainer* container);
 
     virtual void registerProperty(std::shared_ptr<GribSection> section) = 0;
