@@ -1,6 +1,8 @@
 #include "grib_section_0.h"
 #include "number_convert.h"
+
 #include <tuple>
+#include <array>
 
 namespace grib_coder {
 
@@ -10,8 +12,9 @@ GribSection0::GribSection0():
 }
 
 bool GribSection0::parseFile(std::FILE* file, bool header_only) {
-    std::vector<std::byte> buffer(16);
-    auto result = std::fread(&buffer[0], 1, 16, file);
+    const size_t section_length = 16;
+    std::array<std::byte, section_length> buffer;
+    auto result = std::fread(&buffer[0], 1, section_length, file);
     if (result != 16) {
         return false;
     }
