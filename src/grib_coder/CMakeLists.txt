@@ -21,6 +21,7 @@ target_sources(grib_coder
 		sections/grib_section_8.cpp
 		templates/template_4_0.cpp
 		templates/template_4_8.cpp
+		templates/template_4_11.cpp
 )
 
 target_include_directories(grib_coder
