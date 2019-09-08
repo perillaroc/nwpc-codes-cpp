@@ -5,11 +5,13 @@
 #include <grib_property/grib_property_container.h>
 
 #include <tuple>
+#include <cassert>
 
 namespace grib_coder {
 
 Template_4_8::Template_4_8(int template_length):
     GribTemplate{template_length} {
+    assert(template_length == 58 - 9);
     init();
 }
 

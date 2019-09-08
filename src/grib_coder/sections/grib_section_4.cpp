@@ -1,12 +1,12 @@
 #include "sections/grib_section_4.h"
 #include "sections/grib_section_0.h"
 #include "templates/template_4_0.h"
+#include "templates/template_4_1.h"
 #include "templates/template_4_8.h"
 #include "templates/template_4_11.h"
 #include "number_convert.h"
 
 #include <vector>
-#include <sstream>
 #include <cassert>
 #include <stdexcept>
 
@@ -18,7 +18,7 @@ GribSection4::GribSection4():
 
 GribSection4::GribSection4(int section_length):
     GribSection{4, section_length} {
-    assert(section_length_ == 34 || section_length_ == 58 || section_length_ == 61);
+    assert(section_length_ >= 9);
     init();
 }
 
@@ -33,25 +33,20 @@ bool GribSection4::parseFile(std::FILE* file, bool header_only) {
     nv_ = convert_bytes_to_uint16(&buffer[5], 2);
     const auto product_definition_template_number = convert_bytes_to_uint16(&buffer[7], 2);
 
-    // TODO: different product definition template
-    assert(
-        product_definition_template_number == 0 \
-        || product_definition_template_number == 8 \
-        || product_definition_template_number == 11 
-    );
-
     product_definition_template_number_.setLong(product_definition_template_number);
 
     auto template_length = section_length_ - 9;
 
     if (product_definition_template_number == 0) {
         product_definition_template_ = std::make_shared<Template_4_0>(template_length);
+    } else if (product_definition_template_number == 1) {
+        product_definition_template_ = std::make_shared<Template_4_1>(template_length);
     } else if (product_definition_template_number == 8) {
         product_definition_template_ = std::make_shared<Template_4_8>(template_length);
     } else if (product_definition_template_number == 11) {
         product_definition_template_ = std::make_shared<Template_4_11>(template_length);
     } else {
-        throw std::runtime_error("template not implemented");
+        throw std::runtime_error(fmt::format("template not implemented: {}", product_definition_template_number));
     }
     product_definition_template_->registerProperty(shared_from_this());
     product_definition_template_->parse(buffer);

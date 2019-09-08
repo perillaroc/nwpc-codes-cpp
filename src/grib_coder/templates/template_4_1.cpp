@@ -1,4 +1,4 @@
-#include "template_4_0.h"
+#include "template_4_1.h"
 #include "sections/grib_section_0.h"
 #include "number_convert.h"
 
@@ -8,13 +8,13 @@
 
 namespace grib_coder {
 
-Template_4_0::Template_4_0(int template_length):
+Template_4_1::Template_4_1(int template_length):
     GribTemplate{template_length} {
-    assert(template_length == 34 - 9);
+    assert(template_length == 37 - 9);
     init();
 }
 
-bool Template_4_0::parse(std::vector<std::byte>& buffer) {
+bool Template_4_1::parse(std::vector<std::byte>& buffer) {
     const auto parameter_category = convert_bytes_to_uint8(&buffer[9]);
     parameter_category_.setLong(parameter_category);
     const auto parameter_number = convert_bytes_to_uint8(&buffer[10]);
@@ -35,12 +35,16 @@ bool Template_4_0::parse(std::vector<std::byte>& buffer) {
     const auto type_of_second_fixed_surface = convert_bytes_to_uint8(&buffer[28]);
     type_of_second_fixed_surface_.setLong(type_of_second_fixed_surface);
     scale_factor_of_second_fixed_surface_ = convert_bytes_to_int8(&buffer[29]);
-    scaled_value_of_second_fixed_surface_ = convert_bytes_to_uint32(&buffer[30]);
+    scaled_value_of_second_fixed_surface_ = convert_bytes_to_uint32(&buffer[30], 4);
+
+    type_of_ensemble_forecast_.setLong(convert_bytes_to_uint8(&buffer[34]));
+    perturbation_number_ = convert_bytes_to_uint8(&buffer[35]);
+    number_of_forecasts_in_ensemble_ = convert_bytes_to_uint8(&buffer[36]);
 
     return true;
 }
 
-bool Template_4_0::decode(GribPropertyContainer* container) {
+bool Template_4_1::decode(GribPropertyContainer* container) {
     const auto discipline = container->getLong("discipline");
     const auto category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);
@@ -57,7 +61,7 @@ bool Template_4_0::decode(GribPropertyContainer* container) {
     return true;
 }
 
-void Template_4_0::registerProperty(std::shared_ptr<GribSection> section) {
+void Template_4_1::registerProperty(std::shared_ptr<GribSection> section) {
 
     std::vector<std::tuple<std::string, GribProperty*>> properties_name{
         { "parameterCategory", &parameter_category_ },
@@ -75,6 +79,7 @@ void Template_4_0::registerProperty(std::shared_ptr<GribSection> section) {
         { "typeOfSecondFixedSurface", &type_of_second_fixed_surface_ },
         { "scaleFactorOfSecondFixedSurface", &scale_factor_of_second_fixed_surface_ },
         { "scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_ },
+
         { "level", &level_ },
         { "typeOfLevel", &type_of_level_ },
         { "stepRange", &step_range_ },
@@ -84,12 +89,14 @@ void Template_4_0::registerProperty(std::shared_ptr<GribSection> section) {
     }
 }
 
-void Template_4_0::init() {
+void Template_4_1::init() {
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
-        { &type_of_generating_process_, "4.3" },
-        { &indicator_of_unit_of_time_range_, "4.4" },
-        { &type_of_first_fixed_surface_, "4.5" },
-        { &type_of_second_fixed_surface_, "4.5" },
+        {&type_of_generating_process_, "4.3"},
+        {&indicator_of_unit_of_time_range_, "4.4"},
+        {&type_of_first_fixed_surface_, "4.5"},
+        {&type_of_second_fixed_surface_, "4.5"},
+
+        {&type_of_ensemble_forecast_, "4.6"},
     };
     for (const auto& item : tables_id) {
         std::get<0>(item)->setCodeTableId(std::get<1>(item));

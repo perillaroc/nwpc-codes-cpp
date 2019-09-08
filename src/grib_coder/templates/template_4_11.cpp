@@ -4,10 +4,13 @@
 
 #include <grib_property/grib_property_container.h>
 
+#include <cassert>
+
 namespace grib_coder {
 
 Template_4_11::Template_4_11(int template_length):
     GribTemplate{template_length} {
+    assert(template_length == 61 - 9);
     init();
 }
 
