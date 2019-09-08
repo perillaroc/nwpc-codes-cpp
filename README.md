@@ -6,10 +6,10 @@ A GRIB2 decoder for GRIB2 data produced by NWPC's GRAPES model.
 
 Use CMake to build from source code.
 
-OpenJPEG is required to decode data values. If you want to use dynamic link version of OpenJPEG, 
-please set `-DOPENJPEG_STATIC=off`.
+**OpenJPEG** is required to decode data values. 
 
-`nwpc-codes-cpp` use definition files from `eccodes`. Please set `ECCODES_DEFINITION_PATH` before running any tools.
+`nwpc-codes-cpp` use definition files from **eccodes**. 
+Please set `ECCODES_DEFINITION_PATH` before running any tools.
 
 ## Getting Started
 
