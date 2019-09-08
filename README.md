@@ -45,7 +45,15 @@ All examples are under `example` directory.
 
 ## Tested data
 
-Currently, only original GRIB2 data of GRAPES_GFS_GMF is tested.
+GRIB2 data created by the following operation systems is tested:
+
+- GRAPES_GFS_GMA
+- GRAPES_GFS_GDA
+- GRAPES_MESO_10KM
+- GRAPES_MESO_3KM
+- GRAPES_TYM
+- GRAPES_MEPS
+- GRAPES_REPS
 
 ## License
 
