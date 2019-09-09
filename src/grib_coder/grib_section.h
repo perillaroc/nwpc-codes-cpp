@@ -2,20 +2,34 @@
 
 #include <grib_property/grib_property.h>
 #include <grib_property/number_property.h>
+#include <grib_property/grib_property_container.h>
 
 #include <vector>
 #include <unordered_map>
-#include <memory>
 #include <cstdio>
 
 namespace grib_coder {
 
-class GribSection : public std::enable_shared_from_this<GribSection> {
+class GribSection : public GribPropertyContainer {
 public:
     explicit GribSection(int section_number);
     GribSection(int section_number, long section_length);
 
     virtual ~GribSection() = default;
+
+    void setLong(const std::string& key, long value) override;
+    long getLong(const std::string& key) override;
+
+    void setDouble(const std::string& key, double value) override;
+    double getDouble(const std::string& key) override;
+
+    void setString(const std::string& key, const std::string& value) override;
+    std::string getString(const std::string& key) override;
+
+    void setDoubleArray(const std::string& key, std::vector<double>& values) override;
+    std::vector<double> getDoubleArray(const std::string& key) override;
+
+    bool hasProperty(const std::string& key) override;
 
     void setSectionLength(long length);
     long getSectionLength() const;

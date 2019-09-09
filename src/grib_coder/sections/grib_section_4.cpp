@@ -48,7 +48,7 @@ bool GribSection4::parseFile(std::FILE* file, bool header_only) {
     } else {
         throw std::runtime_error(fmt::format("template not implemented: {}", product_definition_template_number));
     }
-    product_definition_template_->registerProperty(shared_from_this());
+    product_definition_template_->registerProperty(std::dynamic_pointer_cast<GribSection>(shared_from_this()));
     product_definition_template_->parse(buffer);
 
     return true;

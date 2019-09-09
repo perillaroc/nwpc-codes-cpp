@@ -1,12 +1,13 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
 
 namespace grib_coder {
 
 class GribProperty;
 
-class GribPropertyContainer {
+class GribPropertyContainer : public std::enable_shared_from_this<GribPropertyContainer> {
 public:
     GribPropertyContainer() = default;
     virtual ~GribPropertyContainer() = default;

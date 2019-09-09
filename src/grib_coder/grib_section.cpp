@@ -1,5 +1,6 @@
 #include "grib_section.h"
 #include <iterator>
+#include "grib_property/code_table_property.h"
 
 namespace grib_coder {
 
@@ -11,6 +12,84 @@ GribSection::GribSection(int section_number):
 GribSection::GribSection(int section_number, long section_length):
     section_number_{section_number},
     section_length_{section_length} {
+}
+
+void GribSection::setLong(const std::string& key, long value)
+{
+    auto property = getProperty(key);
+    if (property == nullptr) {
+        throw std::runtime_error("key is not found");
+    }
+    property->setLong(value);
+}
+
+long GribSection::getLong(const std::string& key)
+{
+    auto property = getProperty(key);
+    if (property == nullptr) {
+        throw std::runtime_error("key is not found");
+    }
+    return property->getLong();
+}
+
+void GribSection::setDouble(const std::string& key, double value)
+{
+    auto property = getProperty(key);
+    if (property == nullptr) {
+        throw std::runtime_error("key is not found");
+    }
+    property->setDouble(value);
+}
+
+double GribSection::getDouble(const std::string& key)
+{
+    auto property = getProperty(key);
+    if (property == nullptr) {
+        throw std::runtime_error("key is not found");
+    }
+    return property->getDouble();
+}
+
+void GribSection::setString(const std::string& key, const std::string& value)
+{
+    auto property = getProperty(key);
+    if (property == nullptr) {
+        throw std::runtime_error("key is not found");
+    }
+    property->setString(value);
+}
+
+std::string GribSection::getString(const std::string& key)
+{
+    auto property = getProperty(key);
+    if (property == nullptr) {
+        throw std::runtime_error("key is not found");
+    }
+    return property->getString();
+}
+
+void GribSection::setDoubleArray(const std::string& key, std::vector<double>& values)
+{
+    auto property = getProperty(key);
+    if (property == nullptr) {
+        throw std::runtime_error("key is not found");
+    }
+    property->setDoubleArray(values);
+}
+
+std::vector<double> GribSection::getDoubleArray(const std::string& key)
+{
+    auto property = getProperty(key);
+    if (property == nullptr) {
+        throw std::runtime_error("key is not found");
+    }
+    return property->getDoubleArray();
+}
+
+bool GribSection::hasProperty(const std::string& key)
+{
+    const auto property = getProperty(key);
+    return property != nullptr;
 }
 
 void GribSection::setSectionLength(long length) {
