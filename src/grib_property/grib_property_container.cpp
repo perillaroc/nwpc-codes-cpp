@@ -33,4 +33,9 @@ void GribPropertyContainer::setDoubleArray(const std::string& key, std::vector<d
 std::vector<double> GribPropertyContainer::getDoubleArray(const std::string& key) {
     throw std::runtime_error("not implemented");
 }
+
+bool GribPropertyContainer::hasProperty(const std::string& key) {
+    throw std::runtime_error("not implemented");
+}
+
 } // namespace grib_coder

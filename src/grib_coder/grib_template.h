@@ -1,9 +1,11 @@
 #pragma once
-#include "grib_section.h"
+#include <grib_property/grib_component.h>
 
 namespace grib_coder {
 
-class GribTemplate {
+class GribSection;
+
+class GribTemplate: public GribComponent {
 public:
     explicit GribTemplate(int template_length);
     virtual ~GribTemplate() = default;

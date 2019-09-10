@@ -12,6 +12,7 @@ target_sources(grib_property
 	PRIVATE
 		grib_table.cpp
 		grib_table_database.cpp
+		grib_component.cpp
         grib_property.cpp
 		grib_property_container.cpp
         code_table_property.cpp

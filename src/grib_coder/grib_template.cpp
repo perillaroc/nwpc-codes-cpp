@@ -1,4 +1,5 @@
 #include "grib_template.h"
+#include "grib_section.h"
 
 namespace grib_coder {
 

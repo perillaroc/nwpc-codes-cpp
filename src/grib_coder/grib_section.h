@@ -2,7 +2,7 @@
 
 #include <grib_property/grib_property.h>
 #include <grib_property/number_property.h>
-#include <grib_property/grib_property_container.h>
+#include <grib_property/grib_component.h>
 
 #include <vector>
 #include <unordered_map>
@@ -10,7 +10,7 @@
 
 namespace grib_coder {
 
-class GribSection : public GribPropertyContainer {
+class GribSection : public GribComponent {
 public:
     explicit GribSection(int section_number);
     GribSection(int section_number, long section_length);
