@@ -38,7 +38,7 @@ public:
 
     virtual bool parseFile(std::FILE* file, bool header_only = false) = 0;
 
-    virtual bool decode(GribPropertyContainer* container);
+    bool decode(GribPropertyContainer* container) override;
 
     GribProperty* getProperty(const std::string& name);
 

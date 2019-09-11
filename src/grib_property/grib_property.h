@@ -26,7 +26,7 @@ public:
     virtual void setDoubleArray(std::vector<double>& values);
     virtual std::vector<double> getDoubleArray();
 
-    virtual bool decode(GribPropertyContainer* container);
+    bool decode(GribPropertyContainer* container) override;
 };
 
 } // namespace grib_coder
