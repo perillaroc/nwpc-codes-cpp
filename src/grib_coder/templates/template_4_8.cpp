@@ -3,6 +3,7 @@
 
 #include <grib_property/number_convert.h>
 #include <grib_property/grib_property_container.h>
+#include <grib_property/property_component.h>
 
 #include <tuple>
 #include <cassert>
@@ -13,51 +14,6 @@ Template_4_8::Template_4_8(int template_length):
     GribTemplate{template_length} {
     assert(template_length == 58 - 9);
     init();
-}
-
-bool Template_4_8::parse(std::vector<std::byte>& buffer) {
-    const auto parameter_category = convert_bytes_to_uint8(&buffer[9]);
-    parameter_category_.setLong(parameter_category);
-    const auto parameter_number = convert_bytes_to_uint8(&buffer[10]);
-    parameter_number_.setLong(parameter_number);
-    const auto type_of_generating_process = convert_bytes_to_uint8(&buffer[11]);
-    type_of_generating_process_.setLong(type_of_generating_process);
-    background_process_ = convert_bytes_to_uint8(&buffer[12]);
-    generating_process_identifier_ = convert_bytes_to_uint8(&buffer[13]);
-    hours_after_data_cutoff_ = convert_bytes_to_uint16(&buffer[14], 2);
-    minutes_after_data_cutoff_ = convert_bytes_to_uint8(&buffer[16]);
-    const auto indicator_of_unit_of_time_range = convert_bytes_to_uint8(&buffer[17]);
-    indicator_of_unit_of_time_range_.setLong(indicator_of_unit_of_time_range);
-    forecast_time_ = convert_bytes_to_int32(&buffer[18], 4);
-    const auto type_of_first_fixed_surface = convert_bytes_to_uint8(&buffer[22]);
-    type_of_first_fixed_surface_.setLong(type_of_first_fixed_surface);
-    scale_factor_of_first_fixed_surface_ = convert_bytes_to_int8(&buffer[23]);
-    scaled_value_of_first_fixed_surface_ = convert_bytes_to_uint32(&buffer[24], 4);
-    const auto type_of_second_fixed_surface = convert_bytes_to_uint8(&buffer[28]);
-    type_of_second_fixed_surface_.setLong(type_of_second_fixed_surface);
-    scale_factor_of_second_fixed_surface_ = convert_bytes_to_int8(&buffer[29]);
-    scaled_value_of_second_fixed_surface_ = convert_bytes_to_uint32(&buffer[30], 4);
-
-    year_of_end_of_overall_time_interval_ = convert_bytes_to_uint16(&buffer[34], 2);
-    month_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[36]);
-    day_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[37]);
-    hour_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[38]);
-    minute_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[39]);
-    second_of_end_of_overall_time_interval_ = convert_bytes_to_uint8(&buffer[40]);
-    number_of_time_range_ = convert_bytes_to_uint8(&buffer[41]);
-    number_of_missing_statistical_process_ = convert_bytes_to_uint32(&buffer[42], 4);
-    const auto type_of_statistical_processing = convert_bytes_to_uint8(&buffer[46]);
-    type_of_statistical_processing_.setLong(type_of_statistical_processing);
-    const auto type_of_time_increment = convert_bytes_to_uint8(&buffer[47]);
-    type_of_time_increment_.setLong(type_of_time_increment);
-    const auto indicator_of_unit_for_time_range = convert_bytes_to_uint8(&buffer[48]);
-    indicator_of_unit_for_time_range_.setLong(indicator_of_unit_for_time_range);
-    length_of_time_range_ = convert_bytes_to_uint32(&buffer[49], 4);
-    const auto indicator_of_unit_for_time_increment = convert_bytes_to_uint8(&buffer[53]);
-    indicator_of_unit_for_time_increment_.setLong(indicator_of_unit_for_time_increment);
-    time_increment_ = convert_bytes_to_uint32(&buffer[54], 4);
-
-    return true;
 }
 
 bool Template_4_8::decode(GribPropertyContainer* container) {
@@ -121,6 +77,44 @@ void Template_4_8::registerProperty(std::shared_ptr<GribSection> section) {
 }
 
 void Template_4_8::init() {
+    std::vector<std::tuple<size_t, GribProperty*>> components{
+        {1, &parameter_category_},
+        {1, &parameter_number_},
+        {1, &type_of_generating_process_},
+        {1, &background_process_},
+        {1, &generating_process_identifier_},
+        {2, &hours_after_data_cutoff_},
+        {1, &minutes_after_data_cutoff_},
+        {1, &indicator_of_unit_of_time_range_},
+        {4, &forecast_time_},
+        {1, &type_of_first_fixed_surface_},
+        {1, &scale_factor_of_first_fixed_surface_},
+        {4, &scaled_value_of_first_fixed_surface_},
+        {1, &type_of_second_fixed_surface_},
+        {1, &scale_factor_of_second_fixed_surface_},
+        {4, &scaled_value_of_second_fixed_surface_},
+
+        {2, &year_of_end_of_overall_time_interval_},
+        {1, &month_of_end_of_overall_time_interval_},
+        {1, &day_of_end_of_overall_time_interval_},
+        {1, &hour_of_end_of_overall_time_interval_},
+        {1, &minute_of_end_of_overall_time_interval_},
+        {1, &second_of_end_of_overall_time_interval_},
+        {1, &number_of_time_range_},
+        {4, &number_of_missing_statistical_process_},
+
+        {1, &type_of_statistical_processing_},
+        {1, &type_of_time_increment_},
+        {1, &indicator_of_unit_for_time_range_},
+        {4, &length_of_time_range_},
+        {1, &indicator_of_unit_for_time_increment_},
+        {4, &time_increment_},
+    };
+
+    for (auto& item : components) {
+        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+    }
+
     const std::vector<std::tuple<CodeTableProperty*, std::string>> properties = {
         {&type_of_generating_process_, "4.3"},
         {&indicator_of_unit_of_time_range_, "4.4"},

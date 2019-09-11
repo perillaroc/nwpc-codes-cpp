@@ -26,7 +26,7 @@ private:
     NumberProperty<uint16_t> nv_;
     CodeTableProperty product_definition_template_number_;
 
-    std::shared_ptr<GribTemplate> product_definition_template_;
+    std::unique_ptr<GribTemplate> product_definition_template_;
 };
 
 } // namespace grib_coder

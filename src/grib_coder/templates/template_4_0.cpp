@@ -3,6 +3,7 @@
 
 #include <grib_property/number_convert.h>
 #include <grib_property/grib_property_container.h>
+#include <grib_property/property_component.h>
 
 #include <cassert>
 
@@ -12,32 +13,6 @@ Template_4_0::Template_4_0(int template_length):
     GribTemplate{template_length} {
     assert(template_length == 34 - 9);
     init();
-}
-
-bool Template_4_0::parse(std::vector<std::byte>& buffer) {
-    const auto parameter_category = convert_bytes_to_uint8(&buffer[9]);
-    parameter_category_.setLong(parameter_category);
-    const auto parameter_number = convert_bytes_to_uint8(&buffer[10]);
-    parameter_number_.setLong(parameter_number);
-    const auto type_of_generating_process = convert_bytes_to_uint8(&buffer[11]);
-    type_of_generating_process_.setLong(type_of_generating_process);
-    background_process_ = convert_bytes_to_uint8(&buffer[12]);
-    generating_process_identifier_ = convert_bytes_to_uint8(&buffer[13]);
-    hours_after_data_cutoff_ = convert_bytes_to_uint16(&buffer[14], 2);
-    minutes_after_data_cutoff_ = convert_bytes_to_uint8(&buffer[16]);
-    const auto indicator_of_unit_of_time_range = convert_bytes_to_uint8(&buffer[17]);
-    indicator_of_unit_of_time_range_.setLong(indicator_of_unit_of_time_range);
-    forecast_time_ = convert_bytes_to_int32(&buffer[18], 4);
-    const auto type_of_first_fixed_surface = convert_bytes_to_uint8(&buffer[22]);
-    type_of_first_fixed_surface_.setLong(type_of_first_fixed_surface);
-    scale_factor_of_first_fixed_surface_ = convert_bytes_to_int8(&buffer[23]);
-    scaled_value_of_first_fixed_surface_ = convert_bytes_to_uint32(&buffer[24], 4);
-    const auto type_of_second_fixed_surface = convert_bytes_to_uint8(&buffer[28]);
-    type_of_second_fixed_surface_.setLong(type_of_second_fixed_surface);
-    scale_factor_of_second_fixed_surface_ = convert_bytes_to_int8(&buffer[29]);
-    scaled_value_of_second_fixed_surface_ = convert_bytes_to_uint32(&buffer[30]);
-
-    return true;
 }
 
 bool Template_4_0::decode(GribPropertyContainer* container) {
@@ -85,6 +60,28 @@ void Template_4_0::registerProperty(std::shared_ptr<GribSection> section) {
 }
 
 void Template_4_0::init() {
+    std::vector<std::tuple<size_t, GribProperty*>> components{
+        {1, &parameter_category_},
+        {1, &parameter_number_},
+        {1, &type_of_generating_process_},
+        {1, &background_process_},
+        {1, &generating_process_identifier_},
+        {2, &hours_after_data_cutoff_},
+        {1, &minutes_after_data_cutoff_},
+        {1, &indicator_of_unit_of_time_range_},
+        {4, &forecast_time_},
+        {1, &type_of_first_fixed_surface_},
+        {1, &scale_factor_of_first_fixed_surface_},
+        {4, &scaled_value_of_first_fixed_surface_},
+        {1, &type_of_second_fixed_surface_},
+        {1, &scale_factor_of_second_fixed_surface_},
+        {4, &scaled_value_of_second_fixed_surface_},
+    };
+
+    for (auto& item : components) {
+        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+    }
+
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         { &type_of_generating_process_, "4.3" },
         { &indicator_of_unit_of_time_range_, "4.4" },

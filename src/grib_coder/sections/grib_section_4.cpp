@@ -6,6 +6,7 @@
 #include "templates/template_4_11.h"
 
 #include <grib_property/number_convert.h>
+#include <grib_property/property_component.h>
 
 #include <vector>
 #include <cassert>
@@ -31,26 +32,29 @@ bool GribSection4::parseFile(std::FILE* file, bool header_only) {
         return false;
     }
 
-    nv_ = convert_bytes_to_uint16(&buffer[5], 2);
-    const auto product_definition_template_number = convert_bytes_to_uint16(&buffer[7], 2);
-
-    product_definition_template_number_.setLong(product_definition_template_number);
+    auto iterator = std::cbegin(buffer) + 5;
+    for (auto& component : components_) {
+        component->parse(iterator);
+    }
 
     auto template_length = section_length_ - 9;
+    const auto product_definition_template_number = product_definition_template_number_.getLong();
 
     if (product_definition_template_number == 0) {
-        product_definition_template_ = std::make_shared<Template_4_0>(template_length);
+        product_definition_template_ = std::make_unique<Template_4_0>(template_length);
     } else if (product_definition_template_number == 1) {
-        product_definition_template_ = std::make_shared<Template_4_1>(template_length);
+        product_definition_template_ = std::make_unique<Template_4_1>(template_length);
     } else if (product_definition_template_number == 8) {
-        product_definition_template_ = std::make_shared<Template_4_8>(template_length);
+        product_definition_template_ = std::make_unique<Template_4_8>(template_length);
     } else if (product_definition_template_number == 11) {
-        product_definition_template_ = std::make_shared<Template_4_11>(template_length);
+        product_definition_template_ = std::make_unique<Template_4_11>(template_length);
     } else {
         throw std::runtime_error(fmt::format("template not implemented: {}", product_definition_template_number));
     }
     product_definition_template_->registerProperty(std::dynamic_pointer_cast<GribSection>(shared_from_this()));
-    product_definition_template_->parse(buffer);
+
+    iterator = std::cbegin(buffer) + 9;
+    product_definition_template_->parse(iterator);
 
     return true;
 }
@@ -60,6 +64,15 @@ bool GribSection4::decode(GribPropertyContainer* container) {
 }
 
 void GribSection4::init() {
+    std::vector<std::tuple<size_t, GribProperty*>> components{
+        {2, &nv_},
+        {2, &product_definition_template_number_},
+    };
+
+    for (auto& item : components) {
+        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+    }
+
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         { &product_definition_template_number_, "4.0" },
     };

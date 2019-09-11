@@ -15,8 +15,6 @@ public:
 
     ~Template_4_8() = default;
 
-    bool parse(std::vector<std::byte>& buffer) override;
-
     bool decode(GribPropertyContainer* container) override;
 
     void registerProperty(std::shared_ptr<GribSection> section) override;
