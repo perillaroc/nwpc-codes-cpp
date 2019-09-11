@@ -13,10 +13,12 @@ target_sources(grib_property
 		grib_table.cpp
 		grib_table_database.cpp
 		grib_component.cpp
+		property_component.cpp
         grib_property.cpp
 		grib_property_container.cpp
         code_table_property.cpp
 		string_property.cpp
+		number_convert.cpp
 		computed/openjpeg_helper.cpp
 		computed/openjpeg_decoder.cpp
 		computed/data_values_property.cpp

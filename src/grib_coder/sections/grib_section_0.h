@@ -21,6 +21,7 @@ private:
     void init();
 
     StringProperty identifier_;
+    NumberProperty<uint16_t> reserved_;
     CodeTableProperty discipline_;
     NumberProperty<uint8_t> edition_number_ = 0;
     NumberProperty<uint64_t> total_length_ = 0;

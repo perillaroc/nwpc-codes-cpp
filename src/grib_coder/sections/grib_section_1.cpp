@@ -1,5 +1,6 @@
 #include "grib_section_1.h"
-#include "number_convert.h"
+#include <grib_property/number_convert.h>
+#include <grib_property/property_component.h>
 
 #include <vector>
 #include <cassert>
@@ -25,30 +26,10 @@ bool GribSection1::parseFile(std::FILE* file, bool header_only) {
         return false;
     }
 
-    centre_ = convert_bytes_to_uint16(&buffer[0], 2);
-    sub_centre_ = convert_bytes_to_uint16(&buffer[2], 2);
-
-    const auto tables_version = convert_bytes_to_uint8(&buffer[4]);
-    tables_version_.setLong(tables_version);
-
-    const auto local_tables_version = convert_bytes_to_uint8(&buffer[5]);
-    local_tables_version_.setLong(local_tables_version);
-
-    const auto significance_of_reference_time = convert_bytes_to_uint8(&buffer[6]);
-    significance_of_reference_time_.setLong(significance_of_reference_time);
-
-    year_ = convert_bytes_to_uint16(&buffer[7], 2);
-    month_ = convert_bytes_to_uint8(&buffer[9]);
-    day_ = convert_bytes_to_uint8(&buffer[10]);
-    hour_ = convert_bytes_to_uint8(&buffer[11]);
-    minute_ = convert_bytes_to_uint8(&buffer[12]);
-    second_ = convert_bytes_to_uint8(&buffer[13]);
-
-    const auto production_status_of_processed_data = convert_bytes_to_uint8(&buffer[14]);
-    production_status_of_processed_data_.setLong(production_status_of_processed_data);
-
-    const auto type_of_processed_data = convert_bytes_to_uint8(&buffer[15]);
-    type_of_processed_data_.setLong(type_of_processed_data);
+    auto iterator = std::cbegin(buffer);
+    for (auto& component : components_) {
+        component->parse(iterator);
+    }
 
     return true;
 }
@@ -62,6 +43,20 @@ bool GribSection1::decode(GribPropertyContainer* container) {
 }
 
 void GribSection1::init() {
+    components_.push_back(std::make_unique<PropertyComponent>(2, &centre_));
+    components_.push_back(std::make_unique<PropertyComponent>(2, &sub_centre_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &tables_version_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &local_tables_version_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &significance_of_reference_time_));
+    components_.push_back(std::make_unique<PropertyComponent>(2, &year_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &month_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &day_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &hour_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &minute_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &second_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &production_status_of_processed_data_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &type_of_processed_data_));
+
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         { &tables_version_, "1.0" },
         { &local_tables_version_, "1.1" },

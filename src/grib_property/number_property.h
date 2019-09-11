@@ -1,6 +1,8 @@
 #pragma once
 
 #include "grib_property.h"
+#include "number_convert.h"
+
 #include <fmt/format.h>
 
 namespace grib_coder {
@@ -47,6 +49,15 @@ public:
 
     std::string getString() override {
         return fmt::format("{}", value_);
+    }
+
+    bool parse(std::vector<std::byte>::const_iterator& iterator, size_t count = sizeof(T)) override {
+        value_ = convert_bytes_to_number<T>(&(*iterator));
+        return true;
+    }
+
+    constexpr static size_t getByteSize() {
+        return sizeof(T);
     }
 
 private:

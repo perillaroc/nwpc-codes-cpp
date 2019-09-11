@@ -1,7 +1,7 @@
 #include "template_4_0.h"
 #include "sections/grib_section_0.h"
-#include "number_convert.h"
 
+#include <grib_property/number_convert.h>
 #include <grib_property/grib_property_container.h>
 
 #include <cassert>

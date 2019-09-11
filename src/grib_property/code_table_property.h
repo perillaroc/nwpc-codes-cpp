@@ -7,9 +7,6 @@ namespace grib_coder {
 
 class CodeTableProperty : public GribProperty {
 public:
-    CodeTableProperty() = default;
-    ~CodeTableProperty() = default;
-
     void setTableDatabase(std::shared_ptr<GribTableDatabase> db);
     void setTablesVersion(const std::string& version);
 
@@ -28,6 +25,8 @@ public:
 
     void setCodeTableId(const std::string& code_table_id);
     void setOctetCount(size_t count);
+
+    bool parse(std::vector<std::byte>::const_iterator& iterator, size_t count=1) override;
 
 private:
     std::optional<GribTableRecord> getTableRecord();

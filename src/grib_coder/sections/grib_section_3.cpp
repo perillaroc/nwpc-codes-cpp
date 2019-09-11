@@ -1,5 +1,5 @@
 #include "grib_section_3.h"
-#include "number_convert.h"
+#include <grib_property/number_convert.h>
 
 #include <vector>
 #include <cassert>

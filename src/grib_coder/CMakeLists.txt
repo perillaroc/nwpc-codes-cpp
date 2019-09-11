@@ -10,7 +10,6 @@ target_sources(grib_coder
 		grib_message_handler.cpp
 		grib_section.cpp
 		grib_template.cpp
-		number_convert.cpp
 		sections/grib_section_0.cpp
 		sections/grib_section_1.cpp
 		sections/grib_section_3.cpp

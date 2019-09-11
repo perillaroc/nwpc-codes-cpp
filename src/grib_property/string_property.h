@@ -13,6 +13,8 @@ public:
     void setString(const std::string& value) override;
     std::string getString() override;
 
+    bool parse(std::vector<std::byte>::const_iterator& iterator, size_t count) override;
+
 private:
     std::string value_;
     int length_;

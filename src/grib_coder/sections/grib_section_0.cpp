@@ -1,5 +1,7 @@
 #include "grib_section_0.h"
-#include "number_convert.h"
+
+#include <grib_property/number_convert.h>
+#include <grib_property/property_component.h>
 
 #include <tuple>
 #include <array>
@@ -13,20 +15,27 @@ GribSection0::GribSection0():
 
 bool GribSection0::parseFile(std::FILE* file, bool header_only) {
     const size_t section_length = 16;
-    std::array<std::byte, section_length> buffer;
+    std::vector<std::byte> buffer(section_length);
     auto result = std::fread(&buffer[0], 1, section_length, file);
     if (result != 16) {
         return false;
     }
-    identifier_.setString(std::string(reinterpret_cast<unsigned char*>(&buffer[0]), reinterpret_cast<unsigned char*>(&buffer[4])));
-    const auto discipline_number = convert_bytes_to_int8(&buffer[6]);
-    discipline_.setLong(discipline_number);
-    edition_number_ = convert_bytes_to_int8(&buffer[7]);
-    total_length_ = convert_bytes_to_uint64(&buffer[8], 8);
+    auto iterator = std::cbegin(buffer);
+    for(auto & component: components_) {
+        component->parse(iterator);
+    }
+
     return true;
 }
 
 void GribSection0::init() {
+    components_.push_back(std::make_unique<PropertyComponent>(4, &identifier_));
+    components_.push_back(std::make_unique<PropertyComponent>(2, &reserved_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &discipline_));
+    components_.push_back(std::make_unique<PropertyComponent>(1, &edition_number_));
+    components_.push_back(std::make_unique<PropertyComponent>(8, &total_length_));
+
+
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         { &discipline_, "0.0" },
     };

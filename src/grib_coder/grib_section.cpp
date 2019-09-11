@@ -1,12 +1,12 @@
 #include "grib_section.h"
 #include <iterator>
-#include "grib_property/code_table_property.h"
+#include <grib_property/code_table_property.h>
+#include <grib_property/property_component.h>
 
 namespace grib_coder {
 
 GribSection::GribSection(int section_number):
-    section_number_{section_number},
-    section_length_{0} {
+    GribSection{section_number, 0} {
 }
 
 GribSection::GribSection(int section_number, long section_length):

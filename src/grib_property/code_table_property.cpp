@@ -1,6 +1,8 @@
 #include "code_table_property.h"
+#include "number_convert.h"
 
 #include <fmt/format.h>
+#include <stdexcept>
 
 namespace grib_coder {
 
@@ -90,6 +92,17 @@ void CodeTableProperty::setCodeTableId(const std::string& code_table_id) {
 
 void CodeTableProperty::setOctetCount(size_t count) {
     octet_count_ = count;
+}
+
+bool CodeTableProperty::parse(std::vector<std::byte>::const_iterator& iterator, size_t count) {
+    if(count == 1) {
+        value_ = convert_bytes_to_uint8(&(*iterator));
+    } else if(count == 2) {
+        value_ = convert_bytes_to_uint16(&(*iterator));
+    } else {
+        throw std::runtime_error("count is not supported");
+    }
+    return true;
 }
 
 std::optional<GribTableRecord> CodeTableProperty::getTableRecord() {

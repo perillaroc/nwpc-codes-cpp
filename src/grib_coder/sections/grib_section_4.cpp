@@ -4,7 +4,8 @@
 #include "templates/template_4_1.h"
 #include "templates/template_4_8.h"
 #include "templates/template_4_11.h"
-#include "number_convert.h"
+
+#include <grib_property/number_convert.h>
 
 #include <vector>
 #include <cassert>
