@@ -3,8 +3,8 @@
 #include "grib_section.h"
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
+#include <grib_property/string_property.h>
 
-#include <string>
 #include <cstdint>
 
 namespace grib_coder {
@@ -20,7 +20,7 @@ public:
 private:
     void init();
 
-    std::string identifier_ = "GRIB";
+    StringProperty identifier_;
     CodeTableProperty discipline_;
     NumberProperty<uint8_t> edition_number_ = 0;
     NumberProperty<uint64_t> total_length_ = 0;

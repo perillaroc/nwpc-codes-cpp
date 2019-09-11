@@ -18,7 +18,7 @@ bool GribSection0::parseFile(std::FILE* file, bool header_only) {
     if (result != 16) {
         return false;
     }
-    // identifier_ = std::string(reinterpret_cast<unsigned char*>(&buffer[0]), reinterpret_cast<unsigned char*>(&buffer[4]));
+    identifier_.setString(std::string(reinterpret_cast<unsigned char*>(&buffer[0]), reinterpret_cast<unsigned char*>(&buffer[4])));
     const auto discipline_number = convert_bytes_to_int8(&buffer[6]);
     discipline_.setLong(discipline_number);
     edition_number_ = convert_bytes_to_int8(&buffer[7]);

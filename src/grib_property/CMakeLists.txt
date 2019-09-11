@@ -16,6 +16,7 @@ target_sources(grib_property
         grib_property.cpp
 		grib_property_container.cpp
         code_table_property.cpp
+		string_property.cpp
 		computed/openjpeg_helper.cpp
 		computed/openjpeg_decoder.cpp
 		computed/data_values_property.cpp
