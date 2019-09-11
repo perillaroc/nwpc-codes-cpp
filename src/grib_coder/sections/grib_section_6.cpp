@@ -1,5 +1,6 @@
 #include "grib_section_6.h"
 #include <grib_property/number_convert.h>
+#include <grib_property/property_component.h>
 
 #include <vector>
 
@@ -21,12 +22,23 @@ bool GribSection6::parseFile(std::FILE* file, bool header_only) {
         return false;
     }
 
-    bit_map_indicator_ = convert_bytes_to_uint8(&buffer[5]);
+    auto iterator = std::cbegin(buffer) + 5;
+    for (auto& component : components_) {
+        component->parse(iterator);
+    }
 
     return true;
 }
 
 void GribSection6::init() {
+    std::vector<std::tuple<size_t, GribProperty*>> components{
+        {4, &bit_map_indicator_},
+    };
+
+    for (auto& item : components) {
+        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+    }
+
     std::vector<std::tuple<std::string, GribProperty*>> properties_name{
         { "bitMapIndicator", &bit_map_indicator_ },
     };

@@ -1,5 +1,6 @@
 #include "grib_section_5.h"
 #include <grib_property/number_convert.h>
+#include <grib_property/property_component.h>
 
 #include <vector>
 #include <cassert>
@@ -24,18 +25,10 @@ bool GribSection5::parseFile(std::FILE* file, bool header_only) {
         return false;
     }
 
-    number_of_values_ = convert_bytes_to_uint32(&buffer[5], 4);
-    const auto data_representation_template_number = convert_bytes_to_uint16(&buffer[9], 2);
-    data_representation_template_number_.setLong(data_representation_template_number);
-    reference_value_ = convert_bytes_to_float(&buffer[11], 4);
-    binary_scale_factor_ = convert_bytes_to_int16(&buffer[15], 2);
-    decimal_scale_factor_ = convert_bytes_to_int16(&buffer[17], 2);
-    bits_per_value_ = convert_bytes_to_uint8(&buffer[19]);
-    const auto type_of_original_field_values = convert_bytes_to_uint8(&buffer[20]);
-    type_of_original_field_values_.setLong(type_of_original_field_values);
-    const auto type_of_compression_used = convert_bytes_to_uint8(&buffer[21]);
-    type_of_compression_used_.setLong(type_of_compression_used);
-    target_compression_ratio_ = convert_bytes_to_uint8(&buffer[22]);
+    auto iterator = std::cbegin(buffer) + 5;
+    for (auto& component : components_) {
+        component->parse(iterator);
+    }
 
     return true;
 }
@@ -47,6 +40,24 @@ bool GribSection5::decode(GribPropertyContainer* container)
 }
 
 void GribSection5::init() {
+    std::vector<std::tuple<size_t, GribProperty*>> components{
+        {4, &number_of_values_},
+        {1, &data_representation_template_number_},
+
+        {4, &reference_value_},
+        {2, &binary_scale_factor_},
+        {2, &decimal_scale_factor_},
+        {1, &bits_per_value_},
+        {1, &type_of_original_field_values_},
+        {1, &type_of_compression_used_},
+        {1, &target_compression_ratio_},
+    };
+
+    for (auto& item : components) {
+        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+    }
+
+
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         { &data_representation_template_number_, "5.0" },
 
