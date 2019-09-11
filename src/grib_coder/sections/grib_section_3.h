@@ -34,8 +34,10 @@ private:
     NumberProperty<uint32_t> scaled_value_of_earth_major_axis_;
     NumberProperty<uint8_t> scale_factor_of_earth_minor_axis_;
     NumberProperty<uint32_t> scaled_value_of_earth_minor_axis_;
+
     NumberProperty<uint32_t> ni_;
     NumberProperty<uint32_t> nj_;
+
     NumberProperty<uint32_t> basic_angle_of_the_initial_production_domain_;
     NumberProperty<uint32_t> subdivisions_of_basic_angle_;
     NumberProperty<int32_t> latitude_of_first_grid_point_;
