@@ -20,13 +20,13 @@ GribSection1::GribSection1(long section_length) :
 
 bool GribSection1::parseFile(std::FILE* file, bool header_only) {
     const auto buffer_length = section_length_ - 5;
-    std::vector<std::byte> buffer(buffer_length);
-    const auto read_count = std::fread(&buffer[0], 1, buffer_length, file);
+    std::vector<std::byte> buffer(section_length_);
+    const auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
     if (static_cast<long>(read_count) != buffer_length) {
         return false;
     }
 
-    auto iterator = std::cbegin(buffer);
+    auto iterator = std::cbegin(buffer) + 5;
     for (auto& component : components_) {
         component->parse(iterator);
     }
@@ -43,19 +43,26 @@ bool GribSection1::decode(GribPropertyContainer* container) {
 }
 
 void GribSection1::init() {
-    components_.push_back(std::make_unique<PropertyComponent>(2, &centre_));
-    components_.push_back(std::make_unique<PropertyComponent>(2, &sub_centre_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &tables_version_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &local_tables_version_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &significance_of_reference_time_));
-    components_.push_back(std::make_unique<PropertyComponent>(2, &year_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &month_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &day_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &hour_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &minute_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &second_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &production_status_of_processed_data_));
-    components_.push_back(std::make_unique<PropertyComponent>(1, &type_of_processed_data_));
+    std::vector<std::tuple<size_t, GribProperty*>> components{
+        { 2, &centre_ },
+        { 2, &sub_centre_ },
+        { 1, &tables_version_ },
+        { 1, &local_tables_version_ },
+        { 1, &significance_of_reference_time_ },
+        { 2, &year_ },
+        { 1, &month_ },
+        { 1, &day_ },
+        { 1, &hour_ },
+        { 1, &minute_ },
+        { 1, &second_ },
+        { 1, &production_status_of_processed_data_ },
+        { 1, &type_of_processed_data_ },
+    };
+
+    for (auto& item : components) {
+        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+    }
+
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         { &tables_version_, "1.0" },
