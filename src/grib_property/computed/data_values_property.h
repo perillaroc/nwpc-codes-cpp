@@ -15,8 +15,11 @@ public:
 
     bool decodeValues(GribPropertyContainer* container);
 
+    void dump(const DumpConfig& dump_config) override;
+
 private:
     std::vector<std::byte> raw_value_bytes_;
     std::vector<double> code_values_;
+    long data_count_ = -1;
 };
 } // namespace grib_coder
