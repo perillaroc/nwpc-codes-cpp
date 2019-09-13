@@ -50,7 +50,7 @@ void GribSection5::init() {
         {4, "section5Length", &section_length_ },
         {1, "numberOfSection", &section_number_ },
         {4, "numberOfValues", &number_of_values_ },
-        {1, "dataRepresentationTemplateNumber", &data_representation_template_number_ },
+        {2, "dataRepresentationTemplateNumber", &data_representation_template_number_ },
 
         {4, "referenceValue", &reference_value_ },
         {2, "binaryScaleFactor", &binary_scale_factor_ },
