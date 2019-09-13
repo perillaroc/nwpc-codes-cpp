@@ -1,7 +1,11 @@
 #include "grib_template.h"
 #include "grib_section.h"
+#include "grib_message_handler.h"
 
 #include <grib_property/property_component.h>
+#include <grib_property/code_table_property.h>
+
+#include <fmt/format.h>
 
 namespace grib_coder {
 
@@ -14,6 +18,25 @@ bool GribTemplate::parse(std::vector<std::byte>::const_iterator& iterator) {
         component->parse(iterator);
     }
     return true;
+}
+
+void GribTemplate::dump(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config)
+{
+    auto octec_index = start_octec;
+    auto tables_version = fmt::format("{}", message_handler->getLong("tablesVersion"));
+
+    for (const auto& component : components_) {
+        auto property_component = dynamic_cast<PropertyComponent*>(component.get());
+        if (property_component) {
+            auto code_table_property = dynamic_cast<CodeTableProperty*>(property_component->getProperty());
+            if (code_table_property) {
+                code_table_property->setTableDatabase(message_handler->getTableDatabase());
+                code_table_property->setTablesVersion(tables_version);
+            }
+        }
+        component->dump(octec_index, dump_config);
+        octec_index += component->getByteCount();
+    }
 }
 
 void GribTemplate::registerProperty(std::shared_ptr<GribSection> section) {

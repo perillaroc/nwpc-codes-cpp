@@ -1,5 +1,6 @@
 #include "grib_section.h"
 #include "grib_message_handler.h"
+#include "template_component.h"
 #include <grib_property/number_property.h>
 
 #include <grib_property/property_component.h>
@@ -145,9 +146,20 @@ void GribSection::dump(GribMessageHandler* message_handler, std::size_t start_oc
                 code_table_property->setTableDatabase(message_handler->getTableDatabase());
                 code_table_property->setTablesVersion(tables_version);
             }
+            component->dump(octec_index, dump_config);
+            octec_index += component->getByteCount();
+            continue;
         }
-        component->dump(octec_index, dump_config);
-        octec_index += component->getByteCount();
+
+        auto template_component = dynamic_cast<TemplateComponent*>(component.get());
+        if(template_component) {
+            template_component->dump(message_handler, octec_index, dump_config);
+            octec_index += component->getByteCount();
+            continue;
+        }
+
+        // should not be here
+        throw std::runtime_error("component is not supported");
     }
 }
 

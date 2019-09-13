@@ -6,6 +6,7 @@
 namespace grib_coder {
 class GribTemplate;
 class GribSection;
+class GribMessageHandler;
 
 class TemplateComponent : public GribComponent {
 public:
@@ -20,7 +21,7 @@ public:
 
     bool decode(GribPropertyContainer* container) override;
 
-    void dump(std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{}) override;
+    void dump(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
 
     void registerProperty(std::shared_ptr<GribSection> section);
 

@@ -1,4 +1,5 @@
 #include "template_component.h"
+#include "template_component.h"
 
 #include "grib_template.h"
 #include "grib_section.h"
@@ -26,9 +27,9 @@ bool TemplateComponent::decode(GribPropertyContainer* container)
 {
     return grib_template_->decode(container);
 }
-void TemplateComponent::dump(std::size_t start_octec, const DumpConfig& dump_config)
+void TemplateComponent::dump(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config)
 {
-    grib_template_->dump(start_octec, dump_config);
+    grib_template_->dump(message_handler, start_octec, dump_config);
 }
 
 void TemplateComponent::registerProperty(std::shared_ptr<GribSection> section) {
