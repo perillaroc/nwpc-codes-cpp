@@ -8,7 +8,7 @@ public:
     PropertyComponent(int byte_count, std::string property_name, GribProperty* property);
 
     void setByteCount(const int byte_count);
-    int getByteCount() const override {
+    long getByteCount() const override {
         return byte_count_;
     }
 
@@ -23,7 +23,7 @@ public:
     void dump(std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{}) override;
 
 private:
-    int byte_count_ = 1;
+    long byte_count_ = 1;
     std::string property_name_;
     GribProperty* property_ = nullptr;
 };

@@ -35,9 +35,7 @@ public:
 
     void setSectionLength(long length);
     long getSectionLength() const;
-    int getByteCount() const override {
-        return section_length_;
-    }
+    long getByteCount() const override;
 
     int getSectionNumber() const;
 

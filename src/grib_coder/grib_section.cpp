@@ -1,5 +1,6 @@
 #include "grib_section.h"
 #include "grib_message_handler.h"
+#include <grib_property/number_property.h>
 
 #include <grib_property/property_component.h>
 #include <grib_property/code_table_property.h>
@@ -100,6 +101,10 @@ void GribSection::setSectionLength(long length) {
 }
 
 long GribSection::getSectionLength() const {
+    return static_cast<long>(section_length_);
+}
+
+long GribSection::getByteCount() const {
     return static_cast<long>(section_length_);
 }
 

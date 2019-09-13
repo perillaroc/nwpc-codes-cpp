@@ -10,7 +10,7 @@ public:
     explicit GribTemplate(int template_length);
     virtual ~GribTemplate() = default;
 
-    int getByteCount() const override {
+    long getByteCount() const override {
         return template_length_;
     }
 
@@ -22,6 +22,6 @@ protected:
     std::vector<std::unique_ptr<GribComponent>> components_;
 
     std::string template_name_;
-    int template_length_ = -1;
+    long template_length_ = -1;
 };
 } // namespace grib_coder

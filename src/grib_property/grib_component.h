@@ -15,7 +15,7 @@ struct DumpConfig {
 
 class GribComponent: public GribPropertyContainer {
 public:
-    virtual int getByteCount() const = 0;
+    virtual long getByteCount() const = 0;
 
     // parse binary bytes read from grib message
     virtual bool parse(std::vector<std::byte>::const_iterator& iterator);
