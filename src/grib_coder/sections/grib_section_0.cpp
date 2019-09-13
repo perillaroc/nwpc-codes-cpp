@@ -29,7 +29,7 @@ bool GribSection0::parseFile(std::FILE* file, bool header_only) {
 
 void GribSection0::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
-        { 4, "discipline", &identifier_ },
+        { 4, "identifier", &identifier_ },
         { 2, "reserved", &reserved_ },
         { 1, "discipline", &discipline_ },
         { 1, "editionNumber", &edition_number_ },
