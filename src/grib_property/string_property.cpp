@@ -14,8 +14,7 @@ std::string StringProperty::getString()
 }
 
 bool StringProperty::parse(std::vector<std::byte>::const_iterator& iterator, size_t count) {
-    value_ = std::string(reinterpret_cast<const unsigned char*>(&(*iterator)), 
-        reinterpret_cast<const unsigned char*>(&(*(iterator+count))));
+    value_ = std::string(reinterpret_cast<const char*>(&(*iterator)), count);
     return true;
 }
 

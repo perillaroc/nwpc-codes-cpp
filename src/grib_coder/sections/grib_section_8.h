@@ -2,6 +2,8 @@
 
 #include "grib_section.h"
 
+#include <grib_property/string_property.h>
+
 namespace grib_coder {
 
 class GribSection8 : public GribSection {
@@ -14,6 +16,8 @@ public:
 
 private:
     void init();
+
+    StringProperty end_string_;
 };
 
 } // namespace grib_coder
