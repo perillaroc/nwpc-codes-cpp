@@ -41,25 +41,6 @@ bool GribSection4::parseFile(std::FILE* file, bool header_only) {
         component->parse(iterator);
     }
 
-    auto template_length = section_length_ - 9;
-    const auto product_definition_template_number = product_definition_template_number_.getLong();
-
-    if (product_definition_template_number == 0) {
-        product_definition_template_ = std::make_unique<Template_4_0>(template_length);
-    } else if (product_definition_template_number == 1) {
-        product_definition_template_ = std::make_unique<Template_4_1>(template_length);
-    } else if (product_definition_template_number == 8) {
-        product_definition_template_ = std::make_unique<Template_4_8>(template_length);
-    } else if (product_definition_template_number == 11) {
-        product_definition_template_ = std::make_unique<Template_4_11>(template_length);
-    } else {
-        throw std::runtime_error(fmt::format("template not implemented: {}", product_definition_template_number));
-    }
-    product_definition_template_->registerProperty(std::dynamic_pointer_cast<GribSection>(shared_from_this()));
-
-    iterator = std::cbegin(buffer) + 9;
-    product_definition_template_->parse(iterator);
-
     return true;
 }
 
@@ -68,6 +49,8 @@ bool GribSection4::decode(GribPropertyContainer* container) {
 }
 
 void GribSection4::init() {
+    product_definition_template_ = new TemplateComponent{};
+
     product_definition_template_number_.setOctetCount(2);
 
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
@@ -82,12 +65,41 @@ void GribSection4::init() {
         registerProperty(std::get<1>(item), std::get<2>(item));
     }
 
+    product_definition_template_->setGenerateFunction(
+        [=]() {
+        this->generateProductionDefinitionTemplate();
+    });
+    components_.push_back(std::unique_ptr<TemplateComponent>(product_definition_template_));
+
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         { &product_definition_template_number_, "4.0" },
     };
     for (const auto& item : tables_id) {
         std::get<0>(item)->setCodeTableId(std::get<1>(item));
     }
+}
+
+void GribSection4::generateProductionDefinitionTemplate() {
+    auto template_length = section_length_ - 9;
+    product_definition_template_->setByteCount(template_length);
+    const auto product_definition_template_number = product_definition_template_number_.getLong();
+
+    if (product_definition_template_number == 0) {
+        product_definition_template_->setTemplate(std::make_unique<Template_4_0>(template_length));
+    }
+    else if (product_definition_template_number == 1) {
+        product_definition_template_->setTemplate(std::make_unique<Template_4_1>(template_length));
+    }
+    else if (product_definition_template_number == 8) {
+        product_definition_template_->setTemplate(std::make_unique<Template_4_8>(template_length));
+    }
+    else if (product_definition_template_number == 11) {
+        product_definition_template_->setTemplate(std::make_unique<Template_4_11>(template_length));
+    }
+    else {
+        throw std::runtime_error(fmt::format("template not implemented: {}", product_definition_template_number));
+    }
+    product_definition_template_->registerProperty(std::dynamic_pointer_cast<GribSection>(shared_from_this()));
 }
 
 } // namespace grib_coder
