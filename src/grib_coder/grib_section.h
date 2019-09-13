@@ -45,12 +45,12 @@ public:
     void registerProperty(const std::string& name, GribProperty* property);
 
 protected:
+    std::vector<std::unique_ptr<GribComponent>> components_;
+
     std::unordered_map<std::string, GribProperty*> property_map_;
 
     NumberProperty<int> section_number_;
     NumberProperty<uint64_t> section_length_;
-
-    std::vector<std::unique_ptr<GribComponent>> components_;
 };
 
 GribProperty* get_property_from_section_list(

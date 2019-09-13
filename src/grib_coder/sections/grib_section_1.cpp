@@ -1,8 +1,6 @@
 #include "grib_section_1.h"
-#include <grib_property/number_convert.h>
 #include <grib_property/property_component.h>
 
-#include <vector>
 #include <cassert>
 
 namespace grib_coder {
@@ -43,26 +41,29 @@ bool GribSection1::decode(GribPropertyContainer* container) {
 }
 
 void GribSection1::init() {
-    std::vector<std::tuple<size_t, GribProperty*>> components{
-        { 2, &centre_ },
-        { 2, &sub_centre_ },
-        { 1, &tables_version_ },
-        { 1, &local_tables_version_ },
-        { 1, &significance_of_reference_time_ },
-        { 2, &year_ },
-        { 1, &month_ },
-        { 1, &day_ },
-        { 1, &hour_ },
-        { 1, &minute_ },
-        { 1, &second_ },
-        { 1, &production_status_of_processed_data_ },
-        { 1, &type_of_processed_data_ },
+    std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
+        { 2, "centre", &centre_},
+        { 2, "subCentre", &sub_centre_},
+        { 1, "tablesVersion", &tables_version_},
+        { 1, "localTablesVersion", &local_tables_version_},
+        { 1, "significanceOfReferenceTime", &significance_of_reference_time_},
+        { 2, "year", &year_},
+        { 1, "month", &month_},
+        { 1, "day", &day_},
+        { 1, "hour", &hour_},
+        { 1, "minute", &minute_},
+        { 1, "second", &second_},
+        { 1, "productionStatusOfProcessedData", &production_status_of_processed_data_},
+        { 1, "typeOfProcessedData", &type_of_processed_data_},
     };
 
     for (auto& item : components) {
-        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+        components_.push_back(std::make_unique<PropertyComponent>(
+            std::get<0>(item), 
+            std::get<1>(item), 
+            std::get<2>(item)));
+        registerProperty(std::get<1>(item), std::get<2>(item));
     }
-
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         { &tables_version_, "1.0" },
@@ -76,19 +77,6 @@ void GribSection1::init() {
     }
 
     std::vector<std::tuple<std::string, GribProperty*>> properties = {
-        {"centre", &centre_},
-        {"subCentre", &sub_centre_},
-        {"tablesVersion", &tables_version_},
-        {"localTablesVersion", &local_tables_version_},
-        {"significanceOfReferenceTime", &significance_of_reference_time_},
-        {"year", &year_},
-        {"month", &month_},
-        {"day", &day_},
-        {"hour", &hour_},
-        {"minute", &minute_},
-        {"second", &second_},
-        {"productionStatusOfProcessedData", &production_status_of_processed_data_},
-        {"typeOfProcessedData", &type_of_processed_data_},
         {"dataDate", &data_date_},
         {"dataTime", &data_time_}
     };

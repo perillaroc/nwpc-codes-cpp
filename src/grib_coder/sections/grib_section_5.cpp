@@ -1,8 +1,6 @@
 #include "grib_section_5.h"
-#include <grib_property/number_convert.h>
 #include <grib_property/property_component.h>
 
-#include <vector>
 #include <cassert>
 
 namespace grib_coder {
@@ -40,23 +38,28 @@ bool GribSection5::decode(GribPropertyContainer* container)
 }
 
 void GribSection5::init() {
-    std::vector<std::tuple<size_t, GribProperty*>> components{
-        {4, &number_of_values_},
-        {1, &data_representation_template_number_},
+    data_representation_template_number_.setOctetCount(2);
 
-        {4, &reference_value_},
-        {2, &binary_scale_factor_},
-        {2, &decimal_scale_factor_},
-        {1, &bits_per_value_},
-        {1, &type_of_original_field_values_},
-        {1, &type_of_compression_used_},
-        {1, &target_compression_ratio_},
+    std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
+        {4, "numberOfValues", &number_of_values_ },
+        {1, "dataRepresentationTemplateNumber", &data_representation_template_number_ },
+
+        {4, "referenceValue", &reference_value_ },
+        {2, "binaryScaleFactor", &binary_scale_factor_ },
+        {2, "decimalScaleFactor", &decimal_scale_factor_ },
+        {1, "bitsPerValue", &bits_per_value_ },
+        {1, "typeOfOriginalFieldValues", &type_of_original_field_values_ },
+        {1, "typeOfCompressionUsed", &type_of_compression_used_ },
+        {1, "targetCompressionRatio", &target_compression_ratio_ },
     };
 
     for (auto& item : components) {
-        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+        components_.push_back(std::make_unique<PropertyComponent>(
+            std::get<0>(item), 
+            std::get<1>(item),
+            std::get<2>(item)));
+        registerProperty(std::get<1>(item), std::get<2>(item));
     }
-
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         { &data_representation_template_number_, "5.0" },
@@ -68,20 +71,8 @@ void GribSection5::init() {
         std::get<0>(item)->setCodeTableId(std::get<1>(item));
     }
 
-    data_representation_template_number_.setOctetCount(2);
 
     std::vector<std::tuple<std::string, GribProperty*>> properties_name{
-        { "numberOfValues", &number_of_values_ },
-        { "dataRepresentationTemplateNumber", &data_representation_template_number_ },
-
-        { "referenceValue", &reference_value_ },
-        { "binaryScaleFactor", &binary_scale_factor_ },
-        { "decimalScaleFactor", &decimal_scale_factor_ },
-        { "bitsPerValue", &bits_per_value_ },
-        { "typeOfOriginalFieldValues", &type_of_original_field_values_ },
-        { "typeOfCompressionUsed", &type_of_compression_used_ },
-        { "targetCompressionRatio", &target_compression_ratio_ },
-
         { "packingType", &packing_type_ },
     };
     for (const auto& item : properties_name) {

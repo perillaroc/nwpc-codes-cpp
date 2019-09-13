@@ -3,6 +3,15 @@
 
 
 namespace grib_coder {
+
+struct DumpConfig {
+    enum class DumpStyle {
+        WMO
+    };
+    DumpStyle style = DumpStyle::WMO;
+};
+
+
 class GribComponent: public GribPropertyContainer {
 public:
 
@@ -11,6 +20,8 @@ public:
 
     // decode properties using previous sections.
     virtual bool decode(GribPropertyContainer* container);
+
+    virtual void dump(std::size_t start_octec, const DumpConfig &dump_config=DumpConfig{});
 };
 
 } // namespace grib_coder

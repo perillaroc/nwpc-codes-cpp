@@ -8,7 +8,6 @@
 #include <grib_property/number_convert.h>
 #include <grib_property/property_component.h>
 
-#include <vector>
 #include <cassert>
 #include <stdexcept>
 
@@ -64,13 +63,16 @@ bool GribSection4::decode(GribPropertyContainer* container) {
 }
 
 void GribSection4::init() {
-    std::vector<std::tuple<size_t, GribProperty*>> components{
-        {2, &nv_},
-        {2, &product_definition_template_number_},
+    product_definition_template_number_.setOctetCount(2);
+
+    std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
+        {2, "nv", &nv_},
+        {2, "productDefinitionTemplateNumber", &product_definition_template_number_},
     };
 
     for (auto& item : components) {
-        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item), std::get<2>(item)));
+        registerProperty(std::get<1>(item), std::get<2>(item));
     }
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
@@ -78,17 +80,6 @@ void GribSection4::init() {
     };
     for (const auto& item : tables_id) {
         std::get<0>(item)->setCodeTableId(std::get<1>(item));
-    }
-
-    product_definition_template_number_.setOctetCount(2);
-
-
-    std::vector<std::tuple<std::string, GribProperty*>> properties_name{
-        { "nv", &nv_ },
-        { "productDefinitionTemplateNumber", &product_definition_template_number_ },
-    };
-    for (const auto& item : properties_name) {
-        registerProperty(std::get<0>(item), std::get<1>(item));
     }
 }
 

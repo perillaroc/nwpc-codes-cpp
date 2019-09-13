@@ -1,7 +1,5 @@
 #include "grib_section.h"
 #include <iterator>
-#include <grib_property/code_table_property.h>
-#include <grib_property/property_component.h>
 
 namespace grib_coder {
 

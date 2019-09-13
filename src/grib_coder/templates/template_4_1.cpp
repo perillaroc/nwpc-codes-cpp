@@ -1,8 +1,6 @@
 #include "template_4_1.h"
-#include "sections/grib_section_0.h"
+#include "../grib_section.h"
 
-#include <grib_property/number_convert.h>
-#include <grib_property/grib_property_container.h>
 #include <grib_property/property_component.h>
 
 #include <cassert>
@@ -33,24 +31,9 @@ bool Template_4_1::decode(GribPropertyContainer* container) {
 }
 
 void Template_4_1::registerProperty(std::shared_ptr<GribSection> section) {
+    GribTemplate::registerProperty(section);
 
     std::vector<std::tuple<std::string, GribProperty*>> properties_name{
-        { "parameterCategory", &parameter_category_ },
-        { "parameterNumber", &parameter_number_ },
-        { "typeOfGeneratingProcess", &type_of_generating_process_ },
-        { "backgroundProcess", &background_process_ },
-        { "generatingProcessIdentifier", &generating_process_identifier_ },
-        { "hoursAfterDataCutoff", &hours_after_data_cutoff_ },
-        { "minutesAfterDataCutoff", &minutes_after_data_cutoff_ },
-        { "indicatorOfUnitOfTimeRange", &indicator_of_unit_of_time_range_ },
-        { "forecastTime", &forecast_time_ },
-        { "typeOfFirstFixedSurface", &type_of_first_fixed_surface_ },
-        { "scaleFactorOfFirstFixedSurface", &scale_factor_of_first_fixed_surface_ },
-        { "scaledValueOfFirstFixedSurface", &scaled_value_of_first_fixed_surface_ },
-        { "typeOfSecondFixedSurface", &type_of_second_fixed_surface_ },
-        { "scaleFactorOfSecondFixedSurface", &scale_factor_of_second_fixed_surface_ },
-        { "scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_ },
-
         { "level", &level_ },
         { "typeOfLevel", &type_of_level_ },
         { "stepRange", &step_range_ },
@@ -61,30 +44,33 @@ void Template_4_1::registerProperty(std::shared_ptr<GribSection> section) {
 }
 
 void Template_4_1::init() {
-    std::vector<std::tuple<size_t, GribProperty*>> components{
-        {1, &parameter_category_},
-        {1, &parameter_number_},
-        {1, &type_of_generating_process_},
-        {1, &background_process_},
-        {1, &generating_process_identifier_},
-        {2, &hours_after_data_cutoff_},
-        {1, &minutes_after_data_cutoff_},
-        {1, &indicator_of_unit_of_time_range_},
-        {4, &forecast_time_},
-        {1, &type_of_first_fixed_surface_},
-        {1, &scale_factor_of_first_fixed_surface_},
-        {4, &scaled_value_of_first_fixed_surface_},
-        {1, &type_of_second_fixed_surface_},
-        {1, &scale_factor_of_second_fixed_surface_},
-        {4, &scaled_value_of_second_fixed_surface_},
+    std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
+        {1, "parameterCategory", &parameter_category_ },
+        {1, "parameterNumber", &parameter_number_ },
+        {1, "typeOfGeneratingProcess", &type_of_generating_process_ },
+        {1, "backgroundProcess", &background_process_ },
+        {1, "generatingProcessIdentifier", &generating_process_identifier_ },
+        {2, "hoursAfterDataCutoff", &hours_after_data_cutoff_ },
+        {1, "minutesAfterDataCutoff", &minutes_after_data_cutoff_ },
+        {1, "indicatorOfUnitOfTimeRange", &indicator_of_unit_of_time_range_ },
+        {4, "forecastTime", &forecast_time_ },
+        {1, "typeOfFirstFixedSurface", &type_of_first_fixed_surface_ },
+        {1, "scaleFactorOfFirstFixedSurface", &scale_factor_of_first_fixed_surface_ },
+        {4, "scaledValueOfFirstFixedSurface", &scaled_value_of_first_fixed_surface_ },
+        {1, "typeOfSecondFixedSurface", &type_of_second_fixed_surface_ },
+        {1, "scaleFactorOfSecondFixedSurface", &scale_factor_of_second_fixed_surface_ },
+        {4, "scaledValueOfSecondFixedSurface", &scaled_value_of_second_fixed_surface_ },
 
-        {1, &type_of_ensemble_forecast_},
-        {1, &perturbation_number_},
-        {1, &number_of_forecasts_in_ensemble_},
+        {1, "typeOfEnsembleForecast", &type_of_ensemble_forecast_ },
+        {1, "perturbationNumber", &perturbation_number_ },
+        {1, "numberOfForecastInEnsemble", &number_of_forecasts_in_ensemble_ },
     };
 
     for (auto& item : components) {
-        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+        components_.push_back(std::make_unique<PropertyComponent>(
+            std::get<0>(item), 
+            std::get<1>(item),
+            std::get<2>(item)));
     }
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{

@@ -12,5 +12,10 @@ bool GribComponent::decode(GribPropertyContainer* container)
     return true;
 }
 
+void GribComponent::dump(std::size_t start_octec, const DumpConfig& dump_config)
+{
+    return;
+}
+
 
 } // namespace grib_coder

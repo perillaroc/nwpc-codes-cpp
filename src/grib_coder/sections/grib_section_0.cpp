@@ -4,7 +4,6 @@
 #include <grib_property/property_component.h>
 
 #include <tuple>
-#include <array>
 
 namespace grib_coder {
 
@@ -16,7 +15,7 @@ GribSection0::GribSection0():
 bool GribSection0::parseFile(std::FILE* file, bool header_only) {
     const size_t section_length = 16;
     std::vector<std::byte> buffer(section_length);
-    auto result = std::fread(&buffer[0], 1, section_length, file);
+    const auto result = std::fread(&buffer[0], 1, section_length, file);
     if (result != 16) {
         return false;
     }
@@ -30,16 +29,23 @@ bool GribSection0::parseFile(std::FILE* file, bool header_only) {
 }
 
 void GribSection0::init() {
-    std::vector<std::tuple<size_t, GribProperty*>> components{
-        { 4, &identifier_ },
-        { 2, &reserved_ },
-        { 1, &discipline_ },
-        { 1, &edition_number_ },
-        { 8, &total_length_ },
+    std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
+        { 4, "discipline", &identifier_ },
+        { 2, "reserved", &reserved_ },
+        { 1, "discipline", &discipline_ },
+        { 1, "editionNumber", &edition_number_ },
+        { 8, "totalLength", &total_length_ },
     };
 
     for (auto& item : components) {
-        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item)));
+        components_.push_back(std::make_unique<PropertyComponent>(
+            std::get<0>(item), 
+            std::get<1>(item),
+            std::get<2>(item))
+        );
+        registerProperty(
+            std::get<1>(item), 
+            std::get<2>(item));
     }
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
@@ -47,15 +53,6 @@ void GribSection0::init() {
     };
     for(const auto& item: tables_id) {
         std::get<0>(item)->setCodeTableId(std::get<1>(item));
-    }
-
-    std::vector<std::tuple<std::string, GribProperty*>> properties_name{
-        { "discipline", &discipline_ },
-        { "editionNumber", &edition_number_ },
-        { "totalLength", &total_length_ },
-    };
-    for(const auto& item: properties_name) {
-        registerProperty(std::get<0>(item), std::get<1>(item));
     }
 }
 
