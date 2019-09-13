@@ -20,7 +20,7 @@ bool GribTemplate::parse(std::vector<std::byte>::const_iterator& iterator) {
     return true;
 }
 
-void GribTemplate::dump(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config)
+void GribTemplate::dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config)
 {
     auto octec_index = start_octec;
     auto tables_version = fmt::format("{}", message_handler->getLong("tablesVersion"));

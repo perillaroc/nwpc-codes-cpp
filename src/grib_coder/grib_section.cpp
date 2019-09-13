@@ -153,7 +153,7 @@ void GribSection::dump(GribMessageHandler* message_handler, std::size_t start_oc
 
         auto template_component = dynamic_cast<TemplateComponent*>(component.get());
         if(template_component) {
-            template_component->dump(message_handler, octec_index, dump_config);
+            template_component->dumpTemplate(message_handler, octec_index, dump_config);
             octec_index += component->getByteCount();
             continue;
         }

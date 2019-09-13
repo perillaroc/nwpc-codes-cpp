@@ -27,9 +27,9 @@ bool TemplateComponent::decode(GribPropertyContainer* container)
 {
     return grib_template_->decode(container);
 }
-void TemplateComponent::dump(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config)
+void TemplateComponent::dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config)
 {
-    grib_template_->dump(message_handler, start_octec, dump_config);
+    grib_template_->dumpTemplate(message_handler, start_octec, dump_config);
 }
 
 void TemplateComponent::registerProperty(std::shared_ptr<GribSection> section) {
