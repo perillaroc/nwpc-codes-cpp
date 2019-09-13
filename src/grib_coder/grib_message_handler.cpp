@@ -132,6 +132,13 @@ bool GribMessageHandler::hasProperty(const std::string& key)
 }
 
 
+void GribMessageHandler::dump(const DumpConfig& dump_config)
+{
+    for(const auto& section: section_list_) {
+        section->dump(this, 1, dump_config);
+    }
+}
+
 bool GribMessageHandler::parseNextSection(std::FILE* file) {
     std::byte buffer[5];
     const auto result = std::fread(buffer, 1, 5, file);

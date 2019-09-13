@@ -18,6 +18,8 @@ int main() {
     auto nj = message_handler->get<std::string>("nj");
     auto category = message_handler->get<std::string>("parameterCategory");
 
+    message_handler->dump();
+
     std::fclose(f);
 
     return 0;

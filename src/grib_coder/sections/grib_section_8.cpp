@@ -3,7 +3,7 @@
 
 namespace grib_coder {
 GribSection8::GribSection8():
-    GribSection{8} {
+    GribSection{8, 4} {
     init();
 }
 
@@ -13,7 +13,7 @@ bool GribSection8::parseFile(std::FILE* file, bool header_only) {
     if (result != 4) {
         return false;
     }
-    const std::string end_string{buffer, 4};
+    const std::string end_string{ buffer, 4 };
     if (end_string == "7777") {
         return true;
     } else {

@@ -1,4 +1,7 @@
 #include "grib_property.h"
+
+#include <fmt/format.h>
+
 #include <stdexcept>
 
 namespace grib_coder {
@@ -41,6 +44,11 @@ bool GribProperty::parse(std::vector<std::byte>::const_iterator& iterator, size_
 
 bool GribProperty::decode(GribPropertyContainer* container) {
     return true;
+}
+
+void GribProperty::dump(const DumpConfig& dump_config)
+{
+    fmt::print("not implemented");
 }
 
 } // namespace grib_coder

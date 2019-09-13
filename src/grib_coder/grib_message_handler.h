@@ -30,12 +30,19 @@ public:
 
     template<typename T> T get(const std::string& key);
 
+    void dump(const DumpConfig& dump_config = DumpConfig{});
+
+    GribProperty* getProperty(const std::string& name);
+
+    std::shared_ptr<GribTableDatabase> getTableDatabase() const {
+        return table_database_;
+    }
+
 private:
     bool parseNextSection(std::FILE* file);
 
     std::shared_ptr<GribSection> getSection(int section_number, size_t begin_pos = 0);
 
-    GribProperty* getProperty(const std::string& name);
 
     bool header_only_ = false;
 

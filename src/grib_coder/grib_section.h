@@ -10,6 +10,8 @@
 
 namespace grib_coder {
 
+class GribMessageHandler;
+
 class GribSection : public GribComponent {
 public:
     explicit GribSection(int section_number);
@@ -33,6 +35,9 @@ public:
 
     void setSectionLength(long length);
     long getSectionLength() const;
+    int getByteCount() const override {
+        return section_length_;
+    }
 
     int getSectionNumber() const;
 
@@ -43,6 +48,8 @@ public:
     GribProperty* getProperty(const std::string& name);
 
     void registerProperty(const std::string& name, GribProperty* property);
+
+    void dump(GribMessageHandler *message_handler, std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
 
 protected:
     std::vector<std::unique_ptr<GribComponent>> components_;
@@ -56,5 +63,9 @@ protected:
 GribProperty* get_property_from_section_list(
     const std::string& name,
     std::vector<std::shared_ptr<GribSection>>& section_list);
+
+GribProperty* get_property_from_container(
+    const std::string& name,
+    GribPropertyContainer* container);
 
 } // namespace grib_coder

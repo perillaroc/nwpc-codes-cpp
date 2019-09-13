@@ -1,4 +1,9 @@
 #include "grib_section.h"
+#include "grib_message_handler.h"
+
+#include <grib_property/property_component.h>
+#include <grib_property/code_table_property.h>
+
 #include <iterator>
 
 namespace grib_coder {
@@ -118,6 +123,29 @@ void GribSection::registerProperty(const std::string& name, GribProperty* proper
     property_map_[name] = property;
 }
 
+void GribSection::dump(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config) {
+    auto octec_index = start_octec;
+    fmt::print(
+        "======================   SECTION_{} ( length={} )    ======================\n",
+        section_number_.getLong(),
+        section_length_.getLong());
+
+    auto tables_version = fmt::format("{}", message_handler->getLong("tablesVersion"));
+
+    for(const auto& component: components_) {
+        auto property_component = dynamic_cast<PropertyComponent*>(component.get());
+        if(property_component) {
+            auto code_table_property = dynamic_cast<CodeTableProperty*>(property_component->getProperty());
+            if(code_table_property) {
+                code_table_property->setTableDatabase(message_handler->getTableDatabase());
+                code_table_property->setTablesVersion(tables_version);
+            }
+        }
+        component->dump(octec_index, dump_config);
+        octec_index += component->getByteCount();
+    }
+}
+
 GribProperty* get_property_from_section_list(
     const std::string& name, std::vector<std::shared_ptr<GribSection>>& section_list) {
     for (auto iter = std::rbegin(section_list); iter != std::rend(section_list); ++iter) {
@@ -127,6 +155,17 @@ GribProperty* get_property_from_section_list(
         }
     }
     return nullptr;
+}
+
+GribProperty* get_property_from_container(const std::string& name, GribPropertyContainer* container)
+{
+    auto grib_message_handler = dynamic_cast<GribMessageHandler*>(container);
+    if(grib_message_handler == nullptr) {
+        return nullptr;
+    }
+
+    auto property = grib_message_handler->getProperty(name);
+    return property;
 }
 
 } // namespace grib_coder

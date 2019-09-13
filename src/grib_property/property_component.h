@@ -8,6 +8,9 @@ public:
     PropertyComponent(int byte_count, std::string property_name, GribProperty* property);
 
     void setByteCount(const int byte_count);
+    int getByteCount() const override {
+        return byte_count_;
+    }
 
     GribProperty* getProperty();
     std::string getPropertyName() const;

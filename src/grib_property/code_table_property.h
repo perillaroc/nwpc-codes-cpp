@@ -28,6 +28,12 @@ public:
 
     bool parse(std::vector<std::byte>::const_iterator& iterator, size_t count=1) override;
 
+    void dump(const DumpConfig& dump_config) override;
+
+    int getValue() const {
+        return value_;
+    }
+
 private:
     std::optional<GribTableRecord> getTableRecord();
 

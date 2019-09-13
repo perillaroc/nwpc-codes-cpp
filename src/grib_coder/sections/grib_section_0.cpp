@@ -8,14 +8,13 @@
 namespace grib_coder {
 
 GribSection0::GribSection0():
-    GribSection{0} {
+    GribSection{0, 16} {
     init();
 }
 
 bool GribSection0::parseFile(std::FILE* file, bool header_only) {
-    const size_t section_length = 16;
-    std::vector<std::byte> buffer(section_length);
-    const auto result = std::fread(&buffer[0], 1, section_length, file);
+    std::vector<std::byte> buffer(section_length_);
+    const auto result = std::fread(&buffer[0], 1, section_length_, file);
     if (result != 16) {
         return false;
     }

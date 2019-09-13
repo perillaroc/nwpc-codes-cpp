@@ -1,6 +1,8 @@
 #include "grib_section_1.h"
 #include <grib_property/property_component.h>
 
+#include <gsl/span>
+
 #include <cassert>
 
 namespace grib_coder {
@@ -25,7 +27,11 @@ bool GribSection1::parseFile(std::FILE* file, bool header_only) {
     }
 
     auto iterator = std::cbegin(buffer) + 5;
-    for (auto& component : components_) {
+
+    auto component_span = gsl::make_span(components_);
+    auto sub_component_span = component_span.subspan(2);
+
+    for (auto& component : sub_component_span) {
         component->parse(iterator);
     }
 
@@ -37,11 +43,22 @@ bool GribSection1::decode(GribPropertyContainer* container) {
     if (!result) return false;
 
     result = data_time_.decode(container);
+
+    auto property = get_property_from_container("discipline", container);
+    if(property) {
+        auto discipline = dynamic_cast<CodeTableProperty*>(property);
+        if(discipline) {
+            discipline->setTablesVersion(fmt::format("{}",tables_version_.getValue()));
+        }
+    }
+
     return result;
 }
 
 void GribSection1::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
+        { 4, "section1Length", &section_length_ },
+        { 1, "numberOfSection", &section_number_ },
         { 2, "centre", &centre_},
         { 2, "subCentre", &sub_centre_},
         { 1, "tablesVersion", &tables_version_},

@@ -10,6 +10,10 @@ public:
     explicit GribTemplate(int template_length);
     virtual ~GribTemplate() = default;
 
+    int getByteCount() const override {
+        return template_length_;
+    }
+
     bool parse(std::vector<std::byte>::const_iterator& iterator) override;
 
     virtual void registerProperty(std::shared_ptr<GribSection> section);

@@ -1,16 +1,18 @@
 #include "grib_section_6.h"
 
 #include <grib_property/property_component.h>
-
+#include <gsl/span>
 
 namespace grib_coder {
 GribSection6::GribSection6():
     GribSection{6} {
+    init();
 }
 
 GribSection6::GribSection6(int section_length):
     GribSection{6, section_length} {
     // assert(section_length == 6);
+    init();
 }
 
 bool GribSection6::parseFile(std::FILE* file, bool header_only) {
@@ -22,7 +24,11 @@ bool GribSection6::parseFile(std::FILE* file, bool header_only) {
     }
 
     auto iterator = std::cbegin(buffer) + 5;
-    for (auto& component : components_) {
+
+    auto component_span = gsl::make_span(components_);
+    auto sub_component_span = component_span.subspan(2);
+
+    for (auto& component : sub_component_span) {
         component->parse(iterator);
     }
 
@@ -31,7 +37,9 @@ bool GribSection6::parseFile(std::FILE* file, bool header_only) {
 
 void GribSection6::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty* >> components{
-        {4, "bitMapIndicator", &bit_map_indicator_},
+        {4, "section6Length", &section_length_ },
+        {1, "numberOfSection", &section_number_ },
+        {1, "bitMapIndicator", &bit_map_indicator_},
     };
 
     for (auto& item : components) {

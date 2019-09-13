@@ -2,6 +2,8 @@
 
 #include <grib_property/property_component.h>
 
+#include <gsl/span>
+
 #include <cassert>
 
 namespace grib_coder {
@@ -25,7 +27,11 @@ bool GribSection3::parseFile(std::FILE* file, bool header_only) {
     }
 
     auto iterator = std::cbegin(buffer) + 5;
-    for (auto& component : components_) {
+
+    auto component_span = gsl::make_span(components_);
+    auto sub_component_span = component_span.subspan(2);
+
+    for (auto& component : sub_component_span) {
         component->parse(iterator);
     }
 
@@ -42,6 +48,8 @@ void GribSection3::init() {
     grid_definition_template_number_.setOctetCount(2);
 
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
+        {4, "section3Length", &section_length_ },
+        {1, "numberOfSection", &section_number_ },
         {1, "sourceOfGridDefinition", &source_of_grid_definition_ },
         {4, "numberOfDataPoints", &number_of_data_points_ },
         {1, "numberOfOctectsForNumberOfPoints", &number_of_octects_for_number_of_points_ },

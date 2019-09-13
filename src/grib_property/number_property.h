@@ -60,6 +60,10 @@ public:
         return sizeof(T);
     }
 
+    void dump(const DumpConfig& dump_config) override {
+        fmt::print("{}", value_);
+    }
+
 private:
     T value_;
 };

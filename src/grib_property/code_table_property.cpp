@@ -105,6 +105,10 @@ bool CodeTableProperty::parse(std::vector<std::byte>::const_iterator& iterator, 
     return true;
 }
 
+void CodeTableProperty::dump(const DumpConfig& dump_config) {
+    fmt::print("{} [{} ({}) ]", getLong(), getString(), code_table_id_);
+}
+
 std::optional<GribTableRecord> CodeTableProperty::getTableRecord() {
     auto table = table_database_->getGribTable(tables_version_, code_table_id_);
     if (!table) {
