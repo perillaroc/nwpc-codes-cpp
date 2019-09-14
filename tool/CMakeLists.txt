@@ -1,2 +1,3 @@
 add_subdirectory(tool_util)
 add_subdirectory(nwpc_codes_ls)
+add_subdirectory(nwpc_codes_dump)
