@@ -63,6 +63,18 @@ bool GribMessageHandler::parseFile(std::FILE* file) {
     return true;
 }
 
+bool GribMessageHandler::decodeValues() {
+    for(auto& section: section_list_) {
+        if (section->getSectionNumber() == 7) {
+            auto section7 = std::static_pointer_cast<GribSection7>(section);
+            if (!section7->decodeValues(this)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 void GribMessageHandler::setLong(const std::string& key, long value) {
     auto property = getProperty(key);
     if (property == nullptr) {

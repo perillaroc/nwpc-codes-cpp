@@ -15,6 +15,7 @@ public:
     void setCount(long count);
 
     bool parseFile(std::FILE* file);
+    bool decodeValues();
 
     void setLong(const std::string& key, long value) override;
     long getLong(const std::string& key) override;

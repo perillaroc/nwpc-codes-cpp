@@ -12,7 +12,7 @@ int dump_grib_file(const std::string& file_path, const std::vector<Condition> &c
 
     //auto start_time = std::chrono::system_clock::now();
 
-    grib_coder::GribFileHandler handler(f, false);
+    grib_coder::GribFileHandler handler(f, true);
     auto current_index = 0;
     auto message_selected = 0;
     auto message_handler = handler.next();
@@ -25,6 +25,7 @@ int dump_grib_file(const std::string& file_path, const std::vector<Condition> &c
         }
 
         message_selected++;
+        message_handler->decodeValues();
         message_handler->dump();
         message_handler = handler.next();
     }

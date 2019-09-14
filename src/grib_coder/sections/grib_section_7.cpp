@@ -27,9 +27,9 @@ bool GribSection7::parseFile(std::FILE* file, bool header_only) {
         &data_values_
     ));
 
-    if (header_only) {
-        std::fseek(file, buffer_length, SEEK_CUR);
-    } else {
+    // if (header_only) {
+    //     std::fseek(file, buffer_length, SEEK_CUR);
+    // } else {
         std::vector<std::byte> buffer(section_length_);
         const auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
         if (static_cast<long>(read_count) != buffer_length) {
@@ -40,7 +40,7 @@ bool GribSection7::parseFile(std::FILE* file, bool header_only) {
         raw_value_bytes.resize(buffer_length);
         std::copy(buffer.begin() + 5, buffer.end(), raw_value_bytes.begin());
         data_values_.setRawValues(std::move(raw_value_bytes));
-    }
+    // }
 
     return true;
 }
