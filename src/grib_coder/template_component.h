@@ -21,7 +21,8 @@ public:
 
     bool decode(GribPropertyContainer* container) override;
 
-    void dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
+    void dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec,
+                      const DumpConfig& dump_config = DumpConfig{});
 
     void registerProperty(std::shared_ptr<GribSection> section);
 

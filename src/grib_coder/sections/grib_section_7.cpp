@@ -30,16 +30,16 @@ bool GribSection7::parseFile(std::FILE* file, bool header_only) {
     // if (header_only) {
     //     std::fseek(file, buffer_length, SEEK_CUR);
     // } else {
-        std::vector<std::byte> buffer(section_length_);
-        const auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
-        if (static_cast<long>(read_count) != buffer_length) {
-            return false;
-        }
+    std::vector<std::byte> buffer(section_length_);
+    const auto read_count = std::fread(&buffer[5], 1, buffer_length, file);
+    if (static_cast<long>(read_count) != buffer_length) {
+        return false;
+    }
 
-        std::vector<std::byte> raw_value_bytes;
-        raw_value_bytes.resize(buffer_length);
-        std::copy(buffer.begin() + 5, buffer.end(), raw_value_bytes.begin());
-        data_values_.setRawValues(std::move(raw_value_bytes));
+    std::vector<std::byte> raw_value_bytes;
+    raw_value_bytes.resize(buffer_length);
+    std::copy(buffer.begin() + 5, buffer.end(), raw_value_bytes.begin());
+    data_values_.setRawValues(std::move(raw_value_bytes));
     // }
 
     return true;
@@ -55,8 +55,8 @@ bool GribSection7::decodeValues(GribPropertyContainer* container) {
 
 void GribSection7::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
-        {4, "section7Length", &section_length_ },
-        {1, "numberOfSection", &section_number_ },
+        {4, "section7Length", &section_length_},
+        {1, "numberOfSection", &section_number_},
     };
 
     for (auto& item : components) {
@@ -68,8 +68,8 @@ void GribSection7::init() {
     }
 
     std::vector<std::tuple<std::string, GribProperty*>> properties_name{
-        { "dataValues", &data_values_ },
-        { "values", &data_values_ },
+        {"dataValues", &data_values_},
+        {"values", &data_values_},
     };
     for (const auto& item : properties_name) {
         registerProperty(std::get<0>(item), std::get<1>(item));

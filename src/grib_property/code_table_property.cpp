@@ -95,9 +95,9 @@ void CodeTableProperty::setOctetCount(size_t count) {
 }
 
 bool CodeTableProperty::parse(std::vector<std::byte>::const_iterator& iterator, size_t count) {
-    if(count == 1) {
+    if (count == 1) {
         value_ = convert_bytes_to_uint8(&(*iterator));
-    } else if(count == 2) {
+    } else if (count == 2) {
         value_ = convert_bytes_to_uint16(&(*iterator));
     } else {
         throw std::runtime_error("count is not supported");

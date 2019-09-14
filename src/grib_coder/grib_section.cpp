@@ -19,8 +19,7 @@ GribSection::GribSection(int section_number, long section_length):
     section_length_{section_length} {
 }
 
-void GribSection::setLong(const std::string& key, long value)
-{
+void GribSection::setLong(const std::string& key, long value) {
     auto property = getProperty(key);
     if (property == nullptr) {
         throw std::runtime_error("key is not found");
@@ -28,8 +27,7 @@ void GribSection::setLong(const std::string& key, long value)
     property->setLong(value);
 }
 
-long GribSection::getLong(const std::string& key)
-{
+long GribSection::getLong(const std::string& key) {
     auto property = getProperty(key);
     if (property == nullptr) {
         throw std::runtime_error("key is not found");
@@ -37,8 +35,7 @@ long GribSection::getLong(const std::string& key)
     return property->getLong();
 }
 
-void GribSection::setDouble(const std::string& key, double value)
-{
+void GribSection::setDouble(const std::string& key, double value) {
     auto property = getProperty(key);
     if (property == nullptr) {
         throw std::runtime_error("key is not found");
@@ -46,8 +43,7 @@ void GribSection::setDouble(const std::string& key, double value)
     property->setDouble(value);
 }
 
-double GribSection::getDouble(const std::string& key)
-{
+double GribSection::getDouble(const std::string& key) {
     auto property = getProperty(key);
     if (property == nullptr) {
         throw std::runtime_error("key is not found");
@@ -55,8 +51,7 @@ double GribSection::getDouble(const std::string& key)
     return property->getDouble();
 }
 
-void GribSection::setString(const std::string& key, const std::string& value)
-{
+void GribSection::setString(const std::string& key, const std::string& value) {
     auto property = getProperty(key);
     if (property == nullptr) {
         throw std::runtime_error("key is not found");
@@ -64,8 +59,7 @@ void GribSection::setString(const std::string& key, const std::string& value)
     property->setString(value);
 }
 
-std::string GribSection::getString(const std::string& key)
-{
+std::string GribSection::getString(const std::string& key) {
     auto property = getProperty(key);
     if (property == nullptr) {
         throw std::runtime_error("key is not found");
@@ -73,8 +67,7 @@ std::string GribSection::getString(const std::string& key)
     return property->getString();
 }
 
-void GribSection::setDoubleArray(const std::string& key, std::vector<double>& values)
-{
+void GribSection::setDoubleArray(const std::string& key, std::vector<double>& values) {
     auto property = getProperty(key);
     if (property == nullptr) {
         throw std::runtime_error("key is not found");
@@ -82,8 +75,7 @@ void GribSection::setDoubleArray(const std::string& key, std::vector<double>& va
     property->setDoubleArray(values);
 }
 
-std::vector<double> GribSection::getDoubleArray(const std::string& key)
-{
+std::vector<double> GribSection::getDoubleArray(const std::string& key) {
     auto property = getProperty(key);
     if (property == nullptr) {
         throw std::runtime_error("key is not found");
@@ -91,8 +83,7 @@ std::vector<double> GribSection::getDoubleArray(const std::string& key)
     return property->getDoubleArray();
 }
 
-bool GribSection::hasProperty(const std::string& key)
-{
+bool GribSection::hasProperty(const std::string& key) {
     const auto property = getProperty(key);
     return property != nullptr;
 }
@@ -119,7 +110,7 @@ bool GribSection::decode(GribPropertyContainer* container) {
 
 GribProperty* GribSection::getProperty(const std::string& name) {
     const auto property = property_map_.find(name);
-    if(property == std::end(property_map_)) {
+    if (property == std::end(property_map_)) {
         return nullptr;
     }
     return property->second;
@@ -129,11 +120,12 @@ void GribSection::registerProperty(const std::string& name, GribProperty* proper
     property_map_[name] = property;
 }
 
-void GribSection::dumpSection(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config) {
+void GribSection::dumpSection(GribMessageHandler* message_handler, std::size_t start_octec,
+                              const DumpConfig& dump_config) {
     auto octec_index = start_octec;
-    if(section_number_ == 0) {
+    if (section_number_ == 0) {
         fmt::print("===============   MESSAGE {} ( length={} )    ================\n",
-            message_handler->getLong("count"), message_handler->getLong("totalLength"));
+                   message_handler->getLong("count"), message_handler->getLong("totalLength"));
     } else {
         fmt::print(
             "======================   SECTION_{} ( length={} )    ======================\n",
@@ -143,11 +135,11 @@ void GribSection::dumpSection(GribMessageHandler* message_handler, std::size_t s
 
     const auto tables_version = fmt::format("{}", message_handler->getLong("tablesVersion"));
 
-    for(const auto& component: components_) {
+    for (const auto& component : components_) {
         auto property_component = dynamic_cast<PropertyComponent*>(component.get());
-        if(property_component) {
+        if (property_component) {
             auto code_table_property = dynamic_cast<CodeTableProperty*>(property_component->getProperty());
-            if(code_table_property) {
+            if (code_table_property) {
                 code_table_property->setTableDatabase(message_handler->getTableDatabase());
                 code_table_property->setTablesVersion(tables_version);
             }
@@ -157,7 +149,7 @@ void GribSection::dumpSection(GribMessageHandler* message_handler, std::size_t s
         }
 
         auto template_component = dynamic_cast<TemplateComponent*>(component.get());
-        if(template_component) {
+        if (template_component) {
             template_component->dumpTemplate(message_handler, octec_index, dump_config);
             octec_index += component->getByteCount();
             continue;
@@ -179,10 +171,9 @@ GribProperty* get_property_from_section_list(
     return nullptr;
 }
 
-GribProperty* get_property_from_container(const std::string& name, GribPropertyContainer* container)
-{
+GribProperty* get_property_from_container(const std::string& name, GribPropertyContainer* container) {
     auto grib_message_handler = dynamic_cast<GribMessageHandler*>(container);
-    if(grib_message_handler == nullptr) {
+    if (grib_message_handler == nullptr) {
         return nullptr;
     }
 

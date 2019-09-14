@@ -3,13 +3,11 @@
 
 namespace grib_coder {
 
-void StringProperty::setString(const std::string& value)
-{
+void StringProperty::setString(const std::string& value) {
     value_ = value;
 }
 
-std::string StringProperty::getString()
-{
+std::string StringProperty::getString() {
     return value_;
 }
 

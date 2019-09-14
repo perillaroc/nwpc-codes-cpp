@@ -1,7 +1,7 @@
 #include "codes_ls.h"
 
 #include <CLI11/CLI11.hpp>
-#include <fmt/printf.h>
+#include <fmt/format.h>
 
 
 int main(int argc, char** argv) {
@@ -9,13 +9,13 @@ int main(int argc, char** argv) {
 
     std::string file_path;
     app.add_option("file_path", file_path, "grib file path")
-        ->check(CLI::ExistingFile);
+       ->check(CLI::ExistingFile);
     std::string conditions_option;
     app.add_option("-w", conditions_option, "filter condition");
 
     CLI11_PARSE(app, argc, argv);
 
-    if(file_path.empty()) {
+    if (file_path.empty()) {
         fmt::print("{}\n", app.help());
         return 0;
     }

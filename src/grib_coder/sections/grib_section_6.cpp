@@ -36,15 +36,15 @@ bool GribSection6::parseFile(std::FILE* file, bool header_only) {
 }
 
 void GribSection6::init() {
-    std::vector<std::tuple<size_t, std::string, GribProperty* >> components{
-        {4, "section6Length", &section_length_ },
-        {1, "numberOfSection", &section_number_ },
+    std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
+        {4, "section6Length", &section_length_},
+        {1, "numberOfSection", &section_number_},
         {1, "bitMapIndicator", &bit_map_indicator_},
     };
 
     for (auto& item : components) {
         components_.push_back(std::make_unique<PropertyComponent>(
-            std::get<0>(item), 
+            std::get<0>(item),
             std::get<1>(item),
             std::get<2>(item)));
         registerProperty(std::get<1>(item), std::get<2>(item));

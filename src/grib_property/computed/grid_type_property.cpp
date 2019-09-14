@@ -33,14 +33,13 @@ const std::vector<
     },
 };
 
-bool GridTypeProperty::decode(GribPropertyContainer* container)
-{
+bool GridTypeProperty::decode(GribPropertyContainer* container) {
     std::map<std::string, long> property_map;
 
     property_map["gridDefinitionTemplateNumber"] = container->getLong("gridDefinitionTemplateNumber");
 
     const auto numberOfOctectsForNumberOfPoints = container->getLong("numberOfOctectsForNumberOfPoints");
-    if(numberOfOctectsForNumberOfPoints == 0) {
+    if (numberOfOctectsForNumberOfPoints == 0) {
         property_map["PLPresent"] = 0;
     } else {
         property_map["PLPresent"] = 1;

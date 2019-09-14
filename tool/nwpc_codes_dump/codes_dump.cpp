@@ -5,8 +5,7 @@
 
 namespace grib_tool {
 
-int dump_grib_file(const std::string& file_path, const std::vector<Condition> &conditions)
-{
+int dump_grib_file(const std::string& file_path, const std::vector<Condition>& conditions) {
     fmt::print("{file_path}\n", fmt::arg("file_path", file_path));
     auto f = std::fopen(file_path.c_str(), "rb");
 
@@ -33,9 +32,9 @@ int dump_grib_file(const std::string& file_path, const std::vector<Condition> &c
     std::fclose(f);
 
     fmt::print("{message_selected} of {count} grib2 messages in {file_path}\n",
-        fmt::arg("message_selected", message_selected),
-        fmt::arg("count", current_index),
-        fmt::arg("file_path", file_path));
+               fmt::arg("message_selected", message_selected),
+               fmt::arg("count", current_index),
+               fmt::arg("file_path", file_path));
 
     return 0;
 }

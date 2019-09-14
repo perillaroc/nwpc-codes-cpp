@@ -4,7 +4,7 @@
 
 namespace grib_coder {
 
-class StepRangeProperty: public GribProperty {
+class StepRangeProperty : public GribProperty {
 public:
     StepRangeProperty() = default;
     ~StepRangeProperty() = default;

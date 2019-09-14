@@ -37,8 +37,7 @@ std::vector<double> GribProperty::getDoubleArray() {
     throw std::runtime_error("not implemented");
 }
 
-bool GribProperty::parse(std::vector<std::byte>::const_iterator& iterator, size_t count)
-{
+bool GribProperty::parse(std::vector<std::byte>::const_iterator& iterator, size_t count) {
     return true;
 }
 
@@ -46,8 +45,7 @@ bool GribProperty::decode(GribPropertyContainer* container) {
     return true;
 }
 
-void GribProperty::dump(const DumpConfig& dump_config)
-{
+void GribProperty::dump(const DumpConfig& dump_config) {
     fmt::print("not implemented");
 }
 

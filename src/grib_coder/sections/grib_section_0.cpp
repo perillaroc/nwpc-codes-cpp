@@ -20,7 +20,7 @@ bool GribSection0::parseFile(std::FILE* file, bool header_only) {
     }
 
     auto iterator = std::cbegin(buffer);
-    for(auto & component: components_) {
+    for (auto& component : components_) {
         component->parse(iterator);
     }
 
@@ -29,28 +29,28 @@ bool GribSection0::parseFile(std::FILE* file, bool header_only) {
 
 void GribSection0::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
-        { 4, "identifier", &identifier_ },
-        { 2, "reserved", &reserved_ },
-        { 1, "discipline", &discipline_ },
-        { 1, "editionNumber", &edition_number_ },
-        { 8, "totalLength", &total_length_ },
+        {4, "identifier", &identifier_},
+        {2, "reserved", &reserved_},
+        {1, "discipline", &discipline_},
+        {1, "editionNumber", &edition_number_},
+        {8, "totalLength", &total_length_},
     };
 
     for (auto& item : components) {
         components_.push_back(std::make_unique<PropertyComponent>(
-            std::get<0>(item), 
-            std::get<1>(item),
-            std::get<2>(item))
+                std::get<0>(item),
+                std::get<1>(item),
+                std::get<2>(item))
         );
         registerProperty(
-            std::get<1>(item), 
+            std::get<1>(item),
             std::get<2>(item));
     }
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
-        { &discipline_, "0.0" },
+        {&discipline_, "0.0"},
     };
-    for(const auto& item: tables_id) {
+    for (const auto& item : tables_id) {
         std::get<0>(item)->setCodeTableId(std::get<1>(item));
     }
 }

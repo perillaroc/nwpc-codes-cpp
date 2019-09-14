@@ -2,7 +2,7 @@
 #include <grib_property/grib_property.h>
 
 namespace grib_coder {
-class PackingTypeProperty: public GribProperty {
+class PackingTypeProperty : public GribProperty {
 public:
     PackingTypeProperty() = default;
     ~PackingTypeProperty() = default;

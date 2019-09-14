@@ -18,9 +18,8 @@ Condition parse_condition(const std::string& condition) {
     return c;
 }
 
-std::vector<Condition> parse_conditions(const std::string& condition)
-{
-    auto s{ condition };
+std::vector<Condition> parse_conditions(const std::string& condition) {
+    auto s{condition};
     std::vector<Condition> conditions;
 
     const auto delimiter = ',';

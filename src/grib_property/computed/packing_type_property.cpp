@@ -36,8 +36,7 @@ const std::vector<
     },
 };
 
-bool PackingTypeProperty::decode(GribPropertyContainer* container)
-{
+bool PackingTypeProperty::decode(GribPropertyContainer* container) {
     std::map<std::string, long> property_map;
 
     property_map["dataRepresentationTemplateNumber"] = container->getLong("dataRepresentationTemplateNumber");
@@ -63,4 +62,3 @@ bool PackingTypeProperty::decode(GribPropertyContainer* container)
 }
 
 } // namespace grib_coder
-

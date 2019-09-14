@@ -16,7 +16,7 @@
 
 namespace grib_coder {
 
-GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase> &db, bool header_only):
+GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase>& db, bool header_only):
     header_only_{header_only},
     table_database_{db} {
     property_map_["count"] = &count_;
@@ -64,7 +64,7 @@ bool GribMessageHandler::parseFile(std::FILE* file) {
 }
 
 bool GribMessageHandler::decodeValues() {
-    for(auto& section: section_list_) {
+    for (auto& section : section_list_) {
         if (section->getSectionNumber() == 7) {
             auto section7 = std::static_pointer_cast<GribSection7>(section);
             if (!section7->decodeValues(this)) {
@@ -137,16 +137,14 @@ std::string GribMessageHandler::getString(const std::string& key) {
     return property->getString();
 }
 
-bool GribMessageHandler::hasProperty(const std::string& key)
-{
+bool GribMessageHandler::hasProperty(const std::string& key) {
     const auto property = getProperty(key);
     return property != nullptr;
 }
 
 
-void GribMessageHandler::dump(const DumpConfig& dump_config)
-{
-    for(const auto& section: section_list_) {
+void GribMessageHandler::dump(const DumpConfig& dump_config) {
+    for (const auto& section : section_list_) {
         section->dumpSection(this, 1, dump_config);
     }
 }
@@ -220,7 +218,7 @@ GribProperty* GribMessageHandler::getProperty(const std::string& name) {
         }
     }
     for (auto& item : property_map_) {
-        if(std::get<0>(item) == name) {
+        if (std::get<0>(item) == name) {
             return std::get<1>(item);
         }
     }

@@ -3,7 +3,7 @@
 
 namespace grib_coder {
 
-class GridTypeProperty: public GribProperty {
+class GridTypeProperty : public GribProperty {
 public:
     GridTypeProperty() = default;
     ~GridTypeProperty() = default;

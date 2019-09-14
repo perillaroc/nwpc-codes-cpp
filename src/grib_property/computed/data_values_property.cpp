@@ -42,9 +42,9 @@ bool DataValuesProperty::decodeValues(GribPropertyContainer* container) {
 }
 
 void DataValuesProperty::dump(const DumpConfig& dump_config) {
-    if(data_count_ == -1) {
+    if (data_count_ == -1) {
         fmt::print("not decode");
-    } else if(data_count_ == 0) {
+    } else if (data_count_ == 0) {
         fmt::print("empty");
     } else {
         fmt::print("({}, {})", data_count_, raw_value_bytes_.size());

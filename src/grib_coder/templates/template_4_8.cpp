@@ -70,8 +70,8 @@ void Template_4_8::init() {
         {1, "secondOfEndOfOverallTimeInterval", &second_of_end_of_overall_time_interval_},
         {1, "numberOfTimeRange", &number_of_time_range_},
         {4, "numberOfMissingInStatisticalProcess", &number_of_missing_statistical_process_},
-            
-        {1, "typeOfStatisticalProcessing",&type_of_statistical_processing_},
+
+        {1, "typeOfStatisticalProcessing", &type_of_statistical_processing_},
         {1, "typeOfTimeIncrement", &type_of_time_increment_},
         {1, "indicatorOfUnitForTimeRange", &indicator_of_unit_for_time_range_},
         {4, "lengthOfTimeRange", &length_of_time_range_},
@@ -81,7 +81,7 @@ void Template_4_8::init() {
 
     for (auto& item : components) {
         components_.push_back(std::make_unique<PropertyComponent>(
-            std::get<0>(item), 
+            std::get<0>(item),
             std::get<1>(item),
             std::get<2>(item)));
     }

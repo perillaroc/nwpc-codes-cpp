@@ -8,12 +8,13 @@ struct DumpConfig {
     enum class DumpStyle {
         WMO
     };
+
     DumpStyle style = DumpStyle::WMO;
     int octet_column_length = 10;
 };
 
 
-class GribComponent: public GribPropertyContainer {
+class GribComponent : public GribPropertyContainer {
 public:
     virtual long getByteCount() const = 0;
 
@@ -23,7 +24,7 @@ public:
     // decode properties using previous sections.
     virtual bool decode(GribPropertyContainer* container);
 
-    virtual void dump(std::size_t start_octec, const DumpConfig &dump_config=DumpConfig{});
+    virtual void dump(std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
 };
 
 } // namespace grib_coder

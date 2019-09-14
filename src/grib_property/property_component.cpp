@@ -5,13 +5,12 @@
 
 namespace grib_coder {
 PropertyComponent::PropertyComponent(int byte_count, std::string property_name, GribProperty* property):
-    byte_count_{ byte_count },
+    byte_count_{byte_count},
     property_name_{std::move(property_name)},
-    property_{property}
-{
+    property_{property} {
 }
-void PropertyComponent::setByteCount(const int byte_count)
-{
+
+void PropertyComponent::setByteCount(const int byte_count) {
     byte_count_ = byte_count;
 }
 
@@ -29,18 +28,17 @@ bool PropertyComponent::parse(std::vector<std::byte>::const_iterator& iterator) 
     return true;
 }
 
-bool PropertyComponent::decode(GribPropertyContainer* container)
-{
+bool PropertyComponent::decode(GribPropertyContainer* container) {
     return property_->decode(container);
 }
 
 void PropertyComponent::dump(std::size_t start_octec, const DumpConfig& dump_config) {
     std::string octec_range;
-    if(byte_count_==1) {
+    if (byte_count_ == 1) {
         octec_range = fmt::format("{}", start_octec);
     } else {
         const auto end_octec = start_octec + byte_count_ - 1;
-        octec_range = fmt::format("{}-{}", start_octec, end_octec);        
+        octec_range = fmt::format("{}-{}", start_octec, end_octec);
     }
     const auto octec_column = fmt::format("{:<{}}", octec_range, dump_config.octet_column_length);
     const auto property_name = fmt::format("{} = ", property_name_);

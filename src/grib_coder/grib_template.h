@@ -6,7 +6,7 @@ namespace grib_coder {
 class GribSection;
 class GribMessageHandler;
 
-class GribTemplate: public GribComponent {
+class GribTemplate : public GribComponent {
 public:
     explicit GribTemplate(int template_length);
     virtual ~GribTemplate() = default;
@@ -17,7 +17,8 @@ public:
 
     bool parse(std::vector<std::byte>::const_iterator& iterator) override;
 
-    void dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
+    void dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec,
+                      const DumpConfig& dump_config = DumpConfig{});
 
     virtual void registerProperty(std::shared_ptr<GribSection> section);
 

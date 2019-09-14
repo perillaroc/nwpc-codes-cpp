@@ -45,10 +45,10 @@ bool GribSection1::decode(GribPropertyContainer* container) {
     result = data_time_.decode(container);
 
     auto property = get_property_from_container("discipline", container);
-    if(property) {
+    if (property) {
         auto discipline = dynamic_cast<CodeTableProperty*>(property);
-        if(discipline) {
-            discipline->setTablesVersion(fmt::format("{}",tables_version_.getValue()));
+        if (discipline) {
+            discipline->setTablesVersion(fmt::format("{}", tables_version_.getValue()));
         }
     }
 
@@ -57,37 +57,37 @@ bool GribSection1::decode(GribPropertyContainer* container) {
 
 void GribSection1::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
-        { 4, "section1Length", &section_length_ },
-        { 1, "numberOfSection", &section_number_ },
-        { 2, "centre", &centre_},
-        { 2, "subCentre", &sub_centre_},
-        { 1, "tablesVersion", &tables_version_},
-        { 1, "localTablesVersion", &local_tables_version_},
-        { 1, "significanceOfReferenceTime", &significance_of_reference_time_},
-        { 2, "year", &year_},
-        { 1, "month", &month_},
-        { 1, "day", &day_},
-        { 1, "hour", &hour_},
-        { 1, "minute", &minute_},
-        { 1, "second", &second_},
-        { 1, "productionStatusOfProcessedData", &production_status_of_processed_data_},
-        { 1, "typeOfProcessedData", &type_of_processed_data_},
+        {4, "section1Length", &section_length_},
+        {1, "numberOfSection", &section_number_},
+        {2, "centre", &centre_},
+        {2, "subCentre", &sub_centre_},
+        {1, "tablesVersion", &tables_version_},
+        {1, "localTablesVersion", &local_tables_version_},
+        {1, "significanceOfReferenceTime", &significance_of_reference_time_},
+        {2, "year", &year_},
+        {1, "month", &month_},
+        {1, "day", &day_},
+        {1, "hour", &hour_},
+        {1, "minute", &minute_},
+        {1, "second", &second_},
+        {1, "productionStatusOfProcessedData", &production_status_of_processed_data_},
+        {1, "typeOfProcessedData", &type_of_processed_data_},
     };
 
     for (auto& item : components) {
         components_.push_back(std::make_unique<PropertyComponent>(
-            std::get<0>(item), 
-            std::get<1>(item), 
+            std::get<0>(item),
+            std::get<1>(item),
             std::get<2>(item)));
         registerProperty(std::get<1>(item), std::get<2>(item));
     }
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
-        { &tables_version_, "1.0" },
-        { &local_tables_version_, "1.1" },
-        { &significance_of_reference_time_, "1.2" },
-        { &production_status_of_processed_data_, "1.3" },
-        { &type_of_processed_data_, "1.4" },
+        {&tables_version_, "1.0"},
+        {&local_tables_version_, "1.1"},
+        {&significance_of_reference_time_, "1.2"},
+        {&production_status_of_processed_data_, "1.3"},
+        {&type_of_processed_data_, "1.4"},
     };
     for (const auto& item : tables_id) {
         std::get<0>(item)->setCodeTableId(std::get<1>(item));

@@ -9,7 +9,7 @@ namespace grib_coder {
 
 class GribMessageHandler : public GribPropertyContainer {
 public:
-    GribMessageHandler(std::shared_ptr<GribTableDatabase> &db, bool header_only = false);
+    GribMessageHandler(std::shared_ptr<GribTableDatabase>& db, bool header_only = false);
     ~GribMessageHandler() = default;
 
     void setCount(long count);
@@ -29,7 +29,8 @@ public:
     // NOTE: need to optimization
     bool hasProperty(const std::string& key) override;
 
-    template<typename T> T get(const std::string& key);
+    template <typename T>
+    T get(const std::string& key);
 
     void dump(const DumpConfig& dump_config = DumpConfig{});
 
@@ -56,33 +57,28 @@ private:
     std::unordered_map<std::string, GribProperty*> property_map_;
 };
 
-template<typename T>
-inline T GribMessageHandler::get(const std::string& key)
-{
+template <typename T>
+inline T GribMessageHandler::get(const std::string& key) {
     throw std::runtime_error("not implemented");
 }
 
-template<>
-inline long GribMessageHandler::get(const std::string& key)
-{
+template <>
+inline long GribMessageHandler::get(const std::string& key) {
     return getLong(key);
 }
 
-template<>
-inline double GribMessageHandler::get(const std::string& key)
-{
+template <>
+inline double GribMessageHandler::get(const std::string& key) {
     return getDouble(key);
 }
 
-template<>
-inline std::string GribMessageHandler::get(const std::string& key)
-{
+template <>
+inline std::string GribMessageHandler::get(const std::string& key) {
     return getString(key);
 }
 
-template<>
-inline std::vector<double> GribMessageHandler::get(const std::string& key)
-{
+template <>
+inline std::vector<double> GribMessageHandler::get(const std::string& key) {
     return getDoubleArray(key);
 }
 

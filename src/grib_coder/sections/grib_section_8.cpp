@@ -21,7 +21,7 @@ bool GribSection8::parseFile(std::FILE* file, bool header_only) {
         component->parse(iterator);
     }
 
-    if(end_string_.getString() != "7777") {
+    if (end_string_.getString() != "7777") {
         return false;
     } else {
         return true;
@@ -30,14 +30,14 @@ bool GribSection8::parseFile(std::FILE* file, bool header_only) {
 
 void GribSection8::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
-        { 4, "7777", &end_string_ }
+        {4, "7777", &end_string_}
     };
 
     for (auto& item : components) {
         components_.push_back(std::make_unique<PropertyComponent>(
-            std::get<0>(item),
-            std::get<1>(item),
-            std::get<2>(item))
+                std::get<0>(item),
+                std::get<1>(item),
+                std::get<2>(item))
         );
         registerProperty(
             std::get<1>(item),

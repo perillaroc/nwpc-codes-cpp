@@ -3,11 +3,12 @@
 
 namespace grib_coder {
 
-class PropertyComponent final: public GribComponent {
+class PropertyComponent final : public GribComponent {
 public:
     PropertyComponent(int byte_count, std::string property_name, GribProperty* property);
 
     void setByteCount(const int byte_count);
+
     long getByteCount() const override {
         return byte_count_;
     }

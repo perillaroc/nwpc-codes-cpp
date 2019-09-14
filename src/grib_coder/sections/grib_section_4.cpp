@@ -53,25 +53,26 @@ void GribSection4::init() {
     product_definition_template_number_.setOctetCount(2);
 
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
-        {4, "section4Length", &section_length_ },
-        {1, "numberOfSection", &section_number_ },
+        {4, "section4Length", &section_length_},
+        {1, "numberOfSection", &section_number_},
         {2, "nv", &nv_},
         {2, "productDefinitionTemplateNumber", &product_definition_template_number_},
     };
 
     for (auto& item : components) {
-        components_.push_back(std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item), std::get<2>(item)));
+        components_.push_back(
+            std::make_unique<PropertyComponent>(std::get<0>(item), std::get<1>(item), std::get<2>(item)));
         registerProperty(std::get<1>(item), std::get<2>(item));
     }
 
     product_definition_template_->setGenerateFunction(
         [=]() {
-        this->generateProductionDefinitionTemplate();
-    });
+            this->generateProductionDefinitionTemplate();
+        });
     components_.push_back(std::unique_ptr<TemplateComponent>(product_definition_template_));
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
-        { &product_definition_template_number_, "4.0" },
+        {&product_definition_template_number_, "4.0"},
     };
     for (const auto& item : tables_id) {
         std::get<0>(item)->setCodeTableId(std::get<1>(item));
@@ -85,17 +86,13 @@ void GribSection4::generateProductionDefinitionTemplate() {
 
     if (product_definition_template_number == 0) {
         product_definition_template_->setTemplate(std::make_unique<Template_4_0>(template_length));
-    }
-    else if (product_definition_template_number == 1) {
+    } else if (product_definition_template_number == 1) {
         product_definition_template_->setTemplate(std::make_unique<Template_4_1>(template_length));
-    }
-    else if (product_definition_template_number == 8) {
+    } else if (product_definition_template_number == 8) {
         product_definition_template_->setTemplate(std::make_unique<Template_4_8>(template_length));
-    }
-    else if (product_definition_template_number == 11) {
+    } else if (product_definition_template_number == 11) {
         product_definition_template_->setTemplate(std::make_unique<Template_4_11>(template_length));
-    }
-    else {
+    } else {
         throw std::runtime_error(fmt::format("template not implemented: {}", product_definition_template_number));
     }
     product_definition_template_->registerProperty(std::dynamic_pointer_cast<GribSection>(shared_from_this()));
