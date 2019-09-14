@@ -10,5 +10,5 @@ target_sources(nwpc_codes_ls
 
 target_link_libraries(nwpc_codes_ls
 	PUBLIC
-		NwpcCodesCpp::GribCoder
+		NwpcCodesCpp::ToolUtil
 )
