@@ -1,5 +1,4 @@
 #include "sections/grib_section_4.h"
-#include "sections/grib_section_0.h"
 #include "templates/template_4_0.h"
 #include "templates/template_4_1.h"
 #include "templates/template_4_8.h"

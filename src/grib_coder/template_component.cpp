@@ -1,5 +1,4 @@
 #include "template_component.h"
-#include "template_component.h"
 
 #include "grib_template.h"
 #include "grib_section.h"

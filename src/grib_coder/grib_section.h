@@ -47,7 +47,7 @@ public:
 
     void registerProperty(const std::string& name, GribProperty* property);
 
-    void dump(GribMessageHandler *message_handler, std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
+    void dumpSection(GribMessageHandler *message_handler, std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
 
 protected:
     std::vector<std::unique_ptr<GribComponent>> components_;

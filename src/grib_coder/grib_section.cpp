@@ -129,14 +129,19 @@ void GribSection::registerProperty(const std::string& name, GribProperty* proper
     property_map_[name] = property;
 }
 
-void GribSection::dump(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config) {
+void GribSection::dumpSection(GribMessageHandler* message_handler, std::size_t start_octec, const DumpConfig& dump_config) {
     auto octec_index = start_octec;
-    fmt::print(
-        "======================   SECTION_{} ( length={} )    ======================\n",
-        section_number_.getLong(),
-        section_length_.getLong());
+    if(section_number_ == 0) {
+        fmt::print("===============   MESSAGE {} ( length={} )    ================\n",
+            message_handler->getLong("count"), message_handler->getLong("totalLength"));
+    } else {
+        fmt::print(
+            "======================   SECTION_{} ( length={} )    ======================\n",
+            section_number_.getLong(),
+            section_length_.getLong());
+    }
 
-    auto tables_version = fmt::format("{}", message_handler->getLong("tablesVersion"));
+    const auto tables_version = fmt::format("{}", message_handler->getLong("tablesVersion"));
 
     for(const auto& component: components_) {
         auto property_component = dynamic_cast<PropertyComponent*>(component.get());

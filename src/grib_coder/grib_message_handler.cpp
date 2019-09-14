@@ -135,7 +135,7 @@ bool GribMessageHandler::hasProperty(const std::string& key)
 void GribMessageHandler::dump(const DumpConfig& dump_config)
 {
     for(const auto& section: section_list_) {
-        section->dump(this, 1, dump_config);
+        section->dumpSection(this, 1, dump_config);
     }
 }
 
