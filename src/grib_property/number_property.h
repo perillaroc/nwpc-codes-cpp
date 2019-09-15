@@ -1,7 +1,7 @@
 #pragma once
 
-#include "grib_property.h"
-#include "number_convert.h"
+#include <grib_property/grib_property.h>
+#include <grib_property/number_convert.h>
 
 #include <fmt/format.h>
 
@@ -10,11 +10,8 @@ namespace grib_coder {
 template <class T>
 class NumberProperty : public GribProperty {
 public:
-    NumberProperty() : GribProperty{}, value_{} {
-    }
-
-    NumberProperty(T value) : GribProperty{}, value_{value} {
-    }
+    NumberProperty() : GribProperty{}, value_{} {}
+    NumberProperty(T value) : GribProperty{}, value_{value} {}
 
     ~NumberProperty() = default;
 

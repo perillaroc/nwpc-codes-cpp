@@ -202,7 +202,7 @@ bool GribMessageHandler::parseNextSection(std::FILE* file) {
     return true;
 }
 
-std::shared_ptr<GribSection> GribMessageHandler::getSection(int section_number, size_t begin_pos) {
+auto GribMessageHandler::getSection(int section_number, size_t begin_pos) {
     std::shared_ptr<GribSection> section;
     for (auto iter = section_list_.begin() + begin_pos; iter != section_list_.end(); ++iter) {
         auto s = *iter;

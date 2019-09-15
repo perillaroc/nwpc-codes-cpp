@@ -51,7 +51,7 @@ std::string CodeTableProperty::getString() {
     return record.abbreviation_;
 }
 
-std::string CodeTableProperty::getTitle() {
+auto CodeTableProperty::getTitle() {
     const auto default_value = fmt::format("{}", value_);
 
     const auto record_result = getTableRecord();
@@ -63,7 +63,7 @@ std::string CodeTableProperty::getTitle() {
     return record.title_;
 }
 
-std::string CodeTableProperty::getAbbreviation() {
+auto CodeTableProperty::getAbbreviation() {
     const auto default_value = fmt::format("{}", value_);
 
     const auto record_result = getTableRecord();
@@ -75,7 +75,7 @@ std::string CodeTableProperty::getAbbreviation() {
     return record.abbreviation_;
 }
 
-std::string CodeTableProperty::getUnits() {
+auto CodeTableProperty::getUnits() {
     const auto default_value = fmt::format("{}", value_);
 
     const auto record_result = getTableRecord();

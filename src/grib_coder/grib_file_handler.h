@@ -1,5 +1,5 @@
 #pragma once
-#include "grib_message_handler.h"
+#include <grib_coder/grib_message_handler.h>
 
 namespace grib_coder {
 class GribTableDatabase;

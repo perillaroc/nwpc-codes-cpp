@@ -1,7 +1,7 @@
 #pragma once
 
-#include "grib_property.h"
-#include "grib_table_database.h"
+#include <grib_property/grib_property.h>
+#include <grib_property/grib_table_database.h>
 
 namespace grib_coder {
 
@@ -19,9 +19,9 @@ public:
     void setString(const std::string& value) override;
     std::string getString() override;
 
-    std::string getTitle();
-    std::string getAbbreviation();
-    std::string getUnits();
+    auto getTitle();
+    auto getAbbreviation();
+    auto getUnits();
 
     void setCodeTableId(const std::string& code_table_id);
     void setOctetCount(size_t count);
@@ -30,7 +30,7 @@ public:
 
     void dump(const DumpConfig& dump_config) override;
 
-    int getValue() const {
+    auto getValue() const {
         return value_;
     }
 

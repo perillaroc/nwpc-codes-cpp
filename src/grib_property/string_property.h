@@ -4,7 +4,7 @@
 
 namespace grib_coder {
 
-class StringProperty : public GribProperty {
+class StringProperty final: public GribProperty {
 public:
     void setLength(const int length) {
         length_ = length;

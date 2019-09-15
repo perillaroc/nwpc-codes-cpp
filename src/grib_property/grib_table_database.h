@@ -2,7 +2,7 @@
 #include <map>
 #include <memory>
 
-#include "grib_table.h"
+#include <grib_property/grib_table.h>
 
 namespace grib_coder {
 

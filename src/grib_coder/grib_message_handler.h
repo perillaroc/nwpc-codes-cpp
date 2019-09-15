@@ -1,6 +1,6 @@
 #pragma once
 
-#include "grib_section.h"
+#include <grib_coder/grib_section.h>
 #include <grib_property/grib_property_container.h>
 #include <grib_property/number_property.h>
 
@@ -36,15 +36,14 @@ public:
 
     GribProperty* getProperty(const std::string& name);
 
-    std::shared_ptr<GribTableDatabase> getTableDatabase() const {
+    auto getTableDatabase() const {
         return table_database_;
     }
 
 private:
     bool parseNextSection(std::FILE* file);
 
-    std::shared_ptr<GribSection> getSection(int section_number, size_t begin_pos = 0);
-
+    auto getSection(int section_number, size_t begin_pos = 0);
 
     bool header_only_ = false;
 

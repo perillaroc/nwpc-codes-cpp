@@ -1,9 +1,6 @@
 #pragma once
 #include <grib_property/grib_component.h>
 
-#include <string>
-#include <vector>
-
 namespace grib_coder {
 
 class GribPropertyContainer;
