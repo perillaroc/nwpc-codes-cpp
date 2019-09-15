@@ -1,9 +1,9 @@
 #pragma once
-
 #include "grib_message_handler.h"
-#include <grib_property/grib_table_database.h>
 
 namespace grib_coder {
+class GribTableDatabase;
+
 class GribFileHandler {
 public:
     explicit GribFileHandler(std::FILE* file, bool header_only = false);

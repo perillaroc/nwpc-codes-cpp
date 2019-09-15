@@ -27,7 +27,7 @@ target_sources(grib_coder
 
 target_include_directories(grib_coder
 	PUBLIC
-		${CMAKE_CURRENT_SOURCE_DIR}
+		${CMAKE_CURRENT_SOURCE_DIR}/../
 		${OPENJPEG_INCLUDE_DIRS}
 )
 

@@ -1,11 +1,11 @@
 #pragma once
 
 #include "grib_section.h"
-#include <grib_property/grib_table_database.h>
 #include <grib_property/grib_property_container.h>
 #include <grib_property/number_property.h>
 
 namespace grib_coder {
+class GribTableDatabase;
 
 class GribMessageHandler : public GribPropertyContainer {
 public:
@@ -58,7 +58,7 @@ private:
 };
 
 template <typename T>
-inline T GribMessageHandler::get(const std::string& key) {
+T GribMessageHandler::get(const std::string& key) {
     throw std::runtime_error("not implemented");
 }
 

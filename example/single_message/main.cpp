@@ -1,7 +1,6 @@
-#include <fstream>
 #include <string>
 
-#include <grib_file_handler.h>
+#include <grib_coder/grib_file_handler.h>
 
 int main() {
     const std::string grib_file_path{"./dist/data/t.850hpa.000.grb2"};

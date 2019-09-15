@@ -5,7 +5,7 @@
 
 namespace grib_coder {
 
-const std::string RecordUnknownValue = "unknown";
+const std::string record_unknown_value = "unknown";
 
 class GribTableRecord {
 public:
@@ -14,9 +14,9 @@ public:
     }
 
     int code_ = -1;
-    std::string abbreviation_ = RecordUnknownValue;
-    std::string title_ = RecordUnknownValue;
-    std::string units_ = RecordUnknownValue;
+    std::string abbreviation_ = record_unknown_value;
+    std::string title_ = record_unknown_value;
+    std::string units_ = record_unknown_value;
 };
 
 class GribTable {

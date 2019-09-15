@@ -1,5 +1,5 @@
 #include "template_4_8.h"
-#include "../grib_section.h"
+#include "grib_coder/grib_section.h"
 
 #include <grib_property/property_component.h>
 

@@ -19,7 +19,7 @@ public:
 
 private:
     std::string value_;
-    int length_;
+    int length_ = 0;
 };
 
 } // namespace grib_coder

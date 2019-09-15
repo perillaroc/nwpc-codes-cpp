@@ -2,6 +2,7 @@
 #include "number_convert.h"
 
 #include <fmt/format.h>
+
 #include <stdexcept>
 
 namespace grib_coder {
@@ -43,7 +44,7 @@ std::string CodeTableProperty::getString() {
 
     const auto record = record_result.value();
 
-    if (record.abbreviation_ == RecordUnknownValue) {
+    if (record.abbreviation_ == record_unknown_value) {
         return record.title_;
     }
 

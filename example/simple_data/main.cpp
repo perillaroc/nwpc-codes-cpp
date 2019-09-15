@@ -6,6 +6,7 @@
 
 #include <grib_property/computed/openjpeg_decoder.h>
 
+
 float convert_to_float(uint32_t v) {
     return *(reinterpret_cast<float*>(&v));
 }
@@ -23,7 +24,7 @@ int main() {
     const auto decimal_scale_factor = 0x2;
     const auto reference_value = convert_to_float(0x46B1298E);
 
-    auto buf = new std::byte[raw_data_length];
+    std::vector<std::byte> buf(raw_data_length);
 
     //std::FILE* f = std::fopen(grib_file_path.c_str(), "rb");
     //std::fseek(f, start_pos, SEEK_SET);
@@ -32,12 +33,10 @@ int main() {
 
     std::ifstream f(grib_file_path, std::ios::binary);
     f.seekg(start_pos);
-    f.read(reinterpret_cast<char*>(buf), raw_data_length);
+    f.read(reinterpret_cast<char*>(&buf[0]), raw_data_length);
     f.close();
 
-    auto val = grib_coder::decode_jpeg2000_values(buf, raw_data_length, data_count);
-
-    delete[] buf;
+    auto val = grib_coder::decode_jpeg2000_values(&buf[0], raw_data_length, data_count);
 
     if (val.empty()) {
         std::cerr << "value decode has error." << std::endl;

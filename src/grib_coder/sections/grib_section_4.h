@@ -1,7 +1,7 @@
 #pragma once
 
-#include "grib_section.h"
-#include "../template_component.h"
+#include "grib_coder/grib_section.h"
+#include "grib_coder/template_component.h"
 
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>

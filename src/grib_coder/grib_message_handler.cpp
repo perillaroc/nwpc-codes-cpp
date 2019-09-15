@@ -8,7 +8,10 @@
 #include "sections/grib_section_6.h"
 #include "sections/grib_section_7.h"
 #include "sections/grib_section_8.h"
+
 #include <grib_property/number_convert.h>
+#include <grib_property/grib_table_database.h>
+
 #include <fmt/format.h>
 
 #include <memory>

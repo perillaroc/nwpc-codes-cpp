@@ -1,8 +1,8 @@
-#include "sections/grib_section_4.h"
-#include "templates/template_4_0.h"
-#include "templates/template_4_1.h"
-#include "templates/template_4_8.h"
-#include "templates/template_4_11.h"
+#include "grib_coder/sections/grib_section_4.h"
+#include "grib_coder/templates/template_4_0.h"
+#include "grib_coder/templates/template_4_1.h"
+#include "grib_coder/templates/template_4_8.h"
+#include "grib_coder/templates/template_4_11.h"
 
 #include <grib_property/property_component.h>
 

@@ -3,7 +3,7 @@
 #include <string>
 #include <chrono>
 
-#include <grib_file_handler.h>
+#include <grib_coder/grib_file_handler.h>
 
 int main() {
     const std::string grib_file_path{"./dist/data/gmf.gra.2019080700003.grb2"};
