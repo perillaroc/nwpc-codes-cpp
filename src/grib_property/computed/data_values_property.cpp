@@ -1,5 +1,5 @@
 #include "data_values_property.h"
-#include <grib_property/grib_property_container.h>
+#include <grib_coder/grib_message_handler.h>
 #include "openjpeg_decoder.h"
 
 #include <fmt/format.h>
@@ -20,7 +20,7 @@ void DataValuesProperty::setRawValues(std::vector<std::byte>&& raw_values) {
     raw_value_bytes_ = std::move(raw_values);
 }
 
-bool DataValuesProperty::decodeValues(GribPropertyContainer* container) {
+bool DataValuesProperty::decodeValues(GribMessageHandler* container) {
     if (raw_value_bytes_.empty()) {
         data_count_ = 0;
         return true;

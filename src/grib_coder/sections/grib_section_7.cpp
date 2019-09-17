@@ -49,7 +49,7 @@ bool GribSection7::decode(GribMessageHandler* container) {
     return true;
 }
 
-bool GribSection7::decodeValues(GribPropertyContainer* container) {
+bool GribSection7::decodeValues(GribMessageHandler* container) {
     return data_values_.decodeValues(container);
 }
 

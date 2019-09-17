@@ -15,7 +15,7 @@ public:
 
     bool decode(GribMessageHandler* container) override;
 
-    bool decodeValues(GribPropertyContainer* container);
+    bool decodeValues(GribMessageHandler* container);
 
 private:
     void init();

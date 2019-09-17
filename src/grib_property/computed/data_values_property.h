@@ -13,7 +13,7 @@ public:
 
     void setRawValues(std::vector<std::byte>&& raw_values);
 
-    bool decodeValues(GribPropertyContainer* container);
+    bool decodeValues(GribMessageHandler* container);
 
     void dump(const DumpConfig& dump_config) override;
 
