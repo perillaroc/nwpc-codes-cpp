@@ -1,5 +1,6 @@
 #include "grib_section_1.h"
 #include <grib_property/property_component.h>
+#include <grib_coder/grib_message_handler.h>
 
 #include <gsl/span>
 
@@ -38,13 +39,13 @@ bool GribSection1::parseFile(std::FILE* file, bool header_only) {
     return true;
 }
 
-bool GribSection1::decode(GribPropertyContainer* container) {
+bool GribSection1::decode(GribMessageHandler* container) {
     auto result = data_date_.decode(container);
     if (!result) return false;
 
     result = data_time_.decode(container);
 
-    auto property = get_property_from_container("discipline", container);
+    auto property = container->getProperty("discipline");
     if (property) {
         auto discipline = dynamic_cast<CodeTableProperty*>(property);
         if (discipline) {

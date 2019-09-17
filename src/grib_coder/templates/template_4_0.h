@@ -15,7 +15,7 @@ public:
 
     ~Template_4_0() = default;
 
-    bool decode(GribPropertyContainer* container) override;
+    bool decode(GribMessageHandler* container) override;
 
     void registerProperty(std::shared_ptr<GribSection> section) override;
 

@@ -1,6 +1,8 @@
 #include "property_component.h"
 #include "grib_property.h"
 
+#include <grib_coder/grib_message_handler.h>
+
 #include <fmt/printf.h>
 
 namespace grib_coder {
@@ -28,8 +30,8 @@ bool PropertyComponent::parse(std::vector<std::byte>::const_iterator& iterator) 
     return true;
 }
 
-bool PropertyComponent::decode(GribPropertyContainer* container) {
-    return property_->decode(container);
+bool PropertyComponent::decode(GribMessageHandler* handler) {
+    return property_->decode(handler);
 }
 
 void PropertyComponent::dump(std::size_t start_octec, const DumpConfig& dump_config) {

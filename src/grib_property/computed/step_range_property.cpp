@@ -1,5 +1,5 @@
 #include "step_range_property.h"
-#include <grib_property/grib_property_container.h>
+#include <grib_coder/grib_message_handler.h>
 
 #include <fmt/format.h>
 #include <fmt/printf.h>
@@ -13,7 +13,7 @@ std::string grib_coder::StepRangeProperty::getString() {
     }
 }
 
-bool grib_coder::StepRangeProperty::decode(GribPropertyContainer* container) {
+bool grib_coder::StepRangeProperty::decode(GribMessageHandler* container) {
     const auto time_unit = container->getLong("indicatorOfUnitOfTimeRange");
     const auto forecast_time = container->getLong("forecastTime");
     start_ = end_ = forecast_time;

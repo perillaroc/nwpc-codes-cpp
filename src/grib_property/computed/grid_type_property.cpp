@@ -1,6 +1,6 @@
 #include "grid_type_property.h"
 
-#include <grib_property/grib_property_container.h>
+#include <grib_coder/grib_message_handler.h>
 
 #include <map>
 
@@ -33,7 +33,7 @@ const std::vector<
     },
 };
 
-bool GridTypeProperty::decode(GribPropertyContainer* container) {
+bool GridTypeProperty::decode(GribMessageHandler* container) {
     std::map<std::string, long> property_map;
 
     property_map["gridDefinitionTemplateNumber"] = container->getLong("gridDefinitionTemplateNumber");

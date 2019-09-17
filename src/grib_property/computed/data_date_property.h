@@ -17,7 +17,7 @@ public:
     void setString(const std::string& value) override;
     std::string getString() override;
 
-    bool decode(GribPropertyContainer* container) override;
+    bool decode(GribMessageHandler* handler) override;
 
 private:
     int year_;

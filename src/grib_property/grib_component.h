@@ -4,6 +4,8 @@
 
 namespace grib_coder {
 
+class GribMessageHandler;
+
 struct DumpConfig {
     enum class DumpStyle {
         WMO
@@ -22,7 +24,7 @@ public:
     virtual bool parse(std::vector<std::byte>::const_iterator& iterator);
 
     // decode component using previous sections.
-    virtual bool decode(GribPropertyContainer* container);
+    virtual bool decode(GribMessageHandler* handler);
 
     // dump component
     virtual void dump(std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});

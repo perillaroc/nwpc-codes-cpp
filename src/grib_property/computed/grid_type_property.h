@@ -12,7 +12,7 @@ public:
         return grid_type_;
     }
 
-    bool decode(GribPropertyContainer* container) override;
+    bool decode(GribMessageHandler* container) override;
 
 private:
     std::string grid_type_;

@@ -41,7 +41,7 @@ public:
 
     virtual bool parseFile(std::FILE* file, bool header_only = false) = 0;
 
-    bool decode(GribPropertyContainer* container) override;
+    bool decode(GribMessageHandler* handler) override;
 
     GribProperty* getProperty(const std::string& name);
 
@@ -63,9 +63,4 @@ protected:
 GribProperty* get_property_from_section_list(
     const std::string& name,
     std::vector<std::shared_ptr<GribSection>>& section_list);
-
-GribProperty* get_property_from_container(
-    const std::string& name,
-    GribPropertyContainer* container);
-
 } // namespace grib_coder

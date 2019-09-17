@@ -1,5 +1,6 @@
 #include "template_4_8.h"
 #include "grib_coder/grib_section.h"
+#include "grib_coder/grib_message_handler.h"
 
 #include <grib_property/property_component.h>
 
@@ -14,7 +15,7 @@ Template_4_8::Template_4_8(int template_length):
     init();
 }
 
-bool Template_4_8::decode(GribPropertyContainer* container) {
+bool Template_4_8::decode(GribMessageHandler* container) {
     const auto discipline = container->getLong("discipline");
     const auto category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);

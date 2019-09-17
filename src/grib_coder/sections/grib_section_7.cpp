@@ -45,7 +45,7 @@ bool GribSection7::parseFile(std::FILE* file, bool header_only) {
     return true;
 }
 
-bool GribSection7::decode(GribPropertyContainer* container) {
+bool GribSection7::decode(GribMessageHandler* container) {
     return true;
 }
 

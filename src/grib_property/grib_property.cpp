@@ -41,7 +41,7 @@ bool GribProperty::parse(std::vector<std::byte>::const_iterator& iterator, size_
     return true;
 }
 
-bool GribProperty::decode(GribPropertyContainer* container) {
+bool GribProperty::decode(GribMessageHandler* handler) {
     return true;
 }
 

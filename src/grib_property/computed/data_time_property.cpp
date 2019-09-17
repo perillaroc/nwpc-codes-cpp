@@ -1,5 +1,5 @@
 #include "data_time_property.h"
-#include <grib_property/grib_property_container.h>
+#include <grib_coder/grib_message_handler.h>
 
 #include <fmt/format.h>
 
@@ -51,7 +51,7 @@ std::string DataTimeProperty::getString() {
     return fmt::format("{hour:02}:{minute:02}", fmt::arg("hour", hour_), fmt::arg("minute", minute_));;
 }
 
-bool DataTimeProperty::decode(GribPropertyContainer* container) {
+bool DataTimeProperty::decode(GribMessageHandler* container) {
     hour_ = container->getLong("hour");
     minute_ = container->getLong("minute");
     second_ = container->getLong("second");

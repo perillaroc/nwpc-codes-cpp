@@ -19,7 +19,7 @@ public:
     // parse binary bytes read from grib message
     bool parse(std::vector<std::byte>::const_iterator& iterator) override;
 
-    bool decode(GribPropertyContainer* container) override;
+    bool decode(GribMessageHandler* handler) override;
 
     void dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec,
                       const DumpConfig& dump_config = DumpConfig{});

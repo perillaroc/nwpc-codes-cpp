@@ -11,7 +11,7 @@ public:
         return packing_type_;
     }
 
-    bool decode(GribPropertyContainer* container) override;
+    bool decode(GribMessageHandler* container) override;
 
 private:
     std::string packing_type_ = "MISSING";

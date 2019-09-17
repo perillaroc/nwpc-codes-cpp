@@ -10,7 +10,7 @@ public:
 
     std::string getString() override;
 
-    bool decode(GribPropertyContainer* container) override;
+    bool decode(GribMessageHandler* container) override;
 
 private:
     std::string type_of_level_ = "MISSING";

@@ -21,8 +21,8 @@ bool TemplateComponent::parse(std::vector<std::byte>::const_iterator& iterator) 
     return grib_template_->parse(iterator);;
 }
 
-bool TemplateComponent::decode(GribPropertyContainer* container) {
-    return grib_template_->decode(container);
+bool TemplateComponent::decode(GribMessageHandler* handler) {
+    return grib_template_->decode(handler);
 }
 
 void TemplateComponent::dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec,

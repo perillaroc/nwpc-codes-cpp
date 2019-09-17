@@ -1,5 +1,5 @@
 #include "level_property.h"
-#include <grib_property/grib_property_container.h>
+#include <grib_coder/grib_message_handler.h>
 
 #include <fmt/format.h>
 
@@ -20,7 +20,7 @@ std::string LevelProperty::getString() {
     return fmt::format("{}", value_);
 }
 
-bool LevelProperty::decode(GribPropertyContainer* container) {
+bool LevelProperty::decode(GribMessageHandler* container) {
     const auto level_number_factor = container->getLong("scaleFactorOfFirstFixedSurface");
     const auto level_number_value = container->getLong("scaledValueOfFirstFixedSurface");
     const auto type_of_first_fixed_surface = container->getLong("typeOfFirstFixedSurface");

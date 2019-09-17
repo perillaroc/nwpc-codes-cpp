@@ -1,5 +1,5 @@
 #include "type_of_level_property.h"
-#include <grib_property/grib_property_container.h>
+#include <grib_coder/grib_message_handler.h>
 
 #include <map>
 
@@ -100,7 +100,7 @@ std::string TypeOfLevelProperty::getString() {
     return type_of_level_;
 }
 
-bool TypeOfLevelProperty::decode(GribPropertyContainer* container) {
+bool TypeOfLevelProperty::decode(GribMessageHandler* container) {
     std::map<std::string, long> property_map;
 
     property_map["typeOfFirstFixedSurface"] = container->getLong("typeOfFirstFixedSurface");

@@ -11,7 +11,7 @@ public:
 
     std::string getString() override;
 
-    bool decode(GribPropertyContainer* container) override;
+    bool decode(GribMessageHandler* container) override;
 
 private:
     long start_ = -1;

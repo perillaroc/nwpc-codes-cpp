@@ -38,7 +38,7 @@ bool GribSection3::parseFile(std::FILE* file, bool header_only) {
     return true;
 }
 
-bool GribSection3::decode(GribPropertyContainer* container) {
+bool GribSection3::decode(GribMessageHandler* container) {
     const auto result = grid_type_.decode(container);
     return result;
 }

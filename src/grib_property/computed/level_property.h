@@ -14,7 +14,7 @@ public:
 
     std::string getString() override;
 
-    bool decode(GribPropertyContainer* container) override;
+    bool decode(GribMessageHandler* container) override;
 
 private:
     double value_;

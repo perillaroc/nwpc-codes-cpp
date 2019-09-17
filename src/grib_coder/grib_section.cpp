@@ -103,7 +103,7 @@ int GribSection::getSectionNumber() const {
     return static_cast<int>(section_number_);
 }
 
-bool GribSection::decode(GribPropertyContainer* container) {
+bool GribSection::decode(GribMessageHandler* handler) {
     return true;
 }
 
@@ -173,16 +173,6 @@ GribProperty* get_property_from_section_list(
         }
     }
     return nullptr;
-}
-
-GribProperty* get_property_from_container(const std::string& name, GribPropertyContainer* container) {
-    auto grib_message_handler = dynamic_cast<GribMessageHandler*>(container);
-    if (grib_message_handler == nullptr) {
-        return nullptr;
-    }
-
-    auto property = grib_message_handler->getProperty(name);
-    return property;
 }
 
 } // namespace grib_coder

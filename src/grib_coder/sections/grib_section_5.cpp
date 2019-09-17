@@ -37,7 +37,7 @@ bool GribSection5::parseFile(std::FILE* file, bool header_only) {
     return true;
 }
 
-bool GribSection5::decode(GribPropertyContainer* container) {
+bool GribSection5::decode(GribMessageHandler* container) {
     const auto result = packing_type_.decode(container);
     return result;
 }

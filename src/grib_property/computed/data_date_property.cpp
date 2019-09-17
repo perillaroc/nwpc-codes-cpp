@@ -1,5 +1,5 @@
 #include "data_date_property.h"
-#include <grib_property/grib_property_container.h>
+#include <grib_coder/grib_message_handler.h>
 
 #include <fmt/format.h>
 
@@ -43,10 +43,10 @@ std::string DataDateProperty::getString() {
                        fmt::arg("day", day_));
 }
 
-bool DataDateProperty::decode(GribPropertyContainer* container) {
-    year_ = static_cast<int>(container->getLong("year"));
-    month_ = static_cast<int>(container->getLong("month"));
-    day_ = static_cast<int>(container->getLong("day"));
+bool DataDateProperty::decode(GribMessageHandler* handler) {
+    year_ = static_cast<int>(handler->getLong("year"));
+    month_ = static_cast<int>(handler->getLong("month"));
+    day_ = static_cast<int>(handler->getLong("day"));
     return true;
 }
 

@@ -6,7 +6,7 @@ bool GribComponent::parse(std::vector<std::byte>::const_iterator& iterator) {
     return true;
 }
 
-bool GribComponent::decode(GribPropertyContainer* container) {
+bool GribComponent::decode(GribMessageHandler* handler) {
     return true;
 }
 

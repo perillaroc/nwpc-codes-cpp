@@ -3,7 +3,7 @@
 
 namespace grib_coder {
 
-class GribPropertyContainer;
+class GribMessageHandler;
 
 class GribProperty {
 public:
@@ -23,7 +23,7 @@ public:
 
     virtual bool parse(std::vector<std::byte>::const_iterator& iterator, size_t count);
 
-    virtual bool decode(GribPropertyContainer* container);
+    virtual bool decode(GribMessageHandler* handler);
 
     virtual void dump(const DumpConfig& dump_config);
 };
