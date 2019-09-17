@@ -31,6 +31,14 @@ void TemplateComponent::dumpTemplate(GribMessageHandler* message_handler, std::s
 }
 
 void TemplateComponent::registerProperty(std::shared_ptr<GribSection> section) {
-    grib_template_->registerProperty(section);
+    grib_template_->registerProperty(std::move(section));
+}
+
+void TemplateComponent::unregisterProperty(std::shared_ptr<GribSection> section) {
+    if(grib_template_ == nullptr) {
+        return;
+    }
+
+    grib_template_->unregisterProperty(std::move(section));
 }
 } // namespace grib_coder

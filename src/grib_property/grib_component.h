@@ -21,9 +21,10 @@ public:
     // parse binary bytes read from grib message
     virtual bool parse(std::vector<std::byte>::const_iterator& iterator);
 
-    // decode properties using previous sections.
+    // decode component using previous sections.
     virtual bool decode(GribPropertyContainer* container);
 
+    // dump component
     virtual void dump(std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
 };
 

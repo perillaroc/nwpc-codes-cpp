@@ -46,6 +46,7 @@ public:
     GribProperty* getProperty(const std::string& name);
 
     void registerProperty(const std::string& name, GribProperty* property);
+    void unregisterProperty(const std::string& name);
 
     void dumpSection(GribMessageHandler* message_handler, std::size_t start_octec,
                      const DumpConfig& dump_config = DumpConfig{});

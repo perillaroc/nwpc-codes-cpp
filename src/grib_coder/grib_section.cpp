@@ -119,6 +119,11 @@ void GribSection::registerProperty(const std::string& name, GribProperty* proper
     property_map_[name] = property;
 }
 
+void GribSection::unregisterProperty(const std::string& name)
+{
+    property_map_.erase(name);
+}
+
 void GribSection::dumpSection(GribMessageHandler* message_handler, std::size_t start_octec,
                               const DumpConfig& dump_config) {
     auto octec_index = start_octec;

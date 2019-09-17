@@ -25,6 +25,7 @@ public:
                       const DumpConfig& dump_config = DumpConfig{});
 
     void registerProperty(std::shared_ptr<GribSection> section);
+    void unregisterProperty(std::shared_ptr<GribSection> section);
 
     void setByteCount(long byte_count) {
         byte_count_ = byte_count;
