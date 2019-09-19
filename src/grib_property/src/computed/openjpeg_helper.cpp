@@ -1,4 +1,4 @@
-#include "openjpeg_helper.h"
+#include "grib_property/computed/openjpeg_helper.h"
 #include <cstring>
 
 /* This will read from our memory to the buffer */

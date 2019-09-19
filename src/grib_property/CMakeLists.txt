@@ -10,30 +10,32 @@ add_library(grib_property STATIC)
 
 target_sources(grib_property
 	PRIVATE
-		grib_table.cpp
-		grib_table_database.cpp
-		grib_component.cpp
-		property_component.cpp
-        grib_property.cpp
-		grib_property_container.cpp
-        code_table_property.cpp
-		string_property.cpp
-		number_convert.cpp
-		computed/openjpeg_helper.cpp
-		computed/openjpeg_decoder.cpp
-		computed/data_values_property.cpp
-		computed/data_date_property.cpp
-		computed/data_time_property.cpp
-		computed/level_property.cpp
-		computed/type_of_level_property.cpp
-		computed/packing_type_property.cpp
-		computed/grid_type_property.cpp
-		computed/step_range_property.cpp)
+		src/grib_table.cpp
+		src/grib_table_database.cpp
+		src/grib_component.cpp
+		src/property_component.cpp
+        src/grib_property.cpp
+		src/grib_property_container.cpp
+        src/code_table_property.cpp
+		src/string_property.cpp
+		src/number_convert.cpp
+		src/computed/openjpeg_helper.cpp
+		src/computed/openjpeg_decoder.cpp
+		src/computed/data_values_property.cpp
+		src/computed/data_date_property.cpp
+		src/computed/data_time_property.cpp
+		src/computed/level_property.cpp
+		src/computed/type_of_level_property.cpp
+		src/computed/packing_type_property.cpp
+		src/computed/grid_type_property.cpp
+		src/computed/step_range_property.cpp)
 
 
 target_include_directories(grib_property
 	PUBLIC
-		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/grib_property>
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../grib_coder/include>
 		$<INSTALL_INTERFACE:include>
 		${OPENJPEG_INCLUDE_DIRS}
 )

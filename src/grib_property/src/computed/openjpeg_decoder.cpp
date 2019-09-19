@@ -1,5 +1,5 @@
-#include "openjpeg_decoder.h"
-#include "openjpeg_helper.h"
+#include "grib_property/computed/openjpeg_decoder.h"
+#include "grib_property/computed/openjpeg_helper.h"
 
 #include <cassert>
 

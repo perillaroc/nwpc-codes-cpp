@@ -1,4 +1,4 @@
-#include "template_4_1.h"
+#include "grib_coder/templates/template_4_11.h"
 #include "grib_coder/grib_section.h"
 #include "grib_coder/grib_message_handler.h"
 
@@ -8,13 +8,13 @@
 
 namespace grib_coder {
 
-Template_4_1::Template_4_1(int template_length):
+Template_4_11::Template_4_11(int template_length):
     GribTemplate{template_length} {
-    assert(template_length == 37 - 9);
+    assert(template_length == 61 - 9);
     init();
 }
 
-bool Template_4_1::decode(GribMessageHandler* container) {
+bool Template_4_11::decode(GribMessageHandler* container) {
     const auto discipline = container->getLong("discipline");
     const auto category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);
@@ -31,7 +31,7 @@ bool Template_4_1::decode(GribMessageHandler* container) {
     return true;
 }
 
-void Template_4_1::registerProperty(std::shared_ptr<GribSection> section) {
+void Template_4_11::registerProperty(std::shared_ptr<GribSection> section) {
     GribTemplate::registerProperty(section);
 
     std::vector<std::tuple<std::string, GribProperty*>> properties_name{
@@ -44,7 +44,7 @@ void Template_4_1::registerProperty(std::shared_ptr<GribSection> section) {
     }
 }
 
-void Template_4_1::init() {
+void Template_4_11::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
         {1, "parameterCategory", &parameter_category_},
         {1, "parameterNumber", &parameter_number_},
@@ -65,6 +65,22 @@ void Template_4_1::init() {
         {1, "typeOfEnsembleForecast", &type_of_ensemble_forecast_},
         {1, "perturbationNumber", &perturbation_number_},
         {1, "numberOfForecastInEnsemble", &number_of_forecasts_in_ensemble_},
+
+        {2, "yearOfEndOfOverallTimeInterval", &year_of_end_of_overall_time_interval_},
+        {1, "monthOfEndOfOverallTimeInterval", &month_of_end_of_overall_time_interval_},
+        {1, "dayOfEndOfOverallTimeInterval", &day_of_end_of_overall_time_interval_},
+        {1, "hourOfEndOfOverallTimeInterval", &hour_of_end_of_overall_time_interval_},
+        {1, "minuteOfEndOfOverallTimeInterval", &minute_of_end_of_overall_time_interval_},
+        {1, "secondOfEndOfOverallTimeInterval", &second_of_end_of_overall_time_interval_},
+        {1, "numberOfTimeRange", &number_of_time_range_},
+        {4, "numberOfMissingInStatisticalProcess", &number_of_missing_statistical_process_},
+
+        {1, "typeOfStatisticalProcessing", &type_of_statistical_processing_},
+        {1, "typeOfTimeIncrement", &type_of_time_increment_},
+        {1, "indicatorOfUnitForTimeRange", &indicator_of_unit_for_time_range_},
+        {4, "lengthOfTimeRange", &length_of_time_range_},
+        {1, "indicatorOfUnitForTimeIncrement", &indicator_of_unit_for_time_increment_},
+        {4, "timeIncrement", &time_increment_},
     };
 
     for (auto& item : components) {
@@ -81,6 +97,11 @@ void Template_4_1::init() {
         {&type_of_second_fixed_surface_, "4.5"},
 
         {&type_of_ensemble_forecast_, "4.6"},
+
+        {&type_of_statistical_processing_, "4.10"},
+        {&type_of_time_increment_, "4.11"},
+        {&indicator_of_unit_for_time_range_, "4.4"},
+        {&indicator_of_unit_for_time_increment_, "4.4"}
     };
     for (const auto& item : tables_id) {
         std::get<0>(item)->setCodeTableId(std::get<1>(item));

@@ -1,4 +1,4 @@
-#include "step_range_property.h"
+#include "grib_property/computed/step_range_property.h"
 #include <grib_coder/grib_message_handler.h>
 
 #include <fmt/format.h>

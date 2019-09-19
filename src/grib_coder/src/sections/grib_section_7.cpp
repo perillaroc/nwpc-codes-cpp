@@ -1,4 +1,4 @@
-#include "grib_section_7.h"
+#include "grib_coder/sections/grib_section_7.h"
 
 #include <grib_property/property_component.h>
 

@@ -1,4 +1,4 @@
-#include "level_property.h"
+#include "grib_property/computed/level_property.h"
 #include <grib_coder/grib_message_handler.h>
 
 #include <fmt/format.h>

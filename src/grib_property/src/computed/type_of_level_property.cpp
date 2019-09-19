@@ -1,4 +1,4 @@
-#include "type_of_level_property.h"
+#include "grib_property/computed/type_of_level_property.h"
 #include <grib_coder/grib_message_handler.h>
 
 #include <map>

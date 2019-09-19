@@ -1,6 +1,6 @@
-#include "data_values_property.h"
+#include "grib_property/computed/data_values_property.h"
 #include <grib_coder/grib_message_handler.h>
-#include "openjpeg_decoder.h"
+#include "grib_property/computed/openjpeg_decoder.h"
 
 #include <fmt/format.h>
 
