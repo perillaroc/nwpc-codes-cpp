@@ -32,10 +32,11 @@ target_sources(grib_property
 
 
 target_include_directories(grib_property
-    PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/../
+	PUBLIC
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+		$<INSTALL_INTERFACE:include>
 		${OPENJPEG_INCLUDE_DIRS}
-        )
+)
 
 target_link_libraries(grib_property
 	PUBLIC
@@ -55,3 +56,10 @@ message("Use OpenJPEG dynamic")
 ENDIF()
 
 add_library(NwpcCodesCpp::GribProperty ALIAS grib_property)
+
+install(TARGETS grib_property EXPORT NwpcCodesCppTargets
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib
+	RUNTIME DESTINATION bin
+	INCLUDES DESTINATION include
+)

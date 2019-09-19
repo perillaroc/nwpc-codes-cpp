@@ -11,3 +11,10 @@ target_compile_definitions(vendor
 )
 
 add_library(NwpcCodesCpp::vendor ALIAS vendor)
+
+install(TARGETS vendor EXPORT NwpcCodesCppTargets
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib
+	RUNTIME DESTINATION bin
+	INCLUDES DESTINATION include
+)

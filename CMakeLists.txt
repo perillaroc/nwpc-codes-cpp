@@ -7,3 +7,10 @@ add_subdirectory(src)
 add_subdirectory(vendor)
 add_subdirectory(example)
 add_subdirectory(tool)
+
+install(EXPORT NwpcCodesCppTargets
+	FILE NwpcCodesCppTargets.cmake
+	NAMESPACE NwpcCodesCpp::
+	DESTINATION lib/cmake/NwpcCodesCpp
+
+)

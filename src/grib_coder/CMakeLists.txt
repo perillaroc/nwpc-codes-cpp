@@ -27,7 +27,8 @@ target_sources(grib_coder
 
 target_include_directories(grib_coder
 	PUBLIC
-		${CMAKE_CURRENT_SOURCE_DIR}/../
+		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../>
+		$<INSTALL_INTERFACE:include>
 		${OPENJPEG_INCLUDE_DIRS}
 )
 
@@ -37,3 +38,10 @@ target_link_libraries(grib_coder
 )
 
 add_library(NwpcCodesCpp::GribCoder ALIAS grib_coder)
+
+install(TARGETS grib_coder EXPORT NwpcCodesCppTargets
+	LIBRARY DESTINATION lib
+	ARCHIVE DESTINATION lib
+	RUNTIME DESTINATION bin
+	INCLUDES DESTINATION include
+)
