@@ -14,12 +14,8 @@ target_include_directories(tool_util
 
 target_link_libraries(tool_util
 	PUBLIC
-		NwpcCodesCpp::vendor
-)
-
-target_link_libraries(tool_util
-	PUBLIC
 		NwpcCodesCpp::GribCoder
+		CLI11::CLI11
 )
 
 add_library(NwpcCodesCpp::ToolUtil ALIAS tool_util)

@@ -37,13 +37,14 @@ target_include_directories(grib_property
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include/grib_property>
 		$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../grib_coder/include>
 		$<INSTALL_INTERFACE:include>
-		${OPENJPEG_INCLUDE_DIRS}
+		${GSL_INCLUDE_DIR}
 )
 
 target_link_libraries(grib_property
 	PUBLIC
-		${OPENJPEG_LIBRARIES}
-		NwpcCodesCpp::vendor
+		# GSL::GSL
+		openjp2
+		fmt::fmt-header-only
 )
 
 # OPTION(OPENJPEG_STATIC "Use static version of OpenJPEG" ON)
