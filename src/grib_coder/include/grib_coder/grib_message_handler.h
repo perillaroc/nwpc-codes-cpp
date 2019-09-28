@@ -1,16 +1,19 @@
 #pragma once
 
-#include <grib_coder/grib_section.h>
 #include <grib_property/grib_property_container.h>
 #include <grib_property/number_property.h>
 
+#include <unordered_map>
+
+
 namespace grib_coder {
 class GribTableDatabase;
+class GribSection;
 
 class GribMessageHandler : public GribPropertyContainer {
 public:
-    GribMessageHandler(std::shared_ptr<GribTableDatabase>& db, bool header_only = false);
-    ~GribMessageHandler() = default;
+    explicit GribMessageHandler(std::shared_ptr<GribTableDatabase>& db, bool header_only = false);
+    ~GribMessageHandler();
 
     void setCount(long count);
 

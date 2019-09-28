@@ -1,20 +1,10 @@
 #pragma once
 #include <grib_property/grib_property_container.h>
-
+#include <grib_property/config.h>
 
 namespace grib_coder {
 
 class GribMessageHandler;
-
-struct DumpConfig {
-    enum class DumpStyle {
-        WMO
-    };
-
-    DumpStyle style = DumpStyle::WMO;
-    int octet_column_length = 10;
-};
-
 
 class GribComponent : public GribPropertyContainer {
 public:

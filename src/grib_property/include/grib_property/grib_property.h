@@ -1,5 +1,9 @@
 #pragma once
-#include <grib_property/grib_component.h>
+#include <grib_property/config.h>
+
+#include <string>
+#include <vector>
+
 
 namespace grib_coder {
 
@@ -7,6 +11,8 @@ class GribMessageHandler;
 
 class GribProperty {
 public:
+    GribProperty() = default;
+    GribProperty(const GribProperty&) = default;
     virtual ~GribProperty() = default;
 
     virtual void setLong(long value);

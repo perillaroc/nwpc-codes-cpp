@@ -14,7 +14,6 @@
 
 #include <fmt/format.h>
 
-#include <memory>
 #include <stdexcept>
 
 namespace grib_coder {
@@ -24,6 +23,9 @@ GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase>& db, b
     table_database_{db} {
     property_map_["count"] = &count_;
     property_map_["offset"] = &offset_;
+}
+
+GribMessageHandler::~GribMessageHandler() {
 }
 
 void GribMessageHandler::setCount(long count) {
@@ -177,6 +179,8 @@ bool GribMessageHandler::parseNextSection(std::FILE* file) {
         section = std::make_shared<GribSection6>(section_length);
     } else if (section_number == 7) {
         section = std::make_shared<GribSection7>(section_length);
+    } else {
+        throw std::runtime_error(fmt::format("section number is not supported:{}", section_number));
     }
 
     // NOTE: where to put this line
@@ -214,15 +218,16 @@ auto GribMessageHandler::getSection(int section_number, size_t begin_pos) {
 }
 
 GribProperty* GribMessageHandler::getProperty(const std::string& name) {
+    for (auto& item : property_map_) {
+        if (std::get<0>(item) == name) {
+            return std::get<1>(item);
+        }
+    }
+
     for (auto& section : section_list_) {
         auto p = section->getProperty(name);
         if (p != nullptr) {
             return p;
-        }
-    }
-    for (auto& item : property_map_) {
-        if (std::get<0>(item) == name) {
-            return std::get<1>(item);
         }
     }
 
