@@ -19,9 +19,10 @@ bool Template_4_0::decode(GribMessageHandler* container) {
     const auto category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);
 
-    const auto number_table_id = fmt::format("4.2.{discipline}.{category}",
-                                             fmt::arg("discipline", discipline),
-                                             fmt::arg("category", parameter_category_.getLong()));
+    const auto number_table_id = fmt::format(
+        "4.2.{discipline}.{category}",
+        fmt::arg("discipline", discipline),
+        fmt::arg("category", parameter_category_.getLong()));
     parameter_number_.setCodeTableId(number_table_id);
 
     level_.decode(container);

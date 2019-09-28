@@ -10,13 +10,15 @@ class GribMessageHandler;
 
 class TemplateComponent : public GribComponent {
 public:
+    using GenerateFunction = std::function<void()>;
+
     TemplateComponent() = default;
-    explicit TemplateComponent(std::function<void()> generate_function);
+    explicit TemplateComponent(GenerateFunction generate_function);
 
     void setTemplate(std::unique_ptr<GribTemplate>&& grib_template);
-    void setGenerateFunction(std::function<void()> generate_function);
+    void setGenerateFunction(GenerateFunction generate_function);
 
-    // parse binary bytes read from grib message
+    // call GenerateFunction and parse binary bytes read from grib message
     bool parse(std::vector<std::byte>::const_iterator& iterator) override;
 
     bool decode(GribMessageHandler* handler) override;
@@ -38,7 +40,7 @@ public:
 private:
     long byte_count_ = 0;
 
-    std::function<void()> generate_function_;
+    GenerateFunction generate_function_;
     std::unique_ptr<GribTemplate> grib_template_;
 };
 

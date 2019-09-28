@@ -66,7 +66,7 @@ void GribSection4::init() {
     }
 
     product_definition_template_->setGenerateFunction(
-        [=]() {
+        [this]() {
             this->generateProductionDefinitionTemplate();
         });
     components_.push_back(std::unique_ptr<TemplateComponent>(product_definition_template_));

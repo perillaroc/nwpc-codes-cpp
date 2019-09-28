@@ -3,9 +3,10 @@
 #include <grib_property/grib_property.h>
 #include <grib_property/grib_table_database.h>
 
+
 namespace grib_coder {
 
-class CodeTableProperty : public GribProperty {
+class CodeTableProperty final: public GribProperty {
 public:
     void setTableDatabase(std::shared_ptr<GribTableDatabase> db);
     void setTablesVersion(const std::string& version);
@@ -19,6 +20,10 @@ public:
     void setString(const std::string& value) override;
     std::string getString() override;
 
+    /**
+     * \brief get title from table record. If table record is not available, load table using getTableRecord().
+     * \return table record title
+     */
     auto getTitle();
     auto getAbbreviation();
     auto getUnits();

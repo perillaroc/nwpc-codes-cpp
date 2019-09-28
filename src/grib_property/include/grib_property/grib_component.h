@@ -10,13 +10,13 @@ class GribComponent : public GribPropertyContainer {
 public:
     virtual long getByteCount() const = 0;
 
-    // parse binary bytes read from grib message
+    // parse binary bytes read from grib message.
     virtual bool parse(std::vector<std::byte>::const_iterator& iterator);
 
     // decode component using previous sections.
     virtual bool decode(GribMessageHandler* handler);
 
-    // dump component
+    // dump component to stdout
     virtual void dump(std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
 };
 

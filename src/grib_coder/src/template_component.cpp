@@ -4,7 +4,7 @@
 #include "grib_section.h"
 
 namespace grib_coder {
-TemplateComponent::TemplateComponent(std::function<void()> generate_function):
+TemplateComponent::TemplateComponent(GenerateFunction generate_function):
     generate_function_{std::move(generate_function)} {
 }
 
@@ -12,7 +12,7 @@ void TemplateComponent::setTemplate(std::unique_ptr<GribTemplate>&& grib_templat
     grib_template_ = std::move(grib_template);
 }
 
-void TemplateComponent::setGenerateFunction(std::function<void()> generate_function) {
+void TemplateComponent::setGenerateFunction(GenerateFunction generate_function) {
     generate_function_ = std::move(generate_function);
 }
 

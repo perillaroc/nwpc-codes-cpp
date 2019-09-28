@@ -4,6 +4,7 @@
 namespace grib_coder {
 
 class PropertyComponent final : public GribComponent {
+
 public:
     PropertyComponent(int byte_count, std::string property_name, GribProperty* property);
 
@@ -16,7 +17,6 @@ public:
     GribProperty* getProperty();
     std::string getPropertyName() const;
 
-    // parse binary bytes read from grib message
     bool parse(std::vector<std::byte>::const_iterator& iterator) override;
 
     bool decode(GribMessageHandler* handler) override;

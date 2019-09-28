@@ -1,10 +1,11 @@
 #include "grib_table_database.h"
 
 #include <cstdlib>
-#include <iostream>
 #include <fstream>
 #include <filesystem>
 #include <stdexcept>
+
+#include <fmt/format.h>
 
 std::string& trim(std::string& s) {
     if (s.empty()) {
@@ -21,7 +22,7 @@ namespace grib_coder {
 GribTableDatabase::GribTableDatabase() {
     const auto eccodes_env = std::getenv("ECCODES_DEFINITION_PATH");
     if (eccodes_env == nullptr) {
-        std::cerr << "Please set ECCODES_DEFINITION_PATH to use Grib Table Database." << std::endl;
+        fmt::print(stderr, "Please set ECCODES_DEFINITION_PATH to use Grib Table Database.\n");
     } else {
         eccodes_definition_path_.append(eccodes_env);
     }
@@ -48,7 +49,7 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
     std::ifstream table_stream;
     table_stream.open(table_path);
     if (!table_stream.is_open()) {
-        std::cerr << "table file " << name << " can't be opened." << std::endl;
+        fmt::print(stderr, "table file {} can't be opened.\n", name);
         tables_[table_name] = nullptr;
         return std::shared_ptr<GribTable>();
     }
@@ -63,8 +64,7 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
 
         GribTableRecord record;
 
-        size_t pos = 0;
-        pos = line.find_first_of(' ');
+        auto pos = line.find_first_of(' ');
         if (pos == std::string::npos) {
             continue;
         }
@@ -72,7 +72,7 @@ std::shared_ptr<GribTable> GribTableDatabase::loadGribTable(const std::string& t
         record.code_ = std::stoi(code_string);
 
         auto abbreviation_start_pos = pos + 1;
-        size_t abbreviation_end_pos = line.find_first_of(' ', abbreviation_start_pos);
+        const auto abbreviation_end_pos = line.find_first_of(' ', abbreviation_start_pos);
         if (abbreviation_end_pos == std::string::npos) {
             continue;
         }
