@@ -1,5 +1,5 @@
 if(GSL_INSTALL_PREFIX)
-    set(GSL_INCLUDE_HINTS ${ECCODES_INSTALL_PREFIX}/include)
+    set(GSL_INCLUDE_HINTS ${GSL_INSTALL_PREFIX})
 endif()
 
 find_path(
