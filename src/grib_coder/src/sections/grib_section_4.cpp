@@ -85,6 +85,10 @@ void GribSection4::init() {
 }
 
 void GribSection4::generateProductionTemplate(TemplateComponent* template_component) {
+    auto section = std::dynamic_pointer_cast<GribSection>(shared_from_this());
+
+    template_component->unregisterProperty(section);
+
     auto template_length = section_length_.getLong()- 9;
     template_component->setByteCount(template_length);
 
@@ -105,7 +109,7 @@ void GribSection4::generateProductionTemplate(TemplateComponent* template_compon
         throw std::runtime_error(
             fmt::format("template not implemented: {}", product_definition_template_number));
     }
-    template_component->registerProperty(std::dynamic_pointer_cast<GribSection>(shared_from_this()));
+    template_component->registerProperty(section);
 }
 
 } // namespace grib_coder
