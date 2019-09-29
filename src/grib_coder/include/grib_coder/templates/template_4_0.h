@@ -17,7 +17,7 @@ public:
 
     bool decode(GribMessageHandler* container) override;
 
-    void registerProperty(std::shared_ptr<GribSection> section) override;
+    void registerProperty(std::shared_ptr<GribSection> &section) override;
 
 private:
     void init();

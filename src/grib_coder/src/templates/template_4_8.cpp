@@ -33,7 +33,7 @@ bool Template_4_8::decode(GribMessageHandler* container) {
     return true;
 }
 
-void Template_4_8::registerProperty(std::shared_ptr<GribSection> section) {
+void Template_4_8::registerProperty(std::shared_ptr<GribSection> &section) {
     GribTemplate::registerProperty(section);
 
     const std::vector<std::tuple<std::string, GribProperty*>> properties = {

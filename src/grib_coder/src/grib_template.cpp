@@ -39,7 +39,7 @@ void GribTemplate::dumpTemplate(GribMessageHandler* message_handler, std::size_t
     }
 }
 
-void GribTemplate::registerProperty(std::shared_ptr<GribSection> section) {
+void GribTemplate::registerProperty(std::shared_ptr<GribSection> &section) {
     for (const auto& component : components_) {
         auto property_component = dynamic_cast<PropertyComponent*>(component.get());
         if (property_component) {
@@ -48,7 +48,7 @@ void GribTemplate::registerProperty(std::shared_ptr<GribSection> section) {
     }
 }
 
-void GribTemplate::unregisterProperty(std::shared_ptr<GribSection> section)
+void GribTemplate::unregisterProperty(std::shared_ptr<GribSection> &section)
 {
     for (const auto& component : components_) {
         const auto property_component = dynamic_cast<PropertyComponent*>(component.get());

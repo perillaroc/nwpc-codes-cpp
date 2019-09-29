@@ -22,6 +22,8 @@ public:
 
 private:
     void init();
+
+    // generate production template. used in TemplateCodeTableProperty.
     void generateProductionTemplate(TemplateComponent* template_component);
 
     NumberProperty<uint16_t> nv_;

@@ -6,8 +6,7 @@
 namespace grib_coder {
 
 TemplateComponent::TemplateComponent(TemplateCodeTableProperty& property):
-    TemplateComponent{}
-{
+    TemplateComponent{} {
     property.setTemplateComponent(this);
 }
 
@@ -24,20 +23,23 @@ bool TemplateComponent::decode(GribMessageHandler* handler) {
     return grib_template_->decode(handler);
 }
 
-void TemplateComponent::dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec,
-                                     const DumpConfig& dump_config) {
+void TemplateComponent::dumpTemplate(
+    GribMessageHandler* message_handler, 
+    std::size_t start_octec,
+    const DumpConfig& dump_config
+) {
     grib_template_->dumpTemplate(message_handler, start_octec, dump_config);
 }
 
-void TemplateComponent::registerProperty(std::shared_ptr<GribSection> section) {
-    grib_template_->registerProperty(std::move(section));
+void TemplateComponent::registerProperty(std::shared_ptr<GribSection> &section) {
+    grib_template_->registerProperty(section);
 }
 
-void TemplateComponent::unregisterProperty(std::shared_ptr<GribSection> section) {
+void TemplateComponent::unregisterProperty(std::shared_ptr<GribSection> &section) {
     if(grib_template_ == nullptr) {
         return;
     }
 
-    grib_template_->unregisterProperty(std::move(section));
+    grib_template_->unregisterProperty(section);
 }
 } // namespace grib_coder

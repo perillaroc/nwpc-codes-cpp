@@ -12,11 +12,12 @@ class GribMessageHandler;
 class TemplateComponent : public GribComponent {
 public:
     TemplateComponent() = default;
+
+    // create using default constructor and register itself to TemplateCodeTableProperty
     explicit TemplateComponent(TemplateCodeTableProperty& property);
 
     void setTemplate(std::unique_ptr<GribTemplate>&& grib_template);
 
-    // call GenerateFunction and parse binary bytes read from grib message
     bool parse(std::vector<std::byte>::const_iterator& iterator) override;
 
     bool decode(GribMessageHandler* handler) override;
@@ -24,8 +25,8 @@ public:
     void dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec,
                       const DumpConfig& dump_config = DumpConfig{});
 
-    void registerProperty(std::shared_ptr<GribSection> section);
-    void unregisterProperty(std::shared_ptr<GribSection> section);
+    void registerProperty(std::shared_ptr<GribSection> &section);
+    void unregisterProperty(std::shared_ptr<GribSection> &section);
 
     void setByteCount(long byte_count) {
         byte_count_ = byte_count;

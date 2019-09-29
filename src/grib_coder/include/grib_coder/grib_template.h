@@ -20,8 +20,8 @@ public:
     void dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec,
                       const DumpConfig& dump_config = DumpConfig{});
 
-    virtual void registerProperty(std::shared_ptr<GribSection> section);
-    virtual void unregisterProperty(std::shared_ptr<GribSection> section);
+    virtual void registerProperty(std::shared_ptr<GribSection> &section);
+    virtual void unregisterProperty(std::shared_ptr<GribSection> &section);
 
 protected:
     std::vector<std::unique_ptr<GribComponent>> components_;
