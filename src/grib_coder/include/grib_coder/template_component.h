@@ -1,5 +1,6 @@
 #pragma once
 #include <grib_property/grib_component.h>
+#include <grib_coder/template_code_table_property.h>
 
 #include <functional>
 
@@ -10,13 +11,10 @@ class GribMessageHandler;
 
 class TemplateComponent : public GribComponent {
 public:
-    using GenerateFunction = std::function<void()>;
-
     TemplateComponent() = default;
-    explicit TemplateComponent(GenerateFunction generate_function);
+    explicit TemplateComponent(TemplateCodeTableProperty& property);
 
     void setTemplate(std::unique_ptr<GribTemplate>&& grib_template);
-    void setGenerateFunction(GenerateFunction generate_function);
 
     // call GenerateFunction and parse binary bytes read from grib message
     bool parse(std::vector<std::byte>::const_iterator& iterator) override;
@@ -40,7 +38,6 @@ public:
 private:
     long byte_count_ = 0;
 
-    GenerateFunction generate_function_;
     std::unique_ptr<GribTemplate> grib_template_;
 };
 

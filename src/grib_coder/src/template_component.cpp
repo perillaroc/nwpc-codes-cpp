@@ -4,20 +4,19 @@
 #include "grib_section.h"
 
 namespace grib_coder {
-TemplateComponent::TemplateComponent(GenerateFunction generate_function):
-    generate_function_{std::move(generate_function)} {
+
+TemplateComponent::TemplateComponent(TemplateCodeTableProperty& property):
+    TemplateComponent{}
+{
+    property.setTemplateComponent(this);
 }
 
 void TemplateComponent::setTemplate(std::unique_ptr<GribTemplate>&& grib_template) {
     grib_template_ = std::move(grib_template);
 }
 
-void TemplateComponent::setGenerateFunction(GenerateFunction generate_function) {
-    generate_function_ = std::move(generate_function);
-}
 
 bool TemplateComponent::parse(std::vector<std::byte>::const_iterator& iterator) {
-    generate_function_();
     return grib_template_->parse(iterator);;
 }
 

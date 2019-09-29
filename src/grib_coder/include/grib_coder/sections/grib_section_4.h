@@ -1,10 +1,8 @@
 #pragma once
 
-#include "grib_coder/grib_section.h"
-#include "grib_coder/template_component.h"
-
-#include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
+#include <grib_coder/grib_section.h>
+#include <grib_coder/template_code_table_property.h>
 
 #include <cstdint>
 
@@ -16,7 +14,7 @@ class GribSection4 : public GribSection {
 public:
     GribSection4();
     explicit GribSection4(int section_length);
-    ~GribSection4() = default;
+    ~GribSection4();
 
     bool parseFile(std::FILE* file, bool header_only = false) override;
 
@@ -24,13 +22,10 @@ public:
 
 private:
     void init();
-
-    void generateProductionDefinitionTemplate();
+    void generateProductionTemplate(TemplateComponent* template_component);
 
     NumberProperty<uint16_t> nv_;
-    CodeTableProperty product_definition_template_number_;
-
-    TemplateComponent* product_definition_template_ = nullptr;
+    TemplateCodeTableProperty product_definition_template_number_;
 };
 
 } // namespace grib_coder

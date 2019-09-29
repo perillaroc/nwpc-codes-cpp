@@ -6,7 +6,7 @@
 
 namespace grib_coder {
 
-class CodeTableProperty final: public GribProperty {
+class CodeTableProperty: public GribProperty {
 public:
     void setTableDatabase(std::shared_ptr<GribTableDatabase> db);
     void setTablesVersion(const std::string& version);

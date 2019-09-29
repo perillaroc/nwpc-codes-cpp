@@ -11,6 +11,7 @@ target_sources(grib_coder
 		src/grib_section.cpp
 		src/grib_template.cpp
 		src/template_component.cpp
+		src/template_code_table_property.cpp
 		src/sections/grib_section_0.cpp
 		src/sections/grib_section_1.cpp
 		src/sections/grib_section_3.cpp
