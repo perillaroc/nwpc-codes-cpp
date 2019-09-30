@@ -90,7 +90,6 @@ void GribSection4::generateProductionTemplate(TemplateComponent* template_compon
     template_component->unregisterProperty(section);
 
     auto template_length = section_length_.getLong()- 9;
-    template_component->setByteCount(template_length);
 
     auto product_definition_template_number = product_definition_template_number_.getLong();
     if (product_definition_template_number == 0) {

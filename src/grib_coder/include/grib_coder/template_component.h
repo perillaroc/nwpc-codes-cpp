@@ -28,13 +28,7 @@ public:
     void registerProperty(std::shared_ptr<GribSection> &section);
     void unregisterProperty(std::shared_ptr<GribSection> &section);
 
-    void setByteCount(long byte_count) {
-        byte_count_ = byte_count;
-    }
-
-    long getByteCount() const override {
-        return byte_count_;
-    }
+    long getByteCount() const override;
 
 private:
     long byte_count_ = 0;

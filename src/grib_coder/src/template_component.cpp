@@ -42,4 +42,8 @@ void TemplateComponent::unregisterProperty(std::shared_ptr<GribSection> &section
 
     grib_template_->unregisterProperty(section);
 }
+
+long TemplateComponent::getByteCount() const {
+    return grib_template_->getByteCount();
+}
 } // namespace grib_coder
