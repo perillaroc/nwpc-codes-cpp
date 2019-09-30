@@ -154,6 +154,15 @@ void GribMessageHandler::dump(const DumpConfig& dump_config) {
     }
 }
 
+bool GribMessageHandler::packFile(std::FILE* file) {
+    std::vector<std::byte> bytes;
+    auto iterator = std::back_inserter(bytes);
+    for (const auto& section : section_list_) {
+        section->pack(iterator);
+    }
+    return true;
+}
+
 bool GribMessageHandler::parseNextSection(std::FILE* file) {
     std::byte buffer[5];
     const auto result = std::fread(buffer, 1, 5, file);

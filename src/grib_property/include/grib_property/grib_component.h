@@ -13,11 +13,16 @@ public:
     // parse binary bytes read from grib message.
     virtual bool parse(std::vector<std::byte>::const_iterator& iterator);
 
-    // decode component using previous sections.
+    // decode component using previous sections, such as
+    //  - computed properties
+    //  - some code tables which rely on other code tables.
     virtual bool decode(GribMessageHandler* handler);
 
     // dump component to stdout
     virtual void dump(std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
+
+    // pack component into bytes vector for output
+    virtual void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator);
 };
 
 } // namespace grib_coder

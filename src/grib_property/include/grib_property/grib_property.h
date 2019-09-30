@@ -32,6 +32,8 @@ public:
     virtual bool decode(GribMessageHandler* handler);
 
     virtual void dump(const DumpConfig& dump_config);
+
+    virtual void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator);
 };
 
 } // namespace grib_coder

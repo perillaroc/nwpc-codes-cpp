@@ -19,6 +19,7 @@ public:
 
     virtual ~GribSection() = default;
 
+    // property
     void setLong(const std::string& key, long value) override;
     long getLong(const std::string& key) override;
 
@@ -33,23 +34,27 @@ public:
 
     bool hasProperty(const std::string& key) override;
 
+    GribProperty* getProperty(const std::string& name);
+
+    void registerProperty(const std::string& name, GribProperty* property);
+    void unregisterProperty(const std::string& name);
+
+    // section length and number
     void setSectionLength(long length);
     long getSectionLength() const;
     long getByteCount() const override;
 
     int getSectionNumber() const;
 
+    // parse and dump
     virtual bool parseFile(std::FILE* file, bool header_only = false) = 0;
 
     bool decode(GribMessageHandler* handler) override;
 
-    GribProperty* getProperty(const std::string& name);
-
-    void registerProperty(const std::string& name, GribProperty* property);
-    void unregisterProperty(const std::string& name);
-
     void dumpSection(GribMessageHandler* message_handler, std::size_t start_octec,
                      const DumpConfig& dump_config = DumpConfig{});
+
+    void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
 
 protected:
     std::vector<std::unique_ptr<GribComponent>> components_;

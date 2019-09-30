@@ -28,16 +28,16 @@ public:
     auto getAbbreviation();
     auto getUnits();
 
+    auto getValue() const {
+        return value_;
+    }
+
     void setCodeTableId(const std::string& code_table_id);
     void setOctetCount(size_t count);
 
     bool parse(std::vector<std::byte>::const_iterator& iterator, size_t count = 1) override;
 
     void dump(const DumpConfig& dump_config) override;
-
-    auto getValue() const {
-        return value_;
-    }
 
 private:
     std::optional<GribTableRecord> getTableRecord();

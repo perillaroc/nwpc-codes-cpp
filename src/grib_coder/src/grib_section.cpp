@@ -164,6 +164,12 @@ void GribSection::dumpSection(GribMessageHandler* message_handler, std::size_t s
     }
 }
 
+void GribSection::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
+    for(auto& component: components_) {
+        component->pack(iterator);
+    }
+}
+
 GribProperty* get_property_from_section_list(
     const std::string& name, std::vector<std::shared_ptr<GribSection>>& section_list) {
     for (auto iter = std::rbegin(section_list); iter != std::rend(section_list); ++iter) {

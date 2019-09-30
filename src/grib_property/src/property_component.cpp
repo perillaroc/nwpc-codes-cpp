@@ -49,5 +49,9 @@ void PropertyComponent::dump(std::size_t start_octec, const DumpConfig& dump_con
     fmt::print("\n");
 }
 
+void PropertyComponent::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
+    property_->pack(iterator);
+}
+
 
 } // namespace grib_coder

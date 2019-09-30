@@ -15,10 +15,17 @@ public:
     explicit GribMessageHandler(std::shared_ptr<GribTableDatabase>& db, bool header_only = false);
     ~GribMessageHandler();
 
-    void setCount(long count);
+    // parse, dump and pack
 
     bool parseFile(std::FILE* file);
     bool decodeValues();
+
+    void dump(const DumpConfig& dump_config = DumpConfig{});
+
+    bool packFile(std::FILE* file);
+
+    // properties
+    void setCount(long count);
 
     void setLong(const std::string& key, long value) override;
     long getLong(const std::string& key) override;
@@ -34,8 +41,6 @@ public:
 
     template <typename T>
     T get(const std::string& key);
-
-    void dump(const DumpConfig& dump_config = DumpConfig{});
 
     GribProperty* getProperty(const std::string& name);
 

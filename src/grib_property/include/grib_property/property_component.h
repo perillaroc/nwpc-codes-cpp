@@ -23,6 +23,8 @@ public:
 
     void dump(std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{}) override;
 
+    void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
+
 private:
     long byte_count_ = 1;
     std::string property_name_;

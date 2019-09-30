@@ -49,4 +49,8 @@ void GribProperty::dump(const DumpConfig& dump_config) {
     fmt::print("not implemented");
 }
 
+void GribProperty::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
+    throw std::runtime_error("GribProperty::pack() is not implemented");
+}
+
 } // namespace grib_coder
