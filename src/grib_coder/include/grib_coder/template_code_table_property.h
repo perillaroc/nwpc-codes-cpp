@@ -18,6 +18,10 @@ public:
     // parse CodeTableProperty and create template in TemplateComponent using GenerateFunction
     bool parse(std::vector<std::byte>::const_iterator& iterator, size_t count = 1) override;
 
+    void setLong(long value) override;
+
+    void setDouble(double value) override;
+
 private:
     GenerateFunction generate_function_;
     TemplateComponent* template_component_ = nullptr;

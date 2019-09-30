@@ -1,5 +1,7 @@
 #include "template_code_table_property.h"
 
+#include <stdexcept>
+
 namespace grib_coder {
 
 void TemplateCodeTableProperty::setGenerateFunction(const GenerateFunction &generate_function) {
@@ -21,5 +23,21 @@ bool TemplateCodeTableProperty::parse(std::vector<std::byte>::const_iterator& it
     generate_function_(template_component_);
 
     return true;
+}
+
+void TemplateCodeTableProperty::setLong(long value) {
+    CodeTableProperty::setLong(value);
+    if(template_component_==nullptr) {
+        throw std::runtime_error("template component must be set.");
+    }
+    generate_function_(template_component_);
+}
+
+void TemplateCodeTableProperty::setDouble(double value) {
+    CodeTableProperty::setDouble(value);
+    if (template_component_ == nullptr) {
+        throw std::runtime_error("template component must be set.");
+    }
+    generate_function_(template_component_);
 }
 } // namespace
