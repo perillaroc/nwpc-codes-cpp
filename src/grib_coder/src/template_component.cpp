@@ -31,6 +31,10 @@ void TemplateComponent::dumpTemplate(
     grib_template_->dumpTemplate(message_handler, start_octec, dump_config);
 }
 
+void TemplateComponent::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
+    grib_template_->pack(iterator);
+}
+
 void TemplateComponent::registerProperty(std::shared_ptr<GribSection> &section) {
     grib_template_->registerProperty(section);
 }

@@ -110,6 +110,20 @@ void CodeTableProperty::dump(const DumpConfig& dump_config) {
     fmt::print("{} [{} ({}) ]", getLong(), getString(), code_table_id_);
 }
 
+void CodeTableProperty::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
+    if (octet_count_ == 1) {
+        auto bytes = convert_uint8_to_bytes(static_cast<uint8_t>(value_));
+        std::copy(std::begin(bytes), std::end(bytes), iterator);
+    }
+    else if (octet_count_ == 2) {
+        auto bytes = convert_uint16_to_bytes(static_cast<uint16_t>(value_));
+        std::copy(std::begin(bytes), std::end(bytes), iterator);
+    }
+    else {
+        throw std::runtime_error("count is not supported");
+    }
+}
+
 std::optional<GribTableRecord> CodeTableProperty::getTableRecord() {
     auto table = table_database_->getGribTable(tables_version_, code_table_id_);
     if (!table) {

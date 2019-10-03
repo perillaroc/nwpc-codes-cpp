@@ -61,6 +61,11 @@ public:
         fmt::print("{}", value_);
     }
 
+    void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override {
+        auto bytes = convert_number_to_bytes(value_);
+        std::copy(std::begin(bytes), std::end(bytes), iterator);
+    }
+
 private:
     T value_;
 };

@@ -76,4 +76,50 @@ inline float convert_bytes_to_number(const std::byte* bytes) {
     return convert_bytes_to_float(bytes);
 }
 
+
+template <typename T>
+std::vector<std::byte> convert_number_to_bytes(T value) {
+    throw std::runtime_error("not implemented");
+}
+
+template <>
+inline std::vector<std::byte> convert_number_to_bytes(uint8_t value) {
+    return convert_uint8_to_bytes(value);
+}
+
+template <>
+inline std::vector<std::byte> convert_number_to_bytes(int8_t value) {
+    return convert_int8_to_bytes(value);
+}
+
+template <>
+inline std::vector<std::byte> convert_number_to_bytes(uint16_t value) {
+    return convert_uint16_to_bytes(value);
+}
+
+template <>
+inline std::vector<std::byte> convert_number_to_bytes(int16_t value) {
+    return convert_int16_to_bytes(value);
+}
+
+template <>
+inline std::vector<std::byte> convert_number_to_bytes(uint32_t value) {
+    return convert_uint32_to_bytes(value);
+}
+
+template <>
+inline std::vector<std::byte> convert_number_to_bytes(int32_t value) {
+    return convert_int32_to_bytes(value);
+}
+
+template <>
+inline std::vector<std::byte> convert_number_to_bytes(uint64_t value) {
+    return convert_uint64_to_bytes(value);
+}
+
+template <>
+inline std::vector<std::byte> convert_number_to_bytes(float value) {
+    return convert_float_to_bytes(value);
+}
+
 } // namespace grib_coder

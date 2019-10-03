@@ -17,6 +17,8 @@ public:
 
     void dump(const DumpConfig& dump_config) override;
 
+    void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
+
 private:
     std::string value_;
     int length_ = 0;

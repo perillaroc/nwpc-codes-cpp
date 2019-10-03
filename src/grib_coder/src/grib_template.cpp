@@ -39,6 +39,12 @@ void GribTemplate::dumpTemplate(GribMessageHandler* message_handler, std::size_t
     }
 }
 
+void GribTemplate::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
+    for (auto& component : components_) {
+        component->pack(iterator);
+    }
+}
+
 void GribTemplate::registerProperty(std::shared_ptr<GribSection> &section) {
     for (const auto& component : components_) {
         auto property_component = dynamic_cast<PropertyComponent*>(component.get());

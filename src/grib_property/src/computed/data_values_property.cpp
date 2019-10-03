@@ -51,4 +51,8 @@ void DataValuesProperty::dump(const DumpConfig& dump_config) {
     }
 }
 
+void DataValuesProperty::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
+    // TODO
+}
+
 } // namespace grib_coder

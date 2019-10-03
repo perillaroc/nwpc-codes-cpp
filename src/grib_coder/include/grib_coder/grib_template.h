@@ -20,6 +20,8 @@ public:
     void dumpTemplate(GribMessageHandler* message_handler, std::size_t start_octec,
                       const DumpConfig& dump_config = DumpConfig{});
 
+    void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
+
     virtual void registerProperty(std::shared_ptr<GribSection> &section);
     virtual void unregisterProperty(std::shared_ptr<GribSection> &section);
 
