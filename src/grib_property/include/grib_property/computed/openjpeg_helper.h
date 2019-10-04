@@ -5,17 +5,20 @@
 struct j2k_encode_helper {
     size_t buffer_size;
 
-    long width;
-    long height;
-    long bits_per_value;
+    long width;     // ni
+    long height;    // nj
+    long bits_per_value;    // bits_per_value
+    
+    // type_of_compression_used:
+    //  false: 0 (target_compression_ratio == 255)
+    //  true: target_compression_ratio (target_compression_ratio != 0 or 255)
+    float compression;  
 
-    float compression;
-
-    long no_values;
-    const double* values;
-    double reference_value;
-    double divisor;
-    double decimal;
+    long no_values;     // number of values
+    const double* values;   // original values
+    double reference_value;     // reference value
+    double divisor;     // 2^(-binary_scale_factor)
+    double decimal;     // 10^(decimal_scale_factor)
 
     long jpeg_length;
     unsigned char* jpeg_buffer;

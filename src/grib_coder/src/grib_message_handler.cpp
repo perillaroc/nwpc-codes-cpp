@@ -154,6 +154,18 @@ void GribMessageHandler::dump(const DumpConfig& dump_config) {
     }
 }
 
+bool GribMessageHandler::encodeValues() {
+    for (auto& section : section_list_) {
+        if (section->getSectionNumber() == 7) {
+            auto section7 = std::static_pointer_cast<GribSection7>(section);
+            if (!section7->encodeValues(this)) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 bool GribMessageHandler::packFile(std::FILE* file) {
     for(auto iter=std::rbegin(section_list_); iter !=std::rend(section_list_); ++iter ) {
         (*iter)->encode(this);
@@ -164,6 +176,9 @@ bool GribMessageHandler::packFile(std::FILE* file) {
     for (const auto& section : section_list_) {
         section->pack(iterator);
     }
+
+    std::fwrite(&bytes[0], 1, bytes.size(), file);
+
     return true;
 }
 

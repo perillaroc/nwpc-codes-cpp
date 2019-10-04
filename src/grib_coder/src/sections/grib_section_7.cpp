@@ -53,12 +53,21 @@ bool GribSection7::decodeValues(GribMessageHandler* container) {
     return data_values_.decodeValues(container);
 }
 
+bool GribSection7::encodeValues(GribMessageHandler* container) {
+    return data_values_.encodeValues(container);
+}
+
+bool GribSection7::encode(GribMessageHandler* handler) {
+    encodeValues(handler);
+    return GribSection::encode(handler);
+}
+
 void GribSection7::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
     GribSection::pack(iterator);
 }
 
 void GribSection7::updateSectionLength() {
-    section_length_ = 5;
+    section_length_ = 5 + data_values_.getByteCount();
 }
 
 void GribSection7::init() {

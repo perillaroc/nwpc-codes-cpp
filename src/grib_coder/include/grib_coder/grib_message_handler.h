@@ -18,9 +18,12 @@ public:
     // parse, dump and pack
 
     bool parseFile(std::FILE* file);
+
     bool decodeValues();
 
     void dump(const DumpConfig& dump_config = DumpConfig{});
+
+    bool encodeValues();
 
     bool packFile(std::FILE* file);
 
