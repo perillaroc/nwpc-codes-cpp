@@ -42,11 +42,12 @@ public:
     // section length and number
     void setSectionLength(long length);
     long getSectionLength() const;
+
     long getByteCount() const override;
 
     int getSectionNumber() const;
 
-    // parse and dump
+    // parse, dump and pack
     virtual bool parseFile(std::FILE* file, bool header_only = false) = 0;
 
     bool decode(GribMessageHandler* handler) override;
@@ -54,15 +55,19 @@ public:
     void dumpSection(GribMessageHandler* message_handler, std::size_t start_octec,
                      const DumpConfig& dump_config = DumpConfig{});
 
+    bool encode(GribMessageHandler* handler) override;
+
     void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
+
+    virtual void updateSectionLength();
 
 protected:
     std::vector<std::unique_ptr<GribComponent>> components_;
 
     std::unordered_map<std::string, GribProperty*> property_map_;
 
-    NumberProperty<int> section_number_;
-    NumberProperty<uint64_t> section_length_;
+    NumberProperty<uint8_t> section_number_;
+    NumberProperty<uint32_t> section_length_;
 };
 
 GribProperty* get_property_from_section_list(

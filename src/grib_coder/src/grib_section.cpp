@@ -164,10 +164,23 @@ void GribSection::dumpSection(GribMessageHandler* message_handler, std::size_t s
     }
 }
 
+bool GribSection::encode(GribMessageHandler* handler) {
+    updateSectionLength();
+    return true;
+}
+
 void GribSection::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
     for(auto& component: components_) {
         component->pack(iterator);
     }
+}
+
+void GribSection::updateSectionLength() {
+    long section_length = 0;
+    for (auto& component : components_) {
+        section_length += component->getByteCount();
+    }
+    section_length_.setLong(section_length);
 }
 
 GribProperty* get_property_from_section_list(

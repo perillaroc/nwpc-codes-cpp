@@ -155,12 +155,24 @@ void GribMessageHandler::dump(const DumpConfig& dump_config) {
 }
 
 bool GribMessageHandler::packFile(std::FILE* file) {
+    for(auto iter=std::rbegin(section_list_); iter !=std::rend(section_list_); ++iter ) {
+        (*iter)->encode(this);
+    }
+
     std::vector<std::byte> bytes;
     auto iterator = std::back_inserter(bytes);
     for (const auto& section : section_list_) {
         section->pack(iterator);
     }
     return true;
+}
+
+long GribMessageHandler::calculateTotalLength() const {
+    long total_length = 0;
+    for (auto& section : section_list_) {
+        total_length += section->getByteCount();
+    }
+    return total_length;
 }
 
 bool GribMessageHandler::parseNextSection(std::FILE* file) {

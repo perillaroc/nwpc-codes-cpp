@@ -53,6 +53,14 @@ bool GribSection7::decodeValues(GribMessageHandler* container) {
     return data_values_.decodeValues(container);
 }
 
+void GribSection7::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
+    GribSection::pack(iterator);
+}
+
+void GribSection7::updateSectionLength() {
+    section_length_ = 5;
+}
+
 void GribSection7::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
         {4, "section7Length", &section_length_},

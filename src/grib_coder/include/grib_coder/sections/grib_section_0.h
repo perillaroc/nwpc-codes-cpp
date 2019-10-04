@@ -17,6 +17,8 @@ public:
 
     bool parseFile(std::FILE* file, bool header_only = false) override;
 
+    bool encode(GribMessageHandler* handler) override;
+
 private:
     void init();
 

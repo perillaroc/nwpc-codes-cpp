@@ -21,8 +21,12 @@ public:
     // dump component to stdout
     virtual void dump(std::size_t start_octec, const DumpConfig& dump_config = DumpConfig{});
 
+    // encode component using all sections.
+    virtual bool encode(GribMessageHandler* handler);
+
     // pack component into bytes vector for output
     virtual void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator);
+
 };
 
 } // namespace grib_coder

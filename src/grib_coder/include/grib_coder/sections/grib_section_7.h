@@ -17,6 +17,11 @@ public:
 
     bool decodeValues(GribMessageHandler* container);
 
+    void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
+
+    // TODO: just for test
+    void updateSectionLength() override;
+
 private:
     void init();
 

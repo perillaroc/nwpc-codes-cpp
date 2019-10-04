@@ -48,6 +48,8 @@ public:
         return table_database_;
     }
 
+    long calculateTotalLength() const;
+
 private:
     bool parseNextSection(std::FILE* file);
 

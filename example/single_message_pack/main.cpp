@@ -13,6 +13,8 @@ int main() {
 
     auto message_handler = handler.next();
 
+    message_handler->dump();
+
     std::fclose(f);
 
     auto output_file = std::fopen(output_grib_file_path.c_str(), "wb");

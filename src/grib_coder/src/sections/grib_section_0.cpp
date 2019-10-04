@@ -2,6 +2,7 @@
 
 #include <grib_property/number_convert.h>
 #include <grib_property/property_component.h>
+#include <grib_coder/grib_message_handler.h>
 
 #include <tuple>
 
@@ -24,6 +25,11 @@ bool GribSection0::parseFile(std::FILE* file, bool header_only) {
         component->parse(iterator);
     }
 
+    return true;
+}
+
+bool GribSection0::encode(GribMessageHandler* handler) {
+    total_length_.setLong(handler->calculateTotalLength());
     return true;
 }
 
