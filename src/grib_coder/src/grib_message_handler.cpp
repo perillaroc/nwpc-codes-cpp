@@ -196,8 +196,8 @@ bool GribMessageHandler::parseNextSection(std::FILE* file) {
     if (result != 5) {
         return false;
     }
-    const auto section_length = convert_bytes_to_uint32(buffer, 4);
-    const auto section_number = convert_bytes_to_uint8(&buffer[4]);
+    const auto section_length = convert_bytes_to_number<uint32_t>(buffer);
+    const auto section_number = convert_bytes_to_number<uint8_t>(&buffer[4]);
 
     std::shared_ptr<GribSection> section;
 

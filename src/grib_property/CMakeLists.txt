@@ -18,7 +18,6 @@ target_sources(grib_property
 		src/grib_property_container.cpp
         src/code_table_property.cpp
 		src/string_property.cpp
-		src/number_convert.cpp
 		src/computed/openjpeg_helper.cpp
 		src/computed/openjpeg_decoder.cpp
 		src/computed/data_values_property.cpp
