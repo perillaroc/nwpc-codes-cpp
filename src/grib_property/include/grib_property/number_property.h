@@ -4,6 +4,7 @@
 #include <grib_property/number_convert.h>
 
 #include <fmt/format.h>
+#include <limits>
 
 namespace grib_coder {
 
@@ -58,7 +59,14 @@ public:
     }
 
     void dump(const DumpConfig& dump_config) override {
-        fmt::print("{}", value_);
+        //TODO: check signed number
+        if(std::numeric_limits<T>::is_signed && value_ == std::numeric_limits<T>::min()) {
+            fmt::print("{}(MISSING)", value_);
+        } else if(value_ == std::numeric_limits<T>::max()) {
+            fmt::print("{}(MISSING)", value_);
+        } else {
+            fmt::print("{}", value_);
+        }
     }
 
     void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override {

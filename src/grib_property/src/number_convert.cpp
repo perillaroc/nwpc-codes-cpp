@@ -85,7 +85,7 @@ uint16_t convert_bytes_to_uint16(const std::byte* bytes, size_t length) {
 
 std::vector<std::byte> convert_uint16_to_bytes(uint16_t value) {
     std::vector<std::byte> bytes(2);
-    bytes[0] = static_cast<std::byte>((value & 0x00FF) >> 8);
+    bytes[0] = static_cast<std::byte>((value & 0xFF00) >> 8);
     bytes[1] = static_cast<std::byte>((value & 0xFF));
     return bytes;
 }
