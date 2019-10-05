@@ -11,8 +11,6 @@ public:
     GribSection5();
     explicit GribSection5(int section_length);
 
-    ~GribSection5() = default;
-
     bool parseFile(std::FILE* file, bool header_only = false) override;
 
     bool decode(GribMessageHandler* container) override;

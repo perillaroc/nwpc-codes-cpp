@@ -7,8 +7,13 @@ class GribTableDatabase;
 class GribFileHandler {
 public:
     explicit GribFileHandler(std::FILE* file, bool header_only = false);
-
     ~GribFileHandler() = default;
+
+    GribFileHandler(GribFileHandler&& handler) = default;
+    GribFileHandler& operator= (GribFileHandler&&) = default;
+
+    GribFileHandler(const GribFileHandler & handler) = delete;
+    GribFileHandler& operator= (GribFileHandler) = delete;
 
     // parse the next grib message, return nullptr if no message is available.
     std::unique_ptr<GribMessageHandler> next();

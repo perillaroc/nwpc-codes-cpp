@@ -19,6 +19,11 @@ public:
 
     virtual ~GribSection() = default;
 
+    GribSection(GribSection&&) = default;
+    GribSection& operator= (GribSection&&) = default;
+
+    GribSection(const GribSection&) = delete;
+
     // property
     void setLong(const std::string& key, long value) override;
     long getLong(const std::string& key) override;

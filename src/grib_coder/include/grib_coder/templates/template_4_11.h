@@ -13,8 +13,6 @@ class Template_4_11 : public GribTemplate {
 public:
     Template_4_11(int template_length);
 
-    ~Template_4_11() = default;
-
     bool decode(GribMessageHandler* container) override;
 
     void registerProperty(std::shared_ptr<GribSection> &section) override;

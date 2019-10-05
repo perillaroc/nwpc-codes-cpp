@@ -11,6 +11,12 @@ public:
     explicit GribTemplate(int template_length);
     virtual ~GribTemplate() = default;
 
+    GribTemplate(GribTemplate&&) = default;
+    GribTemplate& operator= (GribTemplate&&) = default;
+
+    GribTemplate(const GribTemplate&) = delete;
+    GribTemplate& operator= (GribTemplate) = delete;
+
     long getByteCount() const override {
         return template_length_;
     }

@@ -10,10 +10,16 @@ namespace grib_coder {
 class GribTableDatabase;
 class GribSection;
 
-class GribMessageHandler : public GribPropertyContainer {
+class GribMessageHandler final: public GribPropertyContainer {
 public:
     explicit GribMessageHandler(std::shared_ptr<GribTableDatabase>& db, bool header_only = false);
     ~GribMessageHandler();
+
+    GribMessageHandler(GribMessageHandler&&) = default;
+    GribMessageHandler& operator= (GribMessageHandler&&) = default;
+
+    GribMessageHandler(const GribMessageHandler&) = delete;
+    GribMessageHandler& operator= (GribMessageHandler) = delete;
 
     // parse, dump and pack
 

@@ -24,9 +24,6 @@ GribSection4::GribSection4(int section_length):
     init();
 }
 
-GribSection4::~GribSection4() {
-}
-
 bool GribSection4::parseFile(std::FILE* file, bool header_only) {
     const auto buffer_length = section_length_ - 5;
     std::vector<std::byte> buffer(section_length_);

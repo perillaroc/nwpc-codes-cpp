@@ -8,7 +8,6 @@ class GribSection6 : public GribSection {
 public:
     GribSection6();
     explicit GribSection6(int section_length);
-    ~GribSection6() = default;
 
     bool parseFile(std::FILE* file, bool header_only = false) override;
 
