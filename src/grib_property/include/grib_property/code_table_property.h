@@ -11,13 +11,19 @@ public:
     void setTableDatabase(std::shared_ptr<GribTableDatabase> db);
     void setTablesVersion(const std::string& version);
 
+    void setCodeTableId(const std::string& code_table_id);
+
+    void setByteCount(size_t count);
+
     void setLong(long value) override;
     long getLong() override;
 
     void setDouble(double value) override;
     double getDouble() override;
 
-    void setString(const std::string& value) override;
+    void setString(const std::string& value) override {
+        GribProperty::setString(value);
+    };
     std::string getString() override;
 
     /**
@@ -31,10 +37,7 @@ public:
     auto getValue() const {
         return value_;
     }
-
-    void setCodeTableId(const std::string& code_table_id);
-    void setOctetCount(size_t count);
-
+    
     bool parse(std::vector<std::byte>::const_iterator& iterator, size_t count = 1) override;
 
     void dump(const DumpConfig& dump_config) override;
@@ -45,7 +48,7 @@ private:
     std::optional<GribTableRecord> getTableRecord();
 
     std::string code_table_id_ = "";
-    size_t octet_count_ = 1;
+    size_t byte_count_ = 1;
     long value_ = 255;
 
     std::string tables_version_;

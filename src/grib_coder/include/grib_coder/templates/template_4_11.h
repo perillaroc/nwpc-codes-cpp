@@ -1,5 +1,5 @@
 #pragma once
-#include "grib_coder/grib_template.h"
+#include <grib_coder/grib_template.h>
 
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>

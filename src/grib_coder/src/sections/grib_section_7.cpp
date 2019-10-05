@@ -66,10 +66,6 @@ void GribSection7::pack(std::back_insert_iterator<std::vector<std::byte>>& itera
     GribSection::pack(iterator);
 }
 
-void GribSection7::updateSectionLength() {
-    section_length_ = 5 + data_values_.getByteCount();
-}
-
 void GribSection7::init() {
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
         {4, "section7Length", &section_length_},
@@ -92,4 +88,9 @@ void GribSection7::init() {
         registerProperty(std::get<0>(item), std::get<1>(item));
     }
 }
+
+void GribSection7::updateSectionLength() {
+    section_length_ = 5 + data_values_.getByteCount();
+}
+
 } // grib_coder

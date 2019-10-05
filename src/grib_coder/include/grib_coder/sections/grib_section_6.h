@@ -1,9 +1,6 @@
 #pragma once
 
-#include "grib_coder/grib_section.h"
-#include <grib_property/number_property.h>
-
-#include <cstdint>
+#include <grib_coder/grib_section.h>
 
 namespace grib_coder {
 

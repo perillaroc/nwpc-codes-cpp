@@ -43,7 +43,7 @@ bool GribSection5::decode(GribMessageHandler* container) {
 }
 
 void GribSection5::init() {
-    data_representation_template_number_.setOctetCount(2);
+    data_representation_template_number_.setByteCount(2);
 
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
         {4, "section5Length", &section_length_},

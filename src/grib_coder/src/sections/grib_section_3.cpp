@@ -44,7 +44,7 @@ bool GribSection3::decode(GribMessageHandler* container) {
 }
 
 void GribSection3::init() {
-    grid_definition_template_number_.setOctetCount(2);
+    grid_definition_template_number_.setByteCount(2);
 
     std::vector<std::tuple<size_t, std::string, GribProperty*>> components{
         {4, "section3Length", &section_length_},
@@ -87,7 +87,7 @@ void GribSection3::init() {
         registerProperty(std::get<1>(item), std::get<2>(item));
     }
 
-    grid_definition_template_number_.setOctetCount(2);
+    grid_definition_template_number_.setByteCount(2);
 
     std::vector<std::tuple<CodeTableProperty*, std::string>> tables_id{
         {&source_of_grid_definition_, "3.0"},

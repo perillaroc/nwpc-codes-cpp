@@ -59,11 +59,15 @@ public:
 
     void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
 
+protected:
+    // update section length using all components.
     virtual void updateSectionLength();
 
-protected:
+    // properties and templates which are encoded in the grib file.
     std::vector<std::unique_ptr<GribComponent>> components_;
 
+    // including other properties which are not in grib file, such as computed properties.
+    // template properties are also registered into section's property map.
     std::unordered_map<std::string, GribProperty*> property_map_;
 
     NumberProperty<uint8_t> section_number_;

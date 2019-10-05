@@ -17,14 +17,20 @@ public:
 
     // parse, dump and pack
 
+    // parse current grib message from file.
+    // current pos of file will be changed.
     bool parseFile(std::FILE* file);
 
+    // decode values in section 7 regardless of handler_only flag.
     bool decodeValues();
 
+    // dump grib message into stdout.
     void dump(const DumpConfig& dump_config = DumpConfig{});
 
+    // encode values in section 7
     bool encodeValues();
 
+    // pack message into file.
     bool packFile(std::FILE* file);
 
     // properties
@@ -51,21 +57,29 @@ public:
         return table_database_;
     }
 
+    // calculate total length of all sections.
+    // used for section 0.
     long calculateTotalLength() const;
 
 private:
+    // parse next section 1 - 7. currently section 2 is not supported.
     bool parseNextSection(std::FILE* file);
 
     auto getSection(int section_number, size_t begin_pos = 0);
 
+    // same as header only flag in GribFileHandler.
     bool header_only_ = false;
 
     std::vector<std::shared_ptr<GribSection>> section_list_;
     std::shared_ptr<GribTableDatabase> table_database_;
 
+    // message offset in file.
     NumberProperty<uint64_t> offset_;
+
+    // current message count.
     NumberProperty<uint64_t> count_;
 
+    // store message only properties.
     std::unordered_map<std::string, GribProperty*> property_map_;
 };
 

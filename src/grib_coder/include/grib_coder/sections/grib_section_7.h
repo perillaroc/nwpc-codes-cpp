@@ -1,6 +1,6 @@
 #pragma once
 
-#include "grib_coder/grib_section.h"
+#include <grib_coder/grib_section.h>
 #include <grib_property/computed/data_values_property.h>
 
 namespace grib_coder {
@@ -23,11 +23,10 @@ public:
 
     void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
 
-    // TODO: just for test
-    void updateSectionLength() override;
-
 private:
     void init();
+
+    void updateSectionLength() override;
 
     DataValuesProperty data_values_;
 };

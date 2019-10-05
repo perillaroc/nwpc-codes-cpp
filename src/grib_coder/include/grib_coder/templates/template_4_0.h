@@ -1,5 +1,5 @@
 #pragma once
-#include "grib_coder/grib_template.h"
+#include <grib_coder/grib_template.h>
 
 #include <grib_property/code_table_property.h>
 #include <grib_property/number_property.h>
@@ -11,7 +11,7 @@ namespace grib_coder {
 
 class Template_4_0 : public GribTemplate {
 public:
-    Template_4_0(int template_length);
+    explicit Template_4_0(int template_length);
 
     ~Template_4_0() = default;
 

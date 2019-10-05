@@ -31,9 +31,6 @@ double CodeTableProperty::getDouble() {
     return value_;
 }
 
-void CodeTableProperty::setString(const std::string& value) {
-}
-
 std::string CodeTableProperty::getString() {
     const auto default_value = fmt::format("{}", value_);
 
@@ -91,8 +88,8 @@ void CodeTableProperty::setCodeTableId(const std::string& code_table_id) {
     code_table_id_ = code_table_id;
 }
 
-void CodeTableProperty::setOctetCount(size_t count) {
-    octet_count_ = count;
+void CodeTableProperty::setByteCount(size_t count) {
+    byte_count_ = count;
 }
 
 bool CodeTableProperty::parse(std::vector<std::byte>::const_iterator& iterator, size_t count) {
@@ -111,11 +108,11 @@ void CodeTableProperty::dump(const DumpConfig& dump_config) {
 }
 
 void CodeTableProperty::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
-    if (octet_count_ == 1) {
+    if (byte_count_ == 1) {
         auto bytes = convert_number_to_bytes(static_cast<uint8_t>(value_));
         std::copy(std::begin(bytes), std::end(bytes), iterator);
     }
-    else if (octet_count_ == 2) {
+    else if (byte_count_ == 2) {
         auto bytes = convert_number_to_bytes(static_cast<uint16_t>(value_));
         std::copy(std::begin(bytes), std::end(bytes), iterator);
     }

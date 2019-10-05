@@ -4,7 +4,7 @@
 
 namespace grib_coder {
 
-void TemplateCodeTableProperty::setGenerateFunction(const GenerateFunction &generate_function) {
+void TemplateCodeTableProperty::setGenerateFunction(const generate_function &generate_function) {
     generate_function_ = generate_function;
 }
 

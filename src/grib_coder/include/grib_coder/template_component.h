@@ -27,14 +27,15 @@ public:
 
     void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
 
+    // register all properties into section's property_map_
     void registerProperty(std::shared_ptr<GribSection> &section);
+
+    // unregister all properties from section's property_map_
     void unregisterProperty(std::shared_ptr<GribSection> &section);
 
     long getByteCount() const override;
 
 private:
-    long byte_count_ = 0;
-
     std::unique_ptr<GribTemplate> grib_template_;
 };
 

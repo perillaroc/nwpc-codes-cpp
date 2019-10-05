@@ -54,7 +54,7 @@ public:
         return true;
     }
 
-    constexpr static size_t getByteSize() {
+    constexpr static size_t getByteCount() {
         return sizeof(T);
     }
 

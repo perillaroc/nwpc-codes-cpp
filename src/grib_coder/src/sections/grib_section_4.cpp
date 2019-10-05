@@ -56,7 +56,7 @@ bool GribSection4::decode(GribMessageHandler* container) {
 }
 
 void GribSection4::init() {
-    product_definition_template_number_.setOctetCount(2);
+    product_definition_template_number_.setByteCount(2);
     product_definition_template_number_.setGenerateFunction([this](TemplateComponent* template_component) {
         this->generateProductionTemplate(template_component);
     });

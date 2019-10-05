@@ -7,6 +7,8 @@
 
 namespace grib_coder {
 
+// convert bytes to number
+
 template <typename T>
 T convert_bytes_to_number(const std::byte* bytes) {
     throw std::runtime_error("not implemented");
@@ -101,6 +103,7 @@ inline float convert_bytes_to_number(const std::byte* bytes) {
     return *(reinterpret_cast<float*>(&t));
 }
 
+// convert number to bytes
 
 template <typename T>
 std::vector<std::byte> convert_number_to_bytes(T value) {
