@@ -26,6 +26,9 @@ public:
     void pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) override;
 
 private:
+    // calculate bitsPerValue and referenceValue using binaryScaleFactor and decimalScaleFactor.
+    void calculate(GribMessageHandler* container);
+
     std::vector<std::byte> raw_value_bytes_;
     std::vector<double> code_values_;
     long data_count_ = -1;

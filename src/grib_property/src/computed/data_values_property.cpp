@@ -53,6 +53,8 @@ void DataValuesProperty::dump(const DumpConfig& dump_config) {
 }
 
 bool DataValuesProperty::encodeValues(GribMessageHandler* container) {
+    calculate(container);
+
     if (code_values_.empty()) {
         data_count_ = 0;
         return true;
@@ -89,7 +91,7 @@ bool DataValuesProperty::encodeValues(GribMessageHandler* container) {
     std::vector<unsigned char> buffer(helper->buffer_size);
     helper->jpeg_buffer = &buffer[0];
 
-    auto result = encode_jpeg2000_values(helper.get());
+    const auto result = encode_jpeg2000_values(helper.get());
 
     if(!result) {
         return false;
@@ -107,6 +109,47 @@ bool DataValuesProperty::encodeValues(GribMessageHandler* container) {
 
 void DataValuesProperty::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
     std::copy(std::begin(raw_value_bytes_), std::end(raw_value_bytes_), iterator);
+}
+
+// algorithm is from NCEP wgrib2 (grib2/g2clib-1.4.0/jpcpack.c)
+void DataValuesProperty::calculate(GribMessageHandler* container) {
+    const auto binary_scale_factor = static_cast<int>(container->getLong("binaryScaleFactor"));
+    const auto decimal_scale_factor = static_cast<int>(container->getLong("decimalScaleFactor"));
+    const auto old_reference_value = static_cast<float>(container->getDouble("referenceValue"));
+    const auto old_bits_per_value = static_cast<int>(container->getLong("bitsPerValue"));
+
+    const auto binary_scale = std::pow(2, -1 * binary_scale_factor);
+    const auto decimal_scale = std::pow(10, decimal_scale_factor);
+
+    auto bscale = binary_scale;
+    if(binary_scale == 0) {
+        bscale = 1;
+    }
+
+    const auto [min_value_iter, max_value_iter] = std::minmax_element(std::begin(code_values_), std::end(code_values_));
+
+    const auto min_value = (*min_value_iter) * decimal_scale * bscale;
+    const auto max_value = (*max_value_iter) * decimal_scale * bscale;
+    const auto max_number_step = static_cast<long>(max_value-min_value);
+
+    const auto log2 = 0.69314718; // ln(2.0)
+    size_t bits_per_value = 0;
+
+    // if max_value and min_value are not equal, use data values.
+    // or use empty data values for constant field.
+    if(max_value!=min_value && max_number_step != 0) {
+        const auto temp = std::log((static_cast<double>(max_number_step) + 1)) / log2;
+        bits_per_value = std::ceil(temp);
+    } else {
+        data_count_ = 0;
+        bits_per_value = 0;
+        code_values_.clear();
+        raw_value_bytes_.clear();
+    }
+
+    const auto reference_value = static_cast<float>(min_value);
+    container->setDouble("referenceValue", reference_value);
+    container->setLong("bitsPerValue", bits_per_value);
 }
 
 } // namespace grib_coder
