@@ -11,10 +11,11 @@
 namespace grib_coder {
 
 void DataValuesProperty::setDoubleArray(std::vector<double>& values) {
+    code_values_ = values;
 }
 
 std::vector<double> DataValuesProperty::getDoubleArray() {
-    return std::vector<double>();
+    return code_values_;
 }
 
 void DataValuesProperty::setRawValues(std::vector<std::byte>&& raw_values) {
@@ -22,9 +23,9 @@ void DataValuesProperty::setRawValues(std::vector<std::byte>&& raw_values) {
 }
 
 bool DataValuesProperty::decodeValues(GribMessageHandler* container) {
+    // constant field has no data values
     if (raw_value_bytes_.empty()) {
-        data_count_ = 0;
-        return true;
+        return decodeConstantFields(container);
     }
 
     const auto binary_scale_factor = int(container->getLong("binaryScaleFactor"));
@@ -36,9 +37,7 @@ bool DataValuesProperty::decodeValues(GribMessageHandler* container) {
     std::transform(code_values_.begin(), code_values_.end(), code_values_.begin(), [=](double v) {
         return (reference_value + v * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
     });
-    //for (auto i = 0; i < data_count; i++) {
-    //	code_values_[i] = (reference_value + code_values_[i] * std::pow(2, int16_t(binary_scale_factor))) / std::pow(10, int16_t(decimal_scale_factor));
-    //}
+
     return true;
 }
 
@@ -135,6 +134,8 @@ void DataValuesProperty::calculate(GribMessageHandler* container) {
     const auto log2 = 0.69314718; // ln(2.0)
     size_t bits_per_value = 0;
 
+    auto reference_value = static_cast<float>(min_value);
+
     // if max_value and min_value are not equal, use data values.
     // or use empty data values for constant field.
     if(max_value!=min_value && max_number_step != 0) {
@@ -145,11 +146,21 @@ void DataValuesProperty::calculate(GribMessageHandler* container) {
         bits_per_value = 0;
         code_values_.clear();
         raw_value_bytes_.clear();
+        reference_value = *min_value_iter;
     }
 
-    const auto reference_value = static_cast<float>(min_value);
     container->setDouble("referenceValue", reference_value);
     container->setLong("bitsPerValue", bits_per_value);
+}
+
+bool DataValuesProperty::decodeConstantFields(GribMessageHandler* container) {
+    data_count_ = container->getLong("numberOfValues");
+    const auto reference_value = static_cast<float>(container->getDouble("referenceValue"));
+
+    code_values_.resize(data_count_);
+    std::fill(std::begin(code_values_), std::end(code_values_), reference_value);
+
+    return true;
 }
 
 } // namespace grib_coder

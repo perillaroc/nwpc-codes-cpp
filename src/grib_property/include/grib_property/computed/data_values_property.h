@@ -17,6 +17,8 @@ public:
 
     void setRawValues(std::vector<std::byte>&& raw_values);
 
+    // decode, dump and encode
+
     bool decodeValues(GribMessageHandler* container);
 
     void dump(const DumpConfig& dump_config) override;
@@ -28,6 +30,8 @@ public:
 private:
     // calculate bitsPerValue and referenceValue using binaryScaleFactor and decimalScaleFactor.
     void calculate(GribMessageHandler* container);
+
+    bool decodeConstantFields(GribMessageHandler* container);
 
     std::vector<std::byte> raw_value_bytes_;
     std::vector<double> code_values_;
