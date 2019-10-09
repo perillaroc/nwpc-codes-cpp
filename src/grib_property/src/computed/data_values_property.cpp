@@ -26,19 +26,9 @@ bool DataValuesProperty::decodeValues(GribMessageHandler* container) {
     // constant field has no data values
     if (raw_value_bytes_.empty()) {
         return decodeConstantFields(container);
+    } else {
+        return decodeNormalFields(container);
     }
-
-    const auto binary_scale_factor = int(container->getLong("binaryScaleFactor"));
-    const auto decimal_scale_factor = int(container->getLong("decimalScaleFactor"));
-    const auto reference_value = float(container->getDouble("referenceValue"));
-
-    data_count_ = container->getLong("numberOfValues");
-    code_values_ = decode_jpeg2000_values(&raw_value_bytes_[0], raw_value_bytes_.size(), data_count_);
-    std::transform(code_values_.begin(), code_values_.end(), code_values_.begin(), [=](double v) {
-        return (reference_value + v * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
-    });
-
-    return true;
 }
 
 void DataValuesProperty::dump(const DumpConfig& dump_config) {
@@ -52,58 +42,22 @@ void DataValuesProperty::dump(const DumpConfig& dump_config) {
 }
 
 bool DataValuesProperty::encodeValues(GribMessageHandler* container) {
-    calculate(container);
 
-    if (code_values_.empty()) {
-        data_count_ = 0;
-        return true;
-    }
-
+    // currently we don't support bitmap.
     const auto bit_map_indicator = static_cast<uint8_t>(container->getLong("bitMapIndicator"));
-    if(bit_map_indicator != std::numeric_limits<uint8_t>::max()) {
+    if (bit_map_indicator != std::numeric_limits<uint8_t>::max()) {
         throw std::runtime_error("bit map is not supported");
     }
 
-    const auto ni = container->getLong("ni");
-    const auto nj = container->getLong("nj");
-    const auto binary_scale_factor = static_cast<int>(container->getLong("binaryScaleFactor"));
-    const auto decimal_scale_factor = static_cast<int>(container->getLong("decimalScaleFactor"));
-    const auto reference_value = static_cast<float>(container->getDouble("referenceValue"));
-    const auto bits_per_value = static_cast<int>(container->getLong("bitsPerValue"));
-
-    auto helper = std::make_unique<j2k_encode_helper>();
-
-    const auto simple_packing_size = (((bits_per_value * data_count_) + 7) / 8) * sizeof(std::byte);
-    helper->buffer_size = simple_packing_size + 10240;
-    helper->width = ni;
-    helper->height = nj;
-    helper->bits_per_value = bits_per_value;
-
-    // TODO: check target compression ratio
-    helper->compression = 0;
-    helper->no_values = data_count_;
-    helper->values = &code_values_[0];
-    helper->reference_value = reference_value;
-    helper->divisor = std::pow(2, -1 * binary_scale_factor);
-    helper->decimal = std::pow(10, decimal_scale_factor);
-
-    std::vector<unsigned char> buffer(helper->buffer_size);
-    helper->jpeg_buffer = &buffer[0];
-
-    const auto result = encode_jpeg2000_values(helper.get());
-
-    if(!result) {
-        return false;
-    }
-
-    const auto encoded_length = helper->jpeg_length;
+    calculate(container);
 
     raw_value_bytes_.clear();
-    raw_value_bytes_.resize(encoded_length);
-    std::transform(std::begin(buffer), std::begin(buffer) + encoded_length, std::begin(raw_value_bytes_),
-        [](unsigned char c) -> std::byte { return static_cast<std::byte>(c); });
 
-    return true;
+    if (data_count_ == 0) {
+        return encodeConstantFields(container);
+    } else {
+        return encodeNormalFields(container);
+    }
 }
 
 void DataValuesProperty::pack(std::back_insert_iterator<std::vector<std::byte>>& iterator) {
@@ -144,8 +98,6 @@ void DataValuesProperty::calculate(GribMessageHandler* container) {
     } else {
         data_count_ = 0;
         bits_per_value = 0;
-        code_values_.clear();
-        raw_value_bytes_.clear();
         reference_value = *min_value_iter;
     }
 
@@ -159,6 +111,75 @@ bool DataValuesProperty::decodeConstantFields(GribMessageHandler* container) {
 
     code_values_.resize(data_count_);
     std::fill(std::begin(code_values_), std::end(code_values_), reference_value);
+
+    return true;
+}
+
+bool DataValuesProperty::decodeNormalFields(GribMessageHandler* container) {
+    const auto binary_scale_factor = int(container->getLong("binaryScaleFactor"));
+    const auto decimal_scale_factor = int(container->getLong("decimalScaleFactor"));
+    const auto reference_value = float(container->getDouble("referenceValue"));
+
+    data_count_ = container->getLong("numberOfValues");
+    code_values_ = decode_jpeg2000_values(&raw_value_bytes_[0], raw_value_bytes_.size(), data_count_);
+    std::transform(code_values_.begin(), code_values_.end(), code_values_.begin(), [=](double v) {
+        return (reference_value + v * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
+    });
+
+    return true;
+}
+
+bool DataValuesProperty::encodeConstantFields(GribMessageHandler* container) {
+    const auto reference_value = code_values_[0];
+    const auto bits_per_value = 0;
+    container->setDouble("referenceValue", reference_value);
+    container->setLong("bitsPerValue", bits_per_value);
+
+    raw_value_bytes_.clear();
+    data_count_ = 0;
+
+    return true;
+}
+
+bool DataValuesProperty::encodeNormalFields(GribMessageHandler* container) {
+    const auto ni = container->getLong("ni");
+    const auto nj = container->getLong("nj");
+    const auto binary_scale_factor = static_cast<int>(container->getLong("binaryScaleFactor"));
+    const auto decimal_scale_factor = static_cast<int>(container->getLong("decimalScaleFactor"));
+    const auto reference_value = static_cast<float>(container->getDouble("referenceValue"));
+    const auto bits_per_value = static_cast<int>(container->getLong("bitsPerValue"));
+
+    auto helper = std::make_unique<j2k_encode_helper>();
+
+    const auto simple_packing_size = (((bits_per_value * data_count_) + 7) / 8) * sizeof(std::byte);
+    helper->buffer_size = simple_packing_size + 10240;
+    helper->width = ni;
+    helper->height = nj;
+    helper->bits_per_value = bits_per_value;
+
+    // TODO: check target compression ratio
+    helper->compression = 0;
+    helper->no_values = data_count_;
+    helper->values = &code_values_[0];
+    helper->reference_value = reference_value;
+    helper->divisor = std::pow(2, -1 * binary_scale_factor);
+    helper->decimal = std::pow(10, decimal_scale_factor);
+
+    std::vector<unsigned char> buffer(helper->buffer_size);
+    helper->jpeg_buffer = &buffer[0];
+
+    const auto result = encode_jpeg2000_values(helper.get());
+
+    if (!result) {
+        return false;
+    }
+
+    const auto encoded_length = helper->jpeg_length;
+
+    raw_value_bytes_.clear();
+    raw_value_bytes_.resize(encoded_length);
+    std::transform(std::begin(buffer), std::begin(buffer) + encoded_length, std::begin(raw_value_bytes_),
+        [](unsigned char c) -> std::byte { return static_cast<std::byte>(c); });
 
     return true;
 }

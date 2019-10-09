@@ -32,6 +32,11 @@ private:
     void calculate(GribMessageHandler* container);
 
     bool decodeConstantFields(GribMessageHandler* container);
+    bool decodeNormalFields(GribMessageHandler* container);
+
+
+    bool encodeConstantFields(GribMessageHandler* container);
+    bool encodeNormalFields(GribMessageHandler* container);
 
     std::vector<std::byte> raw_value_bytes_;
     std::vector<double> code_values_;
