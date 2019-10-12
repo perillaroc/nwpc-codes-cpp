@@ -29,13 +29,17 @@ public:
 
 private:
     // calculate bitsPerValue and referenceValue using binaryScaleFactor and decimalScaleFactor.
+    // and check whether field is constant.
     void calculate(GribMessageHandler* container);
 
+    // decode constant fields using referenceValue.
     bool decodeConstantFields(GribMessageHandler* container);
+
     bool decodeNormalFields(GribMessageHandler* container);
 
-
+    // encode referenceValue for constant fields.
     bool encodeConstantFields(GribMessageHandler* container);
+
     bool encodeNormalFields(GribMessageHandler* container);
 
     std::vector<std::byte> raw_value_bytes_;
