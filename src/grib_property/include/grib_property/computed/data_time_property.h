@@ -1,9 +1,9 @@
 #pragma once
-#include <grib_property/grib_property.h>
+#include <grib_property/computed/computed_property.h>
 
 namespace grib_coder {
 
-class DataTimeProperty : public GribProperty {
+class DataTimeProperty : public ComputedProperty {
 public:
     DataTimeProperty() = default;
     ~DataTimeProperty() = default;
@@ -20,9 +20,13 @@ public:
     bool decode(GribMessageHandler* container) override;
 
 private:
+    void encodeToComponents() override;
+
     int hour_ = -1;
     int minute_ = -1;
     int second_ = -1;
+
+    GribMessageHandler* message_handler_ = nullptr;
 };
 
 } // namespace grib_coder

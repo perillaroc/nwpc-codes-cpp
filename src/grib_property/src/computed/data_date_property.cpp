@@ -12,6 +12,8 @@ void DataDateProperty::setLong(long value) {
     const auto month_day = value % 10000;
     month_ = static_cast<int>(std::floor(month_day / 100));
     day_ = month_day % 100;
+
+    encodeToComponents();
 }
 
 long DataDateProperty::getLong() {
@@ -33,6 +35,8 @@ void DataDateProperty::setString(const std::string& value) {
     year_ = std::stoi(value.substr(0, 4));
     month_ = std::stoi(value.substr(5, 2));
     day_ = std::stoi(value.substr(8, 2));
+
+    encodeToComponents();
 }
 
 std::string DataDateProperty::getString() {
@@ -47,7 +51,17 @@ bool DataDateProperty::decode(GribMessageHandler* handler) {
     year_ = static_cast<int>(handler->getLong("year"));
     month_ = static_cast<int>(handler->getLong("month"));
     day_ = static_cast<int>(handler->getLong("day"));
+    ComputedProperty::decode(handler);
     return true;
+}
+
+void DataDateProperty::encodeToComponents() {
+    if (message_handler_ == nullptr) {
+        return;
+    }
+    message_handler_->setLong("year", year_);
+    message_handler_->setLong("month", month_);
+    message_handler_->setLong("day", month_);
 }
 
 } // namespace grib_coder

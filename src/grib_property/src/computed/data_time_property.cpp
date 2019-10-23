@@ -10,6 +10,8 @@ void DataTimeProperty::setLong(long value) {
     hour_ = static_cast<int>(std::floor(value / 100));
     minute_ = value % 100;
     second_ = 0;
+
+    encodeToComponents();
 }
 
 long DataTimeProperty::getLong() {
@@ -52,9 +54,20 @@ std::string DataTimeProperty::getString() {
 }
 
 bool DataTimeProperty::decode(GribMessageHandler* container) {
+    message_handler_ = container;
     hour_ = container->getLong("hour");
     minute_ = container->getLong("minute");
     second_ = container->getLong("second");
     return true;
 }
+
+void DataTimeProperty::encodeToComponents() {
+    if (message_handler_ == nullptr) {
+        return;
+    }
+    message_handler_->setLong("hour", hour_);
+    message_handler_->setLong("minute", minute_);
+    message_handler_->setLong("second", second_);
+}
+
 } // namespace grib_coder
