@@ -25,8 +25,6 @@ private:
     int hour_ = -1;
     int minute_ = -1;
     int second_ = -1;
-
-    GribMessageHandler* message_handler_ = nullptr;
 };
 
 } // namespace grib_coder

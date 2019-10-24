@@ -8,6 +8,7 @@ public:
     bool decode(GribMessageHandler* handler) override;
 
 protected:
+    // write value back to components, should be called by all available setters.
     virtual void encodeToComponents() = 0;
 
     // computed property needs message handler to write value back to components.
