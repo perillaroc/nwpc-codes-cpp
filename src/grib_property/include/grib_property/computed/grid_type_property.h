@@ -5,9 +5,6 @@ namespace grib_coder {
 
 class GridTypeProperty : public GribProperty {
 public:
-    GridTypeProperty() = default;
-    ~GridTypeProperty() = default;
-
     std::string getString() override {
         return grid_type_;
     }
@@ -15,7 +12,7 @@ public:
     bool decode(GribMessageHandler* container) override;
 
 private:
-    std::string grid_type_;
+    std::string grid_type_ = "MISSING";
 };
 
 } // namespace grib_coder

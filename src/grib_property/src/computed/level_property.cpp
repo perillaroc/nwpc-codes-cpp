@@ -7,11 +7,6 @@
 #include <cmath>
 
 namespace grib_coder {
-
-LevelProperty::LevelProperty():
-    value_{std::numeric_limits<double>::max()} {
-}
-
 std::string LevelProperty::getString() {
     if (value_ == std::numeric_limits<double>::max()) {
         return "MISSING";

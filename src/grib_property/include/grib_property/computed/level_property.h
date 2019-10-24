@@ -5,9 +5,6 @@ namespace grib_coder {
 
 class LevelProperty : public GribProperty {
 public:
-    LevelProperty();
-    ~LevelProperty() = default;
-
     double getDouble() override {
         return value_;
     }
@@ -17,7 +14,7 @@ public:
     bool decode(GribMessageHandler* container) override;
 
 private:
-    double value_;
+    double value_ = std::numeric_limits<double>::max();
 };
 
 } // namespace grib_coder

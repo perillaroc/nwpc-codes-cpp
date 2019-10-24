@@ -4,9 +4,6 @@
 namespace grib_coder {
 class PackingTypeProperty : public GribProperty {
 public:
-    PackingTypeProperty() = default;
-    ~PackingTypeProperty() = default;
-
     std::string getString() override {
         return packing_type_;
     }

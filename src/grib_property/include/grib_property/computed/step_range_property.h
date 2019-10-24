@@ -6,9 +6,6 @@ namespace grib_coder {
 
 class StepRangeProperty : public GribProperty {
 public:
-    StepRangeProperty() = default;
-    ~StepRangeProperty() = default;
-
     std::string getString() override;
 
     bool decode(GribMessageHandler* container) override;

@@ -5,9 +5,6 @@ namespace grib_coder {
 
 class DataTimeProperty : public ComputedProperty {
 public:
-    DataTimeProperty() = default;
-    ~DataTimeProperty() = default;
-
     void setLong(long value) override;
     long getLong() override;
 

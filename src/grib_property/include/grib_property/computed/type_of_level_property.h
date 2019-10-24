@@ -5,9 +5,6 @@ namespace grib_coder {
 
 class TypeOfLevelProperty : public GribProperty {
 public:
-    TypeOfLevelProperty() = default;
-    ~TypeOfLevelProperty() = default;
-
     std::string getString() override;
 
     bool decode(GribMessageHandler* container) override;
