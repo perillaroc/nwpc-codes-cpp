@@ -1,9 +1,9 @@
 #pragma once
-#include <grib_property/grib_property.h>
+#include <grib_property/computed/computed_property.h>
 
 namespace grib_coder {
 
-class LevelProperty : public GribProperty {
+class LevelProperty : public ComputedProperty {
 public:
     double getDouble() override {
         return value_;
@@ -11,9 +11,11 @@ public:
 
     std::string getString() override;
 
-    bool decode(GribMessageHandler* container) override;
+    bool decode(GribMessageHandler* handler) override;
 
 private:
+    void encodeToComponents() override;
+
     double value_ = std::numeric_limits<double>::max();
 };
 

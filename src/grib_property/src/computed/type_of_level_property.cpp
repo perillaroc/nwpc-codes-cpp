@@ -100,11 +100,11 @@ std::string TypeOfLevelProperty::getString() {
     return type_of_level_;
 }
 
-bool TypeOfLevelProperty::decode(GribMessageHandler* container) {
+bool TypeOfLevelProperty::decode(GribMessageHandler* handler) {
     std::map<std::string, long> property_map;
 
-    property_map["typeOfFirstFixedSurface"] = container->getLong("typeOfFirstFixedSurface");
-    property_map["typeOfSecondFixedSurface"] = container->getLong("typeOfSecondFixedSurface");
+    property_map["typeOfFirstFixedSurface"] = handler->getLong("typeOfFirstFixedSurface");
+    property_map["typeOfSecondFixedSurface"] = handler->getLong("typeOfSecondFixedSurface");
 
     for (const auto& item : type_of_level_list) {
         auto type_name = std::get<0>(item);
@@ -123,8 +123,12 @@ bool TypeOfLevelProperty::decode(GribMessageHandler* container) {
             break;
         }
     }
-
+    ComputedProperty::decode(handler);
     return true;
+}
+
+void TypeOfLevelProperty::encodeToComponents() {
+    throw std::runtime_error("StepRangeProperty is a read-only property.");
 }
 
 } // namespace grib_coder

@@ -15,10 +15,10 @@ std::string LevelProperty::getString() {
     return fmt::format("{}", value_);
 }
 
-bool LevelProperty::decode(GribMessageHandler* container) {
-    const auto level_number_factor = container->getLong("scaleFactorOfFirstFixedSurface");
-    const auto level_number_value = container->getLong("scaledValueOfFirstFixedSurface");
-    const auto type_of_first_fixed_surface = container->getLong("typeOfFirstFixedSurface");
+bool LevelProperty::decode(GribMessageHandler* handler) {
+    const auto level_number_factor = handler->getLong("scaleFactorOfFirstFixedSurface");
+    const auto level_number_value = handler->getLong("scaledValueOfFirstFixedSurface");
+    const auto type_of_first_fixed_surface = handler->getLong("typeOfFirstFixedSurface");
 
     std::string level;
     if (static_cast<uint8_t>(level_number_factor) == std::numeric_limits<uint8_t>::max() ||
@@ -32,7 +32,12 @@ bool LevelProperty::decode(GribMessageHandler* container) {
     }
 
     value_ = std::pow(10, level_number_factor) * level_number_value;
+    ComputedProperty::decode(handler);
     return true;
+}
+
+void LevelProperty::encodeToComponents() {
+    throw std::runtime_error("LevelProperty is a read-only property.");
 }
 
 } // namespace grib_coder

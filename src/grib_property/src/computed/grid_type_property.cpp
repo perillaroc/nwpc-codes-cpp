@@ -33,12 +33,12 @@ const std::vector<
     },
 };
 
-bool GridTypeProperty::decode(GribMessageHandler* container) {
+bool GridTypeProperty::decode(GribMessageHandler* handler) {
     std::map<std::string, long> property_map;
 
-    property_map["gridDefinitionTemplateNumber"] = container->getLong("gridDefinitionTemplateNumber");
+    property_map["gridDefinitionTemplateNumber"] = handler->getLong("gridDefinitionTemplateNumber");
 
-    const auto numberOfOctectsForNumberOfPoints = container->getLong("numberOfOctectsForNumberOfPoints");
+    const auto numberOfOctectsForNumberOfPoints = handler->getLong("numberOfOctectsForNumberOfPoints");
     if (numberOfOctectsForNumberOfPoints == 0) {
         property_map["PLPresent"] = 0;
     } else {
@@ -62,7 +62,12 @@ bool GridTypeProperty::decode(GribMessageHandler* container) {
             break;
         }
     }
+    ComputedProperty::decode(handler);
     return true;
+}
+
+void GridTypeProperty::encodeToComponents() {
+    throw std::runtime_error("GridTypeProperty is a read-only property.");
 }
 
 } // namespace grib_coder

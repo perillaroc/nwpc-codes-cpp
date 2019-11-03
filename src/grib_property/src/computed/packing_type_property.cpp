@@ -36,10 +36,10 @@ const std::vector<
     },
 };
 
-bool PackingTypeProperty::decode(GribMessageHandler* container) {
+bool PackingTypeProperty::decode(GribMessageHandler* handler) {
     std::map<std::string, long> property_map;
 
-    property_map["dataRepresentationTemplateNumber"] = container->getLong("dataRepresentationTemplateNumber");
+    property_map["dataRepresentationTemplateNumber"] = handler->getLong("dataRepresentationTemplateNumber");
 
     for (const auto& item : packing_type_list) {
         auto type_name = std::get<0>(item);
@@ -58,7 +58,12 @@ bool PackingTypeProperty::decode(GribMessageHandler* container) {
             break;
         }
     }
+    ComputedProperty::decode(handler);
     return true;
+}
+
+void PackingTypeProperty::encodeToComponents() {
+    throw std::runtime_error("PackingTypeProperty is a read-only property.");
 }
 
 } // namespace grib_coder
