@@ -1,6 +1,5 @@
 #pragma once
 
-#include <grib_property/grib_property.h>
 #include <grib_property/number_property.h>
 #include <grib_property/grib_component.h>
 

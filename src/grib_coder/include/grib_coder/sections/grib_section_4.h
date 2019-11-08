@@ -7,7 +7,7 @@ namespace grib_coder {
 
 class TemplateComponent;
 
-class GribSection4 : public GribSection {
+class GribSection4 final: public GribSection {
 public:
     GribSection4();
     explicit GribSection4(int section_length);

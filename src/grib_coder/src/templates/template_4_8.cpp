@@ -1,7 +1,6 @@
-#include "grib_coder/templates/template_4_8.h"
-#include "grib_coder/grib_section.h"
-#include "grib_coder/grib_message_handler.h"
-
+#include <grib_coder/templates/template_4_8.h>
+#include <grib_coder/grib_section.h>
+#include <grib_coder/grib_message_handler.h>
 #include <grib_property/property_component.h>
 
 #include <tuple>
@@ -15,8 +14,8 @@ Template_4_8::Template_4_8(int template_length):
     init();
 }
 
-bool Template_4_8::decode(GribMessageHandler* container) {
-    const auto discipline = container->getLong("discipline");
+bool Template_4_8::decode(GribMessageHandler* handler) {
+    const auto discipline = handler->getLong("discipline");
     const auto category_table_id = fmt::format("4.1.{discipline}", fmt::arg("discipline", discipline));
     parameter_category_.setCodeTableId(category_table_id);
 
@@ -26,9 +25,9 @@ bool Template_4_8::decode(GribMessageHandler* container) {
         fmt::arg("category", parameter_category_.getLong()));
     parameter_number_.setCodeTableId(number_table_id);
 
-    level_.decode(container);
-    type_of_level_.decode(container);
-    step_range_.decode(container);
+    level_.decode(handler);
+    type_of_level_.decode(handler);
+    step_range_.decode(handler);
 
     return true;
 }

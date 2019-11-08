@@ -9,7 +9,7 @@ class GribTemplate;
 class GribSection;
 class GribMessageHandler;
 
-class TemplateComponent : public GribComponent {
+class TemplateComponent final: public GribComponent {
 public:
     TemplateComponent() = default;
 

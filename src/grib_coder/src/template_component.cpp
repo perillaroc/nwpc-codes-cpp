@@ -1,7 +1,7 @@
-#include "template_component.h"
+#include <grib_coder/template_component.h>
 
-#include "grib_template.h"
-#include "grib_section.h"
+#include <grib_coder/grib_template.h>
+#include <grib_coder/grib_section.h>
 
 namespace grib_coder {
 

@@ -5,8 +5,7 @@
 #include <grib_property/computed/packing_type_property.h>
 
 namespace grib_coder {
-
-class GribSection5 : public GribSection {
+class GribSection5 final: public GribSection {
 public:
     GribSection5();
     explicit GribSection5(int section_length);
@@ -30,6 +29,7 @@ private:
     CodeTableProperty type_of_compression_used_;
     NumberProperty<uint8_t> target_compression_ratio_;
 
+    // computed
     PackingTypeProperty packing_type_;
 };
 

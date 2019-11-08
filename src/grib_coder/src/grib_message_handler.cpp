@@ -1,13 +1,13 @@
-#include "grib_message_handler.h"
+#include <grib_coder/grib_message_handler.h>
 
-#include "sections/grib_section_0.h"
-#include "sections/grib_section_1.h"
-#include "sections/grib_section_3.h"
-#include "sections/grib_section_4.h"
-#include "sections/grib_section_5.h"
-#include "sections/grib_section_6.h"
-#include "sections/grib_section_7.h"
-#include "sections/grib_section_8.h"
+#include <grib_coder/sections/grib_section_0.h>
+#include <grib_coder/sections/grib_section_1.h>
+#include <grib_coder/sections/grib_section_3.h>
+#include <grib_coder/sections/grib_section_4.h>
+#include <grib_coder/sections/grib_section_5.h>
+#include <grib_coder/sections/grib_section_6.h>
+#include <grib_coder/sections/grib_section_7.h>
+#include <grib_coder/sections/grib_section_8.h>
 
 #include <grib_property/number_convert.h>
 #include <grib_property/grib_table_database.h>
@@ -25,8 +25,7 @@ GribMessageHandler::GribMessageHandler(std::shared_ptr<GribTableDatabase>& db, b
     property_map_["offset"] = &offset_;
 }
 
-GribMessageHandler::~GribMessageHandler() {
-}
+GribMessageHandler::~GribMessageHandler() {}
 
 void GribMessageHandler::setCount(long count) {
     count_ = count;

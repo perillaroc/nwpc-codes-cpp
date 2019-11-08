@@ -1,6 +1,6 @@
-#include "grib_template.h"
-#include "grib_section.h"
-#include "grib_message_handler.h"
+#include <grib_coder/grib_template.h>
+#include <grib_coder/grib_section.h>
+#include <grib_coder/grib_message_handler.h>
 
 #include <grib_property/property_component.h>
 #include <grib_property/code_table_property.h>

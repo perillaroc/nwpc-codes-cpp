@@ -4,7 +4,7 @@
 #include <grib_property/computed/grid_type_property.h>
 
 namespace grib_coder {
-class GribSection3 : public GribSection {
+class GribSection3 final: public GribSection {
 public:
     GribSection3();
     explicit GribSection3(long section_length);
@@ -45,6 +45,7 @@ private:
     NumberProperty<uint32_t> j_direction_increment_;
     NumberProperty<uint8_t> scanning_mode_;
 
+    // computed
     GridTypeProperty grid_type_;
 };
 } // namespace grib_coder

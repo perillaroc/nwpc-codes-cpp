@@ -4,7 +4,7 @@
 
 namespace grib_coder {
 
-class GribSection6 : public GribSection {
+class GribSection6 final: public GribSection {
 public:
     GribSection6();
     explicit GribSection6(int section_length);

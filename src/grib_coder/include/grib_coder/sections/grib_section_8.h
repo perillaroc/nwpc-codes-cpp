@@ -5,7 +5,7 @@
 
 namespace grib_coder {
 
-class GribSection8 : public GribSection {
+class GribSection8 final: public GribSection {
 public:
     GribSection8();
 

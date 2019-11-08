@@ -1,4 +1,4 @@
-#include "template_code_table_property.h"
+#include <grib_coder/template_code_table_property.h>
 
 #include <stdexcept>
 

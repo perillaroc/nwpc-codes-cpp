@@ -9,11 +9,11 @@
 
 namespace grib_coder {
 
-class Template_4_11 : public GribTemplate {
+class Template_4_11 final: public GribTemplate {
 public:
     Template_4_11(int template_length);
 
-    bool decode(GribMessageHandler* container) override;
+    bool decode(GribMessageHandler* handler) override;
 
     void registerProperty(std::shared_ptr<GribSection> &section) override;
 

@@ -5,10 +5,8 @@
 #include <grib_property/computed/data_date_property.h>
 #include <grib_property/computed/data_time_property.h>
 
-#include <cstdint>
-
 namespace grib_coder {
-class GribSection1 : public GribSection {
+class GribSection1 final: public GribSection {
 public:
     GribSection1();
     explicit GribSection1(long section_length);
@@ -34,6 +32,7 @@ private:
     CodeTableProperty production_status_of_processed_data_;
     CodeTableProperty type_of_processed_data_;
 
+    // computed
     DataDateProperty data_date_;
     DataTimeProperty data_time_;
 };

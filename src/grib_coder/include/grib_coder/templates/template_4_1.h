@@ -9,7 +9,7 @@
 
 namespace grib_coder {
 
-class Template_4_1 : public GribTemplate {
+class Template_4_1 final: public GribTemplate {
 public:
     Template_4_1(int template_length);
 

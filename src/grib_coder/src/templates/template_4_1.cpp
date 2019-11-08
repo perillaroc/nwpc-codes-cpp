@@ -1,7 +1,6 @@
-#include "grib_coder/templates/template_4_1.h"
-#include "grib_coder/grib_section.h"
-#include "grib_coder/grib_message_handler.h"
-
+#include <grib_coder/templates/template_4_1.h>
+#include <grib_coder/grib_section.h>
+#include <grib_coder/grib_message_handler.h>
 #include <grib_property/property_component.h>
 
 #include <cassert>

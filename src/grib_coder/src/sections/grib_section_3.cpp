@@ -1,5 +1,4 @@
 #include <grib_coder/sections/grib_section_3.h>
-
 #include <grib_property/property_component.h>
 
 #include <gsl/span>

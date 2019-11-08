@@ -4,11 +4,9 @@
 #include <grib_property/code_table_property.h>
 #include <grib_property/string_property.h>
 
-#include <cstdint>
-
 namespace grib_coder {
 
-class GribSection0 : public GribSection {
+class GribSection0 final: public GribSection {
 public:
     GribSection0();
 

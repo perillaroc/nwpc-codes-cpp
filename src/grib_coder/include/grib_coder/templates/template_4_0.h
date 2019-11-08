@@ -9,7 +9,7 @@
 
 namespace grib_coder {
 
-class Template_4_0 : public GribTemplate {
+class Template_4_0 final: public GribTemplate {
 public:
     explicit Template_4_0(int template_length);
 
@@ -36,6 +36,7 @@ private:
     NumberProperty<int8_t> scale_factor_of_second_fixed_surface_;
     NumberProperty<uint32_t> scaled_value_of_second_fixed_surface_;
 
+    // computed
     LevelProperty level_;
     TypeOfLevelProperty type_of_level_;
     StepRangeProperty step_range_;
