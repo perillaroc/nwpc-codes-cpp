@@ -19,7 +19,7 @@ public:
     std::unique_ptr<GribMessageHandler> next();
 
 private:
-    // if false, data values in section 7 will not be decoded.
+    // if true, data values in section 7 will not be decoded.
     bool header_only_ = false;
 
     // all grib messages use the same table database.

@@ -11,7 +11,7 @@ int dump_grib_file(const std::string& file_path, const std::vector<Condition>& c
 
     //auto start_time = std::chrono::system_clock::now();
 
-    grib_coder::GribFileHandler handler(f, true);
+    grib_coder::GribFileHandler handler(f, false);
     auto current_index = 0;
     auto message_selected = 0;
     auto message_handler = handler.next();

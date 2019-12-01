@@ -231,6 +231,13 @@ bool GribMessageHandler::parseNextSection(std::FILE* file) {
         return false;
     }
 
+    if (section_number == 6 && !header_only_) {
+        auto section6 = std::static_pointer_cast<GribSection6>(section);
+        if (!section6->decodeValues(this)) {
+            return false;
+        }
+    }
+
     if (section_number == 7 && !header_only_) {
         auto section7 = std::static_pointer_cast<GribSection7>(section);
         if (!section7->decodeValues(this)) {

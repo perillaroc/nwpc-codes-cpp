@@ -28,7 +28,8 @@ target_sources(grib_property
 		src/computed/type_of_level_property.cpp
 		src/computed/packing_type_property.cpp
 		src/computed/grid_type_property.cpp
-		src/computed/step_range_property.cpp)
+		src/computed/step_range_property.cpp
+		src/computed/bit_map_values_property.cpp)
 
 
 target_include_directories(grib_property

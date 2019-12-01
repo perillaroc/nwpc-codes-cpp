@@ -32,6 +32,24 @@ bool GribSection6::parseFile(std::FILE* file, bool header_only) {
         component->parse(iterator);
     }
 
+    if(bit_map_indicator_.getLong() == 255) {
+        return true;
+    }
+
+    std::vector<std::byte> raw_bytes;
+    raw_bytes.resize(buffer_length - 1);
+    std::copy(buffer.begin() + 6, buffer.end(), raw_bytes.begin());
+    bit_map_values_.setRawValues(std::move(raw_bytes));
+
+    return true;
+}
+
+bool GribSection6::decode(GribMessageHandler* handler) {
+    return true;
+}
+
+bool GribSection6::decodeValues(GribMessageHandler* handler) {
+    bit_map_values_.decodeValues(handler);
     return true;
 }
 
