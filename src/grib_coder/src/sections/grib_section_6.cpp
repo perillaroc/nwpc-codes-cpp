@@ -67,5 +67,7 @@ void GribSection6::init() {
             std::get<2>(item)));
         registerProperty(std::get<1>(item), std::get<2>(item));
     }
+
+    registerProperty("bitmap", &bit_map_values_);
 }
 } // namespace grib_coder

@@ -9,6 +9,10 @@ public:
     
     void setRawValues(std::vector<std::byte>&& raw_values);
 
+    std::vector<bool> getValues() const {
+        return values_;
+    }
+
     // decode, dump, encode and pack
 
     bool decodeValues(GribMessageHandler* container);

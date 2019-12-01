@@ -67,6 +67,14 @@ public:
     // used for section 0.
     long calculateTotalLength() const;
 
+    double getMissingValue() const {
+        return missing_value_;
+    }
+
+    void setMissingValue(double value) {
+        missing_value_ = value;
+    }
+
 private:
     // parse next section 1 - 7. currently section 2 is not supported.
     bool parseNextSection(std::FILE* file);
@@ -87,6 +95,8 @@ private:
 
     // store message only properties.
     std::unordered_map<std::string, GribProperty*> property_map_;
+
+    double missing_value_ = 9999;
 };
 
 template <typename T>

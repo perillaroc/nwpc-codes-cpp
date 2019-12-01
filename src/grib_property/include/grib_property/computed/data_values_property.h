@@ -43,7 +43,8 @@ private:
     bool encodeNormalFields(GribMessageHandler* container);
 
     std::vector<std::byte> raw_value_bytes_;
-    std::vector<double> code_values_;
+    std::vector<double> codes_values_;
+    std::vector<double> values_;
     long data_count_ = -1;
 };
 } // namespace grib_coder

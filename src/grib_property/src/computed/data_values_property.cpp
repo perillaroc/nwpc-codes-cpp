@@ -1,6 +1,7 @@
 #include "grib_property/computed/data_values_property.h"
 #include <grib_coder/grib_message_handler.h>
 #include "grib_property/computed/openjpeg_decoder.h"
+#include <grib_property/computed/bit_map_values_property.h>
 
 #include <fmt/format.h>
 
@@ -11,11 +12,11 @@
 namespace grib_coder {
 
 void DataValuesProperty::setDoubleArray(std::vector<double>& values) {
-    code_values_ = values;
+    values_ = values;
 }
 
 std::vector<double> DataValuesProperty::getDoubleArray() {
-    return code_values_;
+    return values_;
 }
 
 void DataValuesProperty::setRawValues(std::vector<std::byte>&& raw_values) {
@@ -79,7 +80,7 @@ void DataValuesProperty::calculate(GribMessageHandler* container) {
         bscale = 1;
     }
 
-    const auto [min_value_iter, max_value_iter] = std::minmax_element(std::begin(code_values_), std::end(code_values_));
+    const auto [min_value_iter, max_value_iter] = std::minmax_element(std::begin(values_), std::end(values_));
 
     const auto min_value = (*min_value_iter) * decimal_scale * bscale;
     const auto max_value = (*max_value_iter) * decimal_scale * bscale;
@@ -109,8 +110,8 @@ bool DataValuesProperty::decodeConstantFields(GribMessageHandler* container) {
     data_count_ = container->getLong("numberOfValues");
     const auto reference_value = static_cast<float>(container->getDouble("referenceValue"));
 
-    code_values_.resize(data_count_);
-    std::fill(std::begin(code_values_), std::end(code_values_), reference_value);
+    values_.resize(data_count_);
+    std::fill(std::begin(values_), std::end(values_), reference_value);
 
     return true;
 }
@@ -119,18 +120,45 @@ bool DataValuesProperty::decodeNormalFields(GribMessageHandler* container) {
     const auto binary_scale_factor = int(container->getLong("binaryScaleFactor"));
     const auto decimal_scale_factor = int(container->getLong("decimalScaleFactor"));
     const auto reference_value = float(container->getDouble("referenceValue"));
+    const auto bit_map_indicator = int(container->getLong("bitMapIndicator"));
 
     data_count_ = container->getLong("numberOfValues");
-    code_values_ = decode_jpeg2000_values(&raw_value_bytes_[0], raw_value_bytes_.size(), data_count_);
-    std::transform(code_values_.begin(), code_values_.end(), code_values_.begin(), [=](double v) {
+    codes_values_ = decode_jpeg2000_values(&raw_value_bytes_[0], raw_value_bytes_.size(), data_count_);
+    std::transform(codes_values_.begin(), codes_values_.end(), codes_values_.begin(), [=](double v) {
         return (reference_value + v * std::pow(2, binary_scale_factor)) / std::pow(10, decimal_scale_factor);
     });
+
+   
+    if(bit_map_indicator == 255) {
+        values_ = codes_values_;
+    } else {
+        const auto bitmap_property = container->getProperty("bitmap");
+        const auto bitmap = dynamic_cast<const BitMapValuesProperty*>(bitmap_property);
+        auto bitmap_values = bitmap->getValues();
+
+        const auto missing_value = container->getMissingValue();
+
+        const auto data_values_count = bitmap_values.size();
+        values_.resize(data_values_count);
+
+        auto data_iter = std::begin(values_);
+        auto codes_iter = std::begin(codes_values_);
+        for(auto bit: bitmap_values) {
+            if(bit) {
+                *data_iter = *codes_iter;
+                ++codes_iter;
+            } else {
+                *data_iter = missing_value;
+            }
+            ++data_iter;
+        }
+    }
 
     return true;
 }
 
 bool DataValuesProperty::encodeConstantFields(GribMessageHandler* container) {
-    const auto reference_value = code_values_[0];
+    const auto reference_value = values_[0];
     const auto bits_per_value = 0;
     container->setDouble("referenceValue", reference_value);
     container->setLong("bitsPerValue", bits_per_value);
@@ -160,7 +188,7 @@ bool DataValuesProperty::encodeNormalFields(GribMessageHandler* container) {
     // TODO: check target compression ratio
     helper->compression = 0;
     helper->no_values = data_count_;
-    helper->values = &code_values_[0];
+    helper->values = &values_[0];
     helper->reference_value = reference_value;
     helper->divisor = std::pow(2, -1 * binary_scale_factor);
     helper->decimal = std::pow(10, decimal_scale_factor);
